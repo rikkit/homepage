@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+	<link rel="stylesheet" href="style.css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+<script type="text/javascript" src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.latest.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script type="text/javascript" src="res/js/lastfm.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.lastfm > .back > ul.tile-content').lastFM({
+		username: 'tehrikkit',
+		apikey: 'a6ab4b9376e54cdb06912bfbd9c1f288',
+		number: 5,
+		artSize: 'large',
+		noart: 'images/noartwork.gif',
+		onComplete: function(){
+			$('.tile').cycle({
+				delay: 2000,
+				autostop: 1,
+				speed: 1050,
+				easing: 'easeOutQuint',
+				fx: 'scrollUp'
+			});
+		
+			$('.detail-template').cycle({
+				delay: 4000,
+				timeout: 5000,
+				speed: 1050,
+				easing: 'easeOutQuint',
+				fx: 'scrollUp'
+			});
+		}
+	});    
+});
+</script>
+</head>
+<body>
+
+<div class="tile lastfm">
+	<div class="front">
+		<p class="title">Last.fm</p>
+	</div>
+	<div class="back">
+		<ul class="tile-content detail-template">
+			<li class="image-text">
+			<div class="lfm_art"></div>
+				<h3 class="lfm_artist"></h3>
+				<p class="lfm_song"></p>
+			</li>
+		</ul>
+		<p class="title">tehrikkit</p>
+		<div class="badge"></div>
+	</div>
+</div>
+
+
+
+</body>
+</html>
