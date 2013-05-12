@@ -7,6 +7,16 @@ font-family: "Segoe UI", sans-serif;
 
 .tile {
 margin: 1em;
+-webkit-user-select: none;  
+-moz-user-select: none;    
+-ms-user-select: none;      
+user-select: none;
+cursor: pointer
+}
+
+.tile:active {
+-ms-transform: perspective( 250px ) translateZ( -10px );
+transform: perspective( 250px ) translateZ( -10px );
 }
 
 .tile, .tile .front, .tile .back, ul.tile-content > li {
@@ -26,6 +36,8 @@ list-style-type: none;
 margin: 0;
 padding: 0;
 z-index: 5;
+-moz-perspective: 250px;
+-moz-transform: translateZ(-100px);
 }
 
 .tile .title {
@@ -55,6 +67,7 @@ z-index: 10;
 .image-text {
 padding: 1em;
 position: relative;
+
 }
 
 .image-text .lfm_art {
