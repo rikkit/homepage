@@ -1,0 +1,6 @@
+[submodule "lib/lastfmjs"]
+	path = lib/lastfmjs
+	url = git@github.com:fxb/javascript-last.fm-api.git
+[submodule "lib/includejs"]
+	path = lib/includejs
+	url = git@github.com:CapMousse/include.js.git

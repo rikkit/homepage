@@ -1,8 +1,8 @@
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 body {
-font-size: 15px;
-font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .tile {
@@ -45,7 +45,6 @@ position: absolute;
 bottom: 0;
 left: 0;
 margin: 0.5em 1em;
-font-size: 0.9em;
 z-index: 10;
 }
 
@@ -62,45 +61,30 @@ margin: 0.25em 0.75em;
 z-index: 10;
 }
 
-/* --- Tile content --- */
+/* --- TEMPLATES --- */
 
-.image-text {
-padding: 1em;
-position: relative;
+/*<li class="fill-template template-image">*/
+    /*<h3 class="template-lead"></h3>*/
+/*</li>*/
 
+.fill-template.template-image {
+    background-position: center;
 }
 
-.image-text .lfm_art {
-position: absolute;
-left: 1em;
-top: 1em;
+.fill-template h3.template-lead {
+    margin-left: 14px; /* TODO less variable */
+    margin-top: 7px;
+    font-size: 1.4em;
+    font-weight: 400;
+    position: absolute;
 }
 
-.image-text .lfm_art img {
-width: 75px;
-height: 75px;
+.fill-template .template-overlay {
+    background-color: rgba(0,0,0,0.4);
+    height: 120px;
+    width: 250px;
 }
 
-.image-text h3, .image-text p {
--o-text-overflow: ellipsis;   /* Opera */
-text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
-overflow:hidden;              /* don't show excess chars */
-white-space:nowrap;           /* force single line */
-width: 135px;                 /* fixed width */
-margin-top: 0;
-margin-bottom: 0;
-margin-left: 90px;
-}
-
-.image-text h3 {
-margin-top: -5px;
-font-family: "Segoe UI Light";
-font-size: 1.5em;
-}
-
-.image-text p {
-font-size: 0.9em;
-}
 
 /* --- Last fm --- */
 
