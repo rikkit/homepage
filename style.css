@@ -1,105 +1,13 @@
+@import "res/css/tiles.css";
+
 * {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
+
 body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
-}
-
-.tile {
-    margin: 1em;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer
-}
-
-.tile:active {
-    -ms-transform: perspective(250px) translateZ(-10px);
-    transform: perspective(250px) translateZ(-10px);
-}
-
-.tile, .tile .front, .tile .back, ul.tile-content > li {
-    width: 250px;
-    height: 120px;
-    overflow: hidden;
-    position: relative;
-}
-
-.tile .front {
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-ul.tile-content {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    z-index: 5;
-    -moz-perspective: 250px;
-    -moz-transform: translateZ(-100px);
-}
-
-.tile .title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 0.5em 1em;
-    z-index: 10;
-}
-
-.tile .badge {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 24px 24px;
-    height: 24px;
-    width: 24px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 0.25em 0.75em;
-    z-index: 10;
-}
-
-/* --- TEMPLATES --- */
-
-/*<li class="fill-template template-image">*/
-/*<h3 class="template-lead"></h3>*/
-/*</li>*/
-
-.fill-template.template-image {
-    background-position: center;
-}
-
-.fill-template h3.template-lead {
-    margin-left: 14px; /* TODO less variable */
-    margin-top: 7px;
-    font-size: 1.4em;
-    font-weight: 400;
-    position: absolute;
-}
-
-.fill-template .template-overlay {
-    background-color: rgba(0, 0, 0, 0.4);
-    height: 120px;
-    width: 250px;
-}
-
-/* --- Last fm --- */
-
-.tile.lastfm {
-    background: #dc1303;
-    color: #ffffff;
-}
-
-.tile.lastfm .front {
-    background-image: url('res/img/lastfm.png');
-}
-
-.tile.lastfm .badge {
-    background-image: url('res/img/lastfm.png');
 }
