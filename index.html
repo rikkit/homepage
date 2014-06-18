@@ -13,29 +13,49 @@
     <script type="text/javascript" src="res/js/tiles.js"></script>
     <!-- TODO tidy up the script section somehow?? -->
     <script type="text/javascript">
+
+        function greeting(random){
+            var greetings = ['Alright?', 'Hi there!', 'Bonswazzle!', 'Greetings, traveller'];
+
+            var index = parseInt(random * greetings.length);
+
+            console.log('Chose greeting  ' + index );
+            return greetings[index];
+        }
+
         $(document).ready(function() {
             populateLastfmTile(metroTileAnimation, $('#top-artists-tile'));
+
+            $('#header-greeting').text(greeting(Math.random()));
         });
     </script>
 </head>
 <body>
 
-<p>My name is Rikki Tooley, and I'm an alcoholic.</p>
+<header id="prime">
+    <div id="header-lead">
+        <p id="header-greeting">Hello!</p>
+        <p>My name is Rikki Tooley, and I'm an independent programmer.</p>
+    </div>
+</header>
 
-<div id="top-artists-tile" class="tile lastfm">
-    <div class="front">
-        <p class="title">Last.fm</p>
-    </div>
-    <div class="back">
-        <ul class="tile-content">
-            <li class="fill-template template-image">
-                <h3 class="template-lead"></h3>
-                <div class="template-overlay"></div>
-            </li>
-        </ul>
-        <p class="title">tehrikkit</p>
-        <div class="badge"></div>
-    </div>
+<div id="burrito">
+    <div id="top-artists-tile" class="tile lastfm">
+        <div class="front">
+            <p class="title">Last.fm</p>
+        </div>
+        <div class="back">
+            <ul class="tile-content">
+                <li class="fill-template template-image">
+                    <h3 class="template-lead"></h3>
+                    <div class="template-overlay"></div>
+                </li>
+            </ul>
+            <p class="title">tehrikkit</p>
+            <div class="badge"></div>
+        </div>
+</div>
+
 </div>
 
 </body>

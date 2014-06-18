@@ -1,5 +1,4 @@
 .tile {
-    margin: 1em;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -29,8 +28,6 @@ ul.tile-content {
     margin: 0;
     padding: 0;
     z-index: 5;
-    -moz-perspective: 250px;
-    -moz-transform: translateZ(-100px);
 }
 
 .tile .title {

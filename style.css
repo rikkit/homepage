@@ -11,3 +11,31 @@ body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
 }
+
+header#prime {
+    height: 30em;
+    position: relative;
+}
+
+header#prime p {
+    margin: 0;
+}
+
+header#prime p:first-letter {
+    margin-left: -0.1em;
+}
+
+#header-greeting {
+    font-size: 3em;
+}
+
+#header-lead {
+    position: absolute;
+    bottom: 2em;
+    left: 1em;
+    font-size: 2em;
+}
+
+#burrito {
+    padding-left: 2em;
+}
