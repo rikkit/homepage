@@ -32,7 +32,7 @@ header#prime p:first-letter {
 #header-lead {
     position: absolute;
     bottom: 2em;
-    left: 1em;
+    left: 1.5em;
     font-size: 2em;
 }
 
