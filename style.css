@@ -6,14 +6,13 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
 }
 
 header#prime {
-    height: 30em;
+    height: 25em;
     position: relative;
 }
 
@@ -31,11 +30,27 @@ header#prime p:first-letter {
 
 #header-lead {
     position: absolute;
-    bottom: 2em;
+    bottom: 1em;
     left: 1.5em;
     font-size: 2em;
 }
 
 #burrito {
     padding-left: 2em;
+    margin-bottom: 10em;
+}
+
+#burrito .tile {
+    float: left;
+    margin-left: 2em;
+}
+
+#burrito .tile:first-child {
+    margin: 0;
+}
+
+#burrito:last-child:after {
+    content:"";
+    display:table;
+    clear:both;
 }

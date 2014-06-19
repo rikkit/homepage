@@ -10,7 +10,14 @@
     <script type="text/javascript" src="lib/lastfmjs/lastfm.api.js"></script>
     <script type="text/javascript" src="lib/lastfmjs/lastfm.api.cache.js"></script>
     <script type="text/javascript" src="lib/lastfmjs/lastfm.api.md5.js"></script>
+
+    <script type="text/javascript" src="lib/gh3js/vendors/async.js"></script>
+    <script type="text/javascript" src="lib/gh3js/vendors/underscore-min.js"></script>
+    <script type="text/javascript" src="lib/gh3js/gh3.js"></script>
+
+
     <script type="text/javascript" src="res/js/tiles.js"></script>
+
     <!-- TODO tidy up the script section somehow?? -->
     <script type="text/javascript">
 
@@ -24,7 +31,8 @@
         }
 
         $(document).ready(function() {
-            populateLastfmTile(metroTileAnimation, $('#top-artists-tile'));
+            populateLastfmTile(metroTileAnimation, $('#top-artists-tile'), 1);
+            populateGithubTile(metroTileAnimation, $('#github-projects-tile'), 2);
 
             $('#header-greeting').text(greeting(Math.random()));
         });
@@ -54,6 +62,22 @@
             <p class="title">Last.fm</p>
             <div class="badge"></div>
         </div>
+    </div>
+
+    <div id="github-projects-tile" class="tile github">
+        <div class="front">
+            <p class="title">GitHub</p>
+        </div>
+        <div class="back">
+            <ul class="tile-content">
+                <li class="fill-template template-image">
+                    <h3 class="template-lead"></h3>
+                </li>
+            </ul>
+            <p class="title">GitHub</p>
+            <div class="badge"></div>
+        </div>
+    </div>
 </div>
 
 </div>

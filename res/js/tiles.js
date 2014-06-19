@@ -7,22 +7,57 @@
  */
 function fillTemplate(template, lead, sub, image){
 
-    var imagediv = template.find('.template-image');
-    if (template.hasClass('template-image'))
-    {
-        imagediv = template;
+    if (image != null){
+        var imagediv = template.find('.template-image');
+        if (template.hasClass('template-image'))
+        {
+            imagediv = template;
+        }
+
+        imagediv.css({
+            'background-image' : 'url("' + image + '")'
+        });
     }
 
-    imagediv.css({
-        'background-image' : 'url("' + image + '")'
-    });
-    template.find('.template-lead').text(lead);
+    if (lead != null)
+    {
+        template.find('.template-lead').text(lead);
+    }
 
     console.log("Template filled: " + lead + '; ' + sub + '; ' + image);
     return template;
 }
 
-function populateLastfmTile(animation, div)
+function populateGithubTile(animation, div, offset){
+    "use strict";
+
+    var user = new Gh3.User('rikkit');
+
+    var repos = new Gh3.Repositories(user);
+    repos.fetch({
+        'page' : 1,
+        'per_page' : 3,
+        'sort' : 'updated'
+    }, {paginationInfo : 'first'},
+    function(){
+        var content = div.find('.tile-content');
+        var template = content.children('li').clone();
+
+        content.children().remove();
+
+        for (var i=0; i<repos.repositories.length; i++){
+
+            var repo = repos.repositories[i];
+            console.log('GitHub Tile: ' + repo.name + ' loaded');
+            var filled = fillTemplate(template.clone(), repo.name, null, null);
+            content.append(filled);
+        }
+
+        animation(div, offset);
+    });
+}
+
+function populateLastfmTile(animation, div, offset)
 {
     var cache = new LastFMCache();
     var lastfm = new LastFM({
@@ -49,16 +84,16 @@ function populateLastfmTile(animation, div)
             content.append(filled);
         }
 
-        animation(div);
+        animation(div, offset);
     }}, {error: function(code, message){
         console.log('Lastfm Tile Error:' + code + message);
     }});
 }
 
-function metroTileAnimation(div){
+function metroTileAnimation(div, offset){
     if (div.length){
         div.cycle({
-            delay: 0,
+            delay: (offset * 500),
             autostop: 1,
             speed: 1050,
             easing: 'easeOutQuint',
@@ -66,7 +101,7 @@ function metroTileAnimation(div){
         });
 
         div.find('.tile-content').cycle({
-            delay: 4000,
+            delay: 2000 + (offset * 1000),
             timeout: 5000,
             speed: 1050,
             easing: 'easeOutQuint',

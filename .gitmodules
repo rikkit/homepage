@@ -4,3 +4,6 @@
 [submodule "lib/includejs"]
 	path = lib/includejs
 	url = git@github.com:CapMousse/include.js.git
+[submodule "lib/gh3js"]
+	path = lib/gh3js
+	url = git@github.com:k33g/gh3.git
