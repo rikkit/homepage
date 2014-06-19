@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Rikki Tooley's Sweet Sweet Page</title>
+    <meta charset="utf-8">
+    <title>Rikki Tooley's Sweet Sweet Page</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="res/css/nprogress.css"/>
@@ -15,9 +16,12 @@
     <script type="text/javascript" src="lib/gh3js/vendors/async.js"></script>
     <script type="text/javascript" src="lib/gh3js/vendors/underscore-min.js"></script>
     <script type="text/javascript" src="lib/gh3js/gh3.js"></script>
-    <script type="text/javascript" src="res/js/nprogress.js"></script>
+
+    <script type="text/javascript" src="http://js.api.here.com/se/2.5.4/jsl.js"></script>
 
     <script type="text/javascript" src="res/js/tiles.js"></script>
+
+    <script type="text/javascript" src="res/js/nprogress.js"></script>
 
     <!-- TODO tidy up the script section somehow?? -->
     <script type="text/javascript">
@@ -54,16 +58,14 @@
 
             $('.tile > .tile-link').click(function() {
                 NProgress.start();
-                NProgress.done();
             });
 
-            populateLastfmTile(metroTileAnimation, $('.tile.lastfm'), 1);
-            populateGithubTile(metroTileAnimation, $('.tile.github'), 2);
+            setupLastfmTile(metroTileAnimation, $('.tile.lastfm'), 3);
+            setupGithubTile(metroTileAnimation, $('.tile.github'), 1);
+            setupMapTile(metroTileAnimation, $('.tile.map'), 2);
 
             $('#header-greeting').text(greeting(Math.random()));
         });
-
-
     </script>
 </head>
 <body>
@@ -118,6 +120,25 @@
         <div class="faces">
             <div class="front">
                 <p class="title">Blog</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="map-location-tile" class="tile map">
+        <a class="tile-link" href="http://her.is/uLjXEx"> </a>
+        <div class="faces">
+            <div class="front">
+                <p class="title">Hometown</p>
+            </div>
+            <div class="back">
+                <ul class="tile-content">
+                    <li class="fill-template template-image">
+                        <h3 class="template-lead">Bath, UK</h3>
+                        <div class="template-overlay"></div>
+                    </li>
+                </ul>
+                <p class="title">Hometown</p>
+                <div class="badge"></div>
             </div>
         </div>
     </div>

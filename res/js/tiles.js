@@ -28,7 +28,43 @@ function fillTemplate(template, lead, sub, image){
     return template;
 }
 
-function populateGithubTile(animation, div, offset){
+function metroTileAnimation(div, offset){
+    if (div.length){
+        var faces = div.find('> .faces');
+        if (faces.length)
+        {
+            var content = faces.find('.tile-content');
+
+            faces.cycle({
+                delay: -24000 + (offset * 2500),
+                timeout: 25000,
+                speed: 1050,
+                easing: 'easeOutQuint',
+                fx: 'scrollUp',
+                beforeEach: function() {
+                    "use strict";
+                    if (content.children().length > 1)
+                    {
+                        content.cycle('toggle');
+                    }
+                }
+            });
+
+            if (content.children().length > 1)
+            {
+                content.cycle({
+                    delay: 2000 + (offset * 750),
+                    timeout: 4000,
+                    speed: 1050,
+                    easing: 'easeOutQuint',
+                    fx: 'scrollUp'
+                });
+            }
+        }
+    }
+}
+
+function setupGithubTile(animation, div, offset){
     "use strict";
 
     var user = new Gh3.User('rikkit');
@@ -36,7 +72,7 @@ function populateGithubTile(animation, div, offset){
     var repos = new Gh3.Repositories(user);
     repos.fetch({
         'page' : 1,
-        'per_page' : 3,
+        'per_page' : 5,
         'sort' : 'updated'
     }, {paginationInfo : 'first'},
     function(){
@@ -57,8 +93,9 @@ function populateGithubTile(animation, div, offset){
     });
 }
 
-function populateLastfmTile(animation, div, offset)
-{
+function setupLastfmTile(animation, div, offset) {
+    "use strict";
+
     var cache = new LastFMCache();
     var lastfm = new LastFM({
         apiKey    : '4823457a7472a620207cf21ad7663f57',
@@ -68,7 +105,7 @@ function populateLastfmTile(animation, div, offset)
 
     lastfm.user.getTopArtists({
         user: 'tehrikkit',
-        limit: 3,
+        limit: 5,
         period: '7day'
     }, {success: function(data){
         var content = div.find('.tile-content');
@@ -90,30 +127,22 @@ function populateLastfmTile(animation, div, offset)
     }});
 }
 
-function metroTileAnimation(div, offset){
-    if (div.length){
-        var faces = div.find('> .faces');
-        if (faces.length)
-        {
-            faces.cycle({
-                delay: (offset * 500),
-                autostop: 1,
-                speed: 1050,
-                easing: 'easeOutQuint',
-                fx: 'scrollUp'
-            });
+function setupMapTile(animation, div, offset) {
+    "use strict";
 
-            var content = faces.find('.tile-content');
-            if (content.children().length > 1)
-            {
-                content.cycle({
-                    delay: 2000 + (offset * 1000),
-                    timeout: 5000,
-                    speed: 1050,
-                    easing: 'easeOutQuint',
-                    fx: 'scrollUp'
-                });
-            }
-        }
+    var content = div.find('.tile-content');
+    var template = content.children('li').first().clone();
+
+    content.children().remove();
+
+    for (var i=1; i<=9; i++)
+    {
+        var filled = fillTemplate(template.clone(), null, null, '/res/img/bath_' + i + '.jpg');
+        content.append(filled);
     }
+
+    console.log('Photo tiles filled')
+
+
+    animation(div, offset);
 }

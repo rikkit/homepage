@@ -21,6 +21,7 @@
 .tile .front {
     background-position: center center;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 ul.tile-content {
@@ -37,9 +38,6 @@ ul.tile-content {
     background: transparent;
     height: 120px;
     width: 250px;
-}
-
-.tile > .faces {
 }
 
 .tile .title {
@@ -81,7 +79,7 @@ ul.tile-content {
 }
 
 .fill-template .template-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
     height: 120px;
     width: 250px;
 }
@@ -120,4 +118,23 @@ ul.tile-content {
     background-image: url('http://rikk.it/content/images/2013/Nov/STF___Super_summer_vacation_force_O.png');
     background-size: cover;
     color: #fff;
+}
+
+.tile.map {
+    background: #fff;
+    background-size: cover;
+    color: #fff;
+}
+
+.tile.map .front {
+    background-color: #1d468e;
+    background-image: url('../img/heremaps.png');
+}
+
+.tile.map .badge {
+    background-image: url('../img/heremaps.badge.png');
+}
+
+.tile.map .fill-template .template-overlay {
+    background-color: rgba(0, 0, 0, 0.2);
 }
