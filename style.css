@@ -9,11 +9,11 @@
 body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
+    padding-right: 2.5em;
 }
 
 header#prime {
-    height: 25em;
-    position: relative;
+    padding-top: 10em;
 }
 
 header#prime p {
@@ -26,12 +26,12 @@ header#prime p:first-letter {
 
 #header-greeting {
     font-size: 3em;
+    line-height: 1em;
 }
 
 #header-lead {
-    position: absolute;
-    bottom: 1em;
-    left: 1.5em;
+    margin-bottom: 1em;
+    margin-left: 1.5em;
     font-size: 2em;
 }
 
@@ -42,11 +42,8 @@ header#prime p:first-letter {
 
 #burrito .tile {
     float: left;
-    margin-left: 2em;
-}
-
-#burrito .tile:first-child {
-    margin: 0;
+    margin-right: 2em;
+    margin-bottom: 1em;
 }
 
 #burrito:last-child:after {

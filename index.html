@@ -20,10 +20,25 @@
 
     <!-- TODO tidy up the script section somehow?? -->
     <script type="text/javascript">
-
         function greeting(random){
-            var greetings = ['Alright?', 'Hi there!', 'Bonswazzle!', 'Greetings, traveller'];
+            var dt = new Date();
+            var hours = dt.getHours();
 
+            var morning = ['Mornin\''];
+            var day = ['Alright?', 'Hi there!', 'Ciao!'];
+            var evening = ['Evenin\''];
+
+            console.log('it is at least ' + hours + ':00');
+            var greetings;
+            if (hours > 3 && hours < 12) {
+                greetings = morning;
+            }
+            else if (hours > 16 && hours < 21) {
+                greetings = evening;
+            }
+            else {
+                greetings = day;
+            }
             var index = parseInt(random * greetings.length);
 
             console.log('Chose greeting  ' + index );
@@ -42,7 +57,7 @@
 
 <header id="prime">
     <div id="header-lead">
-        <p id="header-greeting">Hello!</p>
+        <p id="header-greeting">Hello.</p>
         <p>My name is Rikki Tooley, and I'm an independent programmer.</p>
     </div>
 </header>
