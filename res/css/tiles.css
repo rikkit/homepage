@@ -74,8 +74,6 @@ ul.tile-content {
     width: 250px;
 }
 
-/* --- Last fm --- */
-
 .tile.lastfm {
     background: #dc1303;
     color: #ffffff;
@@ -103,4 +101,11 @@ ul.tile-content {
 
 .tile.github .badge {
     background-image: url('../img/github.badge.png');
+}
+
+.tile.blog {
+    background: #fff;
+    background-image: url('http://rikk.it/content/images/2013/Nov/STF___Super_summer_vacation_force_O.png');
+    background-size: cover;
+    color: #fff;
 }

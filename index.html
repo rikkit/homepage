@@ -25,7 +25,7 @@
             var hours = dt.getHours();
 
             var morning = ['Mornin\''];
-            var day = ['Alright?', 'Hi there!', 'Ciao!'];
+            var day = ['Alright?', 'Hi there!'];
             var evening = ['Evenin\''];
 
             console.log('it is at least ' + hours + ':00');
@@ -46,11 +46,27 @@
         }
 
         $(document).ready(function() {
-            populateLastfmTile(metroTileAnimation, $('#top-artists-tile'), 1);
-            populateGithubTile(metroTileAnimation, $('#github-projects-tile'), 2);
+            var lastfmtile = $('#top-artists-tile');
+            lastfmtile.click(function () {
+                location.href = "http://last.fm/user/tehrikkit";
+            });
+
+            var githubtile = $('#github-projects-tile');
+            githubtile.click(function () {
+                location.href = "https://github.com/rikkit";
+            });
+
+            $('#blog-tile').click(function () {
+                location.href = "http://rikk.it";
+            });
+
+            populateLastfmTile(metroTileAnimation, lastfmtile, 1);
+            populateGithubTile(metroTileAnimation, githubtile, 2);
 
             $('#header-greeting').text(greeting(Math.random()));
         });
+
+
     </script>
 </head>
 <body>
@@ -93,8 +109,21 @@
             <div class="badge"></div>
         </div>
     </div>
-</div>
 
+    <div id="blog-tile" class="tile blog">
+        <div class="front">
+            <p class="title">Blog</p>
+        </div>
+        <div class="back">
+            <ul class="tile-content">
+                <li class="fill-template template-image">
+                    <h3 class="template-lead"></h3>
+                </li>
+            </ul>
+            <p class="title">Blog</p>
+            <div class="badge"></div>
+        </div>
+    </div>
 </div>
 
 </body>

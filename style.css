@@ -10,6 +10,12 @@ body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
     padding-right: 2.5em;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 header#prime {
@@ -27,6 +33,7 @@ header#prime p:first-letter {
 #header-greeting {
     font-size: 3em;
     line-height: 1em;
+    margin-bottom: 0.25em !important;
 }
 
 #header-lead {
