@@ -15,8 +15,8 @@
     width: 250px;
     height: 120px;
     overflow: hidden;
-    position: relative;
 }
+
 
 .tile .front {
     background-position: center center;
@@ -28,6 +28,18 @@ ul.tile-content {
     margin: 0;
     padding: 0;
     z-index: 5;
+}
+
+.tile .tile-link {
+    position: absolute;
+    display: block;
+    z-index: 50;
+    background: transparent;
+    height: 120px;
+    width: 250px;
+}
+
+.tile > .faces {
 }
 
 .tile .title {

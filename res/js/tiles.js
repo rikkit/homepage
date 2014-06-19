@@ -92,20 +92,28 @@ function populateLastfmTile(animation, div, offset)
 
 function metroTileAnimation(div, offset){
     if (div.length){
-        div.cycle({
-            delay: (offset * 500),
-            autostop: 1,
-            speed: 1050,
-            easing: 'easeOutQuint',
-            fx: 'scrollUp'
-        });
+        var faces = div.find('> .faces');
+        if (faces.length)
+        {
+            faces.cycle({
+                delay: (offset * 500),
+                autostop: 1,
+                speed: 1050,
+                easing: 'easeOutQuint',
+                fx: 'scrollUp'
+            });
 
-        div.find('.tile-content').cycle({
-            delay: 2000 + (offset * 1000),
-            timeout: 5000,
-            speed: 1050,
-            easing: 'easeOutQuint',
-            fx: 'scrollUp'
-        });
+            var content = faces.find('.tile-content');
+            if (content.children().length > 1)
+            {
+                content.cycle({
+                    delay: 2000 + (offset * 1000),
+                    timeout: 5000,
+                    speed: 1050,
+                    easing: 'easeOutQuint',
+                    fx: 'scrollUp'
+                });
+            }
+        }
     }
 }
