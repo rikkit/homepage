@@ -3,7 +3,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: pointer
+    cursor: pointer;
+    position: relative;
 }
 
 .tile:active {
