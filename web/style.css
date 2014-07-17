@@ -6,10 +6,17 @@
     box-sizing: border-box;
 }
 
+html, body
+{
+    height: 100%;
+}
+
 body {
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
-    padding-right: 2.5em;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -18,25 +25,26 @@ body {
     cursor: default;
 }
 
-header#prime {
-    padding-top: 10em;
+header.prime {
+    padding-top: 4em;
 }
 
-header#prime p {
+header.prime p {
     margin: 0;
 }
 
-header#prime p:first-letter {
+header.prime p:first-letter {
     margin-left: -0.1em;
 }
 
-#header-greeting {
+.header-greeting {
     font-size: 3em;
     line-height: 1em;
     margin-bottom: 0.25em !important;
+    font-weight: lighter;
 }
 
-#header-lead {
+.header-lead {
     margin-bottom: 1em;
     margin-left: 1.5em;
     font-size: 2em;
@@ -44,7 +52,6 @@ header#prime p:first-letter {
 
 #burrito {
     padding-left: 2em;
-    margin-bottom: 10em;
 }
 
 #burrito .tile {
@@ -57,4 +64,29 @@ header#prime p:first-letter {
     content:"";
     display:table;
     clear:both;
+}
+
+.hub {
+    overflow: visible;
+    position: relative;
+    display: flex;
+    height: 100%;
+}
+
+.hub-item {
+    float: left;
+    width: 90%;
+    min-width: 1000px;
+    flex-wrap: nowrap;
+    margin-right: 5%;
+    padding-left: 2em;
+    align-items: stretch;
+}
+
+.hub .hub-item:nth-of-type(2) {
+    background: #fdd700;
+}
+
+.hub .hub-item:first-of-type {
+    background: none;
 }

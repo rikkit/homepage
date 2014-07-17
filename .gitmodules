@@ -7,3 +7,6 @@
 [submodule "web/lib/includejs"]
 	path = web/lib/includejs
 	url = git@github.com:CapMousse/include.js.git
+[submodule "web/lib/jquery-mousewheel"]
+	path = web/lib/jquery-mousewheel
+	url = git@github.com:brandonaaron/jquery-mousewheel.git
