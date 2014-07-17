@@ -14,6 +14,8 @@
     <script type="text/javascript" src="lib/lastfmjs/lastfm.api.cache.js"></script>
     <script type="text/javascript" src="lib/lastfmjs/lastfm.api.md5.js"></script>
 
+    <script type="text/javascript" src="lib/jquery.linq.min.js"></script>
+
     <script type="text/javascript" src="lib/gh3js/vendors/async.js"></script>
     <script type="text/javascript" src="lib/gh3js/vendors/underscore-min.js"></script>
     <script type="text/javascript" src="lib/gh3js/gh3.js"></script>
@@ -57,20 +59,10 @@
             NProgress.done();
         });
 
-        function getAnimation(id){
-            switch (id){
-                case 'ease-01':
-                    return metroTileAnimation;
-                default:
-                    return metroTileAnimation;
-            }
-        }
-
 
 
 
         $(document).ready(function() {
-
             $("body").mousewheel(function(event, delta) {
 
                 this.scrollLeft -= (delta * 30);
@@ -95,25 +87,35 @@
                 NProgress.start();
             });
 
-            $.get("./api/all", null, function(data){
-                    for (var i = 0; i < data.length; i++){
-                        var tile = data[i];
-                        var animation = getAnimation(tile['tile-template']);
+            $.get("./api/all", null, function(tiles) {
 
-//                        switch (tile.style){
-//                            case 'lastfm':
-//                                setupLastfmTile(animation, $('.tile.lastfm'), 1);
-//                                break;
-//                            case 'github':
-//                                setupGithubTile(animation, $('.tile.github'), 2);
-//                                break;
-//                            case 'map':
-//                                setupMapTile(metroTileAnimation, $('.tile.map'), 3);
-//                                break;
-//                        }
-                    }
+                var space = $('#burrito');
+                space.children().remove();
+
+                for (var i = 0; i < tiles.length; i++) {
+                    var tile = tiles[i];
+                    var animation = getAnimation(tile['animation']);
+
+                    getTemplateAsync(tile['tile-template'], function(template){
+                        var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
+
+                        getTemplateAsync(tile['content-template'], function(template){
+                            var slides = fillContentTemplates(template, tile.data);
+
+                            var content = filled.find('.tile-content');
+                            content.children().remove();
+
+                            for (var i=0; i < slides.length; i++){
+                                content.append(slides[i]);
+                            }
+
+                            space.append(filled);
+
+                            animation(filled, i);
+                        })
+                    });
                 }
-            );
+            });
 
             $('#header-greeting').text(greeting(Math.random()));
         });

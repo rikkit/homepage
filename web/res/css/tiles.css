@@ -4,6 +4,7 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
+    position: relative;
 }
 
 .tile:active {
