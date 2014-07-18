@@ -4,26 +4,30 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
+
     position: relative;
+    overflow: hidden;
 }
 
-.tile:active {
-    -ms-transform: perspective(250px) translateZ(-10px);
-    transform: perspective(250px) translateZ(-10px);
+.tile.medium {
+    width: 120px;
+    height: 120px;
 }
 
-.tile, .tile .front, .tile .back, ul.tile-content > li {
+.tile.wide {
     width: 250px;
     height: 120px;
-    overflow: hidden;
-    position: relative;
 }
 
+/* Need this rule to keep easing happy */
+.tile .faces, .tile .front, .tile .back, .tile .tile-link, ul.tile-content, ul.tile-content > li {
+    width: inherit;
+    height: inherit;
+}
 
-.tile .front {
+.tile .front, .tile .back, .tile .badge, ul.tile-content > li {
     background-position: center center;
     background-repeat: no-repeat;
-    position: relative;
 }
 
 ul.tile-content {
@@ -38,8 +42,11 @@ ul.tile-content {
     display: block;
     z-index: 50;
     background: transparent;
-    height: 120px;
-    width: 250px;
+}
+
+.tile:active {
+    -ms-transform: perspective(250px) translateZ(-10px);
+    transform: perspective(250px) translateZ(-10px);
 }
 
 .tile .title {
@@ -51,8 +58,6 @@ ul.tile-content {
 }
 
 .tile .badge {
-    background-position: center center;
-    background-repeat: no-repeat;
     height: 24px;
     width: 24px;
     position: absolute;
@@ -82,8 +87,8 @@ ul.tile-content {
 
 .fill-template .template-overlay {
     background-color: rgba(0, 0, 0, 0.4);
-    height: 120px;
-    width: 250px;
+    height: inherit;
+    width: inherit;
 }
 
 .tile.lastfm {
