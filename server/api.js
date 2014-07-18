@@ -1,4 +1,5 @@
 var LastFmNode = require('lastfm').LastFmNode;
+var async = require('async');
 
 function refreshTopArtists(yep, nope){
     var lastfm = new LastFmNode({
@@ -41,27 +42,34 @@ function getTopArtists(yep, nope) {
     refreshTopArtists(yep, nope);
 }
 
+function makeErr(code, message) {
+    return {'code':code,'error':message};
+}
+
 exports.all = function(req, res) {
-    var tiles = [];
+    async.parallel([
+        function(done) {
+            getTopArtists(function(artists){
+                var tile = {
+                    'tile-template': 'tt-01',
+                    'content-template': 'ct-fill',
+                    'animation': 'ease-01',
+                    'title': 'Last.fm',
+                    'style': 'lastfm',
+                    'href': 'http://last.fm/user/tehrikkit',
+                    'data': artists
+                };
 
-    getTopArtists(
-        function(artists){
-            var tile = {
-                'tile-template': 'tt-01',
-                'content-template': 'ct-fill',
-                'animation': 'ease-01',
-                'title': 'Last.fm',
-                'style': 'lastfm',
-                'href': 'http://last.fm/user/tehrikkit',
-                'data': artists
-            };
-
-            tiles.push(tile);
-
-            res.send(tiles);
-        },
-        function(err){
-            res.err(500);
+                done(null, tile);
+            }, function(err){
+                done(makeErr(500, err));
+            });
+        }
+    ], function(err, results) {
+        if (err)
+            res.send(err.code);
+        else
+            res.send(results);
     });
 };
 
