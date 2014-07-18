@@ -62,7 +62,10 @@ ul.tile-content {
     position: absolute;
     bottom: 0;
     left: 0;
-    margin: 0.5em 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
     z-index: 10;
 }
 
@@ -118,7 +121,11 @@ ul.tile-content {
     background: #fff;
     color: #222;
     border: #222 solid 2px;
-    padding: -2px;
+}
+
+.tile.github .title {
+    margin-bottom: 5px;
+    margin-bottom: calc(0.5em - 2px);
 }
 
 .tile.github .front {

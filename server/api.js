@@ -117,11 +117,35 @@ function buildBlogTile(post) {
     post(null, tile);
 }
 
+function buildMapTile(post) {
+    var tile = {
+        'tile-template': 'tt-01',
+        'content-template': 'ct-fill',
+        'animation': 'ease-01',
+        'title': 'Hometown',
+        'style': 'map',
+        'href': 'http://her.is/uLjXEx',
+        'data': []
+    };
+
+    for (var i=1; i<=9; i++)
+    {
+        tile.data.push({
+            'name': 'Bath, UK',
+            'image':  '/res/img/bath_' + i + '.jpg',
+            'overlay': true
+        });
+    }
+
+    post(null, tile);
+}
+
 exports.all = function(req, res) {
     async.parallel([
         buildTopArtistsTile,
         buildGithubProjectsTile,
-        buildBlogTile
+        buildBlogTile,
+        buildMapTile
     ], function(err, results) {
         if (err) {
             console.log(err);
