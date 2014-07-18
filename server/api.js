@@ -1,5 +1,11 @@
-var LastFmNode = require('lastfm').LastFmNode;
 var async = require('async');
+
+var LastFmNode = require('lastfm').LastFmNode;
+var github = require('octonode');
+
+function makeErr(code, message) {
+    return {'code':code,'error':message};
+}
 
 function refreshTopArtists(yep, nope){
     var lastfm = new LastFmNode({
@@ -38,36 +44,75 @@ function refreshTopArtists(yep, nope){
     });
 }
 
-function getTopArtists(yep, nope) {
-    refreshTopArtists(yep, nope);
+function refreshGithubProjects(yep, nope) {
+    var client = github.client('1d4f3baa5f5a7322f451de67ded5a45c5886e735');
+
+    var me = client.me();
+
+    me.repos({
+        page: 1,
+        per_page: 5
+    }, function(err, repos, headers) {
+        if (err) {
+            nope(err);
+        }
+        else {
+            var data = [];
+            for (var i=0; i<repos.length; i++){
+                data.push({'name': repos[i].name, 'overlay': false});
+            }
+
+            // TODO cache data var
+            yep(data);
+        }
+    });
 }
 
-function makeErr(code, message) {
-    return {'code':code,'error':message};
+function getTopArtists(post) {
+    refreshTopArtists(function(artists){
+        var tile = {
+            'tile-template': 'tt-01',
+            'content-template': 'ct-fill',
+            'animation': 'ease-01',
+            'title': 'Last.fm',
+            'style': 'lastfm',
+            'href': 'http://last.fm/user/tehrikkit',
+            'data': artists
+        };
+
+        post(null, tile);
+    }, function(err){
+        post(makeErr(500, err));
+    });
+}
+
+function getGithubProjects(post) {
+    refreshGithubProjects(function(repos) {
+        var tile = {
+            'tile-template': 'tt-01',
+            'content-template': 'ct-fill',
+            'animation': 'ease-01',
+            'title': 'Github',
+            'style': 'github',
+            'href': 'http://github.com/rikkit',
+            'data': repos
+        };
+
+        post(null, tile);
+    }, function(err){
+        post(makeErr(500, err));
+    });
 }
 
 exports.all = function(req, res) {
     async.parallel([
-        function(done) {
-            getTopArtists(function(artists){
-                var tile = {
-                    'tile-template': 'tt-01',
-                    'content-template': 'ct-fill',
-                    'animation': 'ease-01',
-                    'title': 'Last.fm',
-                    'style': 'lastfm',
-                    'href': 'http://last.fm/user/tehrikkit',
-                    'data': artists
-                };
-
-                done(null, tile);
-            }, function(err){
-                done(makeErr(500, err));
-            });
-        }
+        getTopArtists,
+        getGithubProjects
     ], function(err, results) {
-        if (err)
+        if (err) {
+            console.log(err);
             res.send(err.code);
+        }
         else
             res.send(results);
     });
