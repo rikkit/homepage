@@ -59,7 +59,7 @@ function fillContentTemplates(original, data){
             template.find('.template-lead').text(d.name);
         }
 
-        if (d.overlay == false){
+        if (d.overlay != true){
             template.find('.template-overlay').remove();
         }
 
