@@ -103,26 +103,6 @@ function metroTileAnimation(tile, offset){
     }
 }
 
-function setupMapTile(animation, div, offset) {
-    "use strict";
-
-    var content = div.find('.tile-content');
-    var template = content.children('li').first().clone();
-
-    content.children().remove();
-
-    for (var i=1; i<=9; i++)
-    {
-        var filled = fillTemplate(template.clone(), null, null, '/res/img/bath_' + i + '.jpg');
-        content.append(filled);
-    }
-
-    console.log('Photo tiles filled')
-
-
-    animation(div, offset);
-}
-
 /**
  * TODO make metroTileAnimation configurable
  * @param id
