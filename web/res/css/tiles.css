@@ -16,7 +16,7 @@
 
 .tile.wide {
     width: 250px;
-    height: 250px;
+    height: 120px;
 }
 
 /* Need this rule to keep easing happy */
