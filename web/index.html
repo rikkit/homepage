@@ -82,20 +82,26 @@
                         getTemplateAsync(tiles[i]['tile-template'], function(template){
                             var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
-                            getTemplateAsync(tile['content-template'], function(template){
-                                var slides = fillContentTemplates(template.clone(), tile.data);
+                            if (tile['content-template'])
+                            {
+                                getTemplateAsync(tile['content-template'], function(template){
+                                    var slides = fillContentTemplates(template.clone(), tile.data);
 
-                                var content = filled.find('.tile-content');
-                                content.children().remove();
+                                    var content = filled.find('.tile-content');
+                                    content.children().remove();
 
-                                for (var i=0; i < slides.length; i++){
-                                    content.append(slides[i]);
-                                }
+                                    for (var i=0; i < slides.length; i++){
+                                        content.append(slides[i]);
+                                    }
 
+                                    space.append(filled);
+                                    animation(filled, i);
+                                });
+                            }
+                            else {
                                 space.append(filled);
-
                                 animation(filled, i);
-                            })
+                            }
                         });
                     })(i);
                 }

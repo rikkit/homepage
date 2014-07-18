@@ -56,8 +56,8 @@ header.prime p:first-letter {
 
 #burrito .tile {
     float: left;
-    margin-right: 2em;
-    margin-bottom: 1em;
+    margin-right: 14px;
+    margin-bottom: 14px;
 }
 
 #burrito:last-child:after {

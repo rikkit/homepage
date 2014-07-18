@@ -15,8 +15,13 @@
 }
 
 .tile.wide {
-    width: 250px;
+    width: 254px;
     height: 120px;
+}
+
+.tile.large {
+    width: 254px;
+    height: 254px;
 }
 
 /* Need this rule to keep easing happy */
@@ -89,8 +94,8 @@ ul.tile-content {
     position: absolute;
 }
 
-.fill-template .template-overlay {
-    background-color: rgba(0, 0, 0, 0.4);
+.template-overlay {
+    background-color: rgba(0, 0, 0, 0.25);
     height: inherit;
     width: inherit;
 }

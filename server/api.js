@@ -68,7 +68,7 @@ function refreshGithubProjects(yep, nope) {
     });
 }
 
-function getTopArtists(post) {
+function buildTopArtistsTile(post) {
     refreshTopArtists(function(artists){
         var tile = {
             'tile-template': 'tt-01',
@@ -86,7 +86,7 @@ function getTopArtists(post) {
     });
 }
 
-function getGithubProjects(post) {
+function buildGithubProjectsTile(post) {
     refreshGithubProjects(function(repos) {
         var tile = {
             'tile-template': 'tt-01',
@@ -104,10 +104,24 @@ function getGithubProjects(post) {
     });
 }
 
+function buildBlogTile(post) {
+    var tile = {
+        'tile-template': 'ms-01',
+        'content-template': null,
+        'animation': 'ease-01',
+        'title': 'Blog',
+        'style': 'blog',
+        'href': 'http://rikk.it/blog'
+    };
+
+    post(null, tile);
+}
+
 exports.all = function(req, res) {
     async.parallel([
-        getTopArtists,
-        getGithubProjects
+        buildTopArtistsTile,
+        buildGithubProjectsTile,
+        buildBlogTile
     ], function(err, results) {
         if (err) {
             console.log(err);
