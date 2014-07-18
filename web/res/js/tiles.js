@@ -76,32 +76,29 @@ function metroTileAnimation(tile, offset){
         if (faces.length)
         {
             var content = faces.find('.tile-content');
+            var delayMs = offset * 1750;
 
             faces.cycle({
-                delay: -24000 + (offset * 2500),
-                timeout: 25000,
+                timeout: 0,
                 speed: 1050,
                 easing: 'easeOutQuint',
-                fx: 'scrollUp',
-                beforeEach: function() {
-                    "use strict";
-                    if (content.children().length > 1)
-                    {
-                        content.cycle('toggle');
-                    }
-                }
+                fx: 'scrollUp'
             });
 
             if (content.children().length > 1)
             {
                 content.cycle({
-                    delay: 2000 + (offset * 750),
-                    timeout: 4000,
+                    delay: 4250 + delayMs,
+                    timeout: 4500,
                     speed: 1050,
                     easing: 'easeOutQuint',
                     fx: 'scrollUp'
                 });
             }
+
+            setTimeout(function(){
+                faces.cycle('next');
+            }, delayMs);
         }
     }
 }
@@ -133,40 +130,6 @@ function setupGithubTile(animation, div, offset){
 
         animation(div, offset);
     });
-}
-
-function setupLastfmTile(animation, div, offset) {
-    "use strict";
-
-    var cache = new LastFMCache();
-    var lastfm = new LastFM({
-        apiKey    : '4823457a7472a620207cf21ad7663f57',
-        apiSecret : '7f26392d49ddd3251532c75ab4e0dc7f',
-        cache     : cache
-    });
-
-    lastfm.user.getTopArtists({
-        user: 'tehrikkit',
-        limit: 5,
-        period: '7day'
-    }, {success: function(data){
-        var content = div.find('.tile-content');
-        var template = content.children('li').clone();
-
-        content.children().remove();
-
-        for (var i=0; i<data.topartists.artist.length; i++){
-            var artist = data.topartists.artist[i];
-            console.log('Lastfm Tile: ' + artist.name + ' loaded');
-
-            var filled = fillTemplate(template.clone(), artist.name, null, artist.image[3]['#text'])
-            content.append(filled);
-        }
-
-        animation(div, offset);
-    }}, {error: function(code, message){
-        console.log('Lastfm Tile Error:' + code + message);
-    }});
 }
 
 function setupMapTile(animation, div, offset) {
