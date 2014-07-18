@@ -16,7 +16,7 @@
 
 .tile.wide {
     width: 250px;
-    height: 120px;
+    height: 250px;
 }
 
 /* Need this rule to keep easing happy */
@@ -28,6 +28,10 @@
 .tile .front, .tile .back, .tile .badge, ul.tile-content > li {
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+.tile .back, ul.tile-content > li {
+    background-size: cover;
 }
 
 ul.tile-content {
