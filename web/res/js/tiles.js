@@ -103,35 +103,6 @@ function metroTileAnimation(tile, offset){
     }
 }
 
-function setupGithubTile(animation, div, offset){
-    "use strict";
-
-    var user = new Gh3.User('rikkit');
-
-    var repos = new Gh3.Repositories(user);
-    repos.fetch({
-        'page' : 1,
-        'per_page' : 5,
-        'sort' : 'updated'
-    }, {paginationInfo : 'first'},
-    function(){
-        var content = div.find('.tile-content');
-        var template = content.children('li').clone();
-
-        content.children().remove();
-
-        for (var i=0; i<repos.repositories.length; i++){
-
-            var repo = repos.repositories[i];
-            console.log('GitHub Tile: ' + repo.name + ' loaded');
-            var filled = fillTemplate(template.clone(), repo.name, null, null);
-            content.append(filled);
-        }
-
-        animation(div, offset);
-    });
-}
-
 function setupMapTile(animation, div, offset) {
     "use strict";
 
