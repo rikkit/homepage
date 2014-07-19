@@ -10,4 +10,6 @@ console.log(__dirname + homepath);
 
 app.get('/api/all', api.all);
 
-app.listen(80);
+var port = process.argv[2];
+console.log('listening on port ' + port)
+app.listen(port);

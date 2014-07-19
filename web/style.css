@@ -52,7 +52,7 @@ header.prime p:first-letter {
 
 #burrito {
     min-height: 140px;
-    max-height: 60%;
+    height: 60%;
     width: 100%;
     padding-left: 2em;
     margin-top: 2em;
