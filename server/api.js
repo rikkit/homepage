@@ -3,8 +3,8 @@ var async = require('async');
 var LastFmNode = require('lastfm').LastFmNode;
 var github = require('octonode');
 
-function makeErr(code, message) {
-    return {'code':code,'error':message};
+function makeErr(code, message, label) {
+    return {'code':code,'error':message, 'label': label};
 }
 
 function refreshTopArtists(yep, nope){
@@ -82,7 +82,7 @@ function buildTopArtistsTile(post) {
 
         post(null, tile);
     }, function(err){
-        post(makeErr(500, err));
+        post(makeErr(500, err, arguments.callee));
     });
 }
 
@@ -100,7 +100,7 @@ function buildGithubProjectsTile(post) {
 
         post(null, tile);
     }, function(err){
-        post(makeErr(500, err));
+        post(makeErr(500, err, arguments.callee));
     });
 }
 
@@ -144,8 +144,8 @@ exports.all = function(req, res) {
     async.parallel([
         buildTopArtistsTile,
         buildGithubProjectsTile,
-        buildBlogTile,
-        buildMapTile
+        buildMapTile,
+        buildBlogTile
     ], function(err, results) {
         if (err) {
             console.log(err);

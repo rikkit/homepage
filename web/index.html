@@ -78,6 +78,8 @@
                         getTemplateAsync(tiles[i]['tile-template'], function(template){
                             var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
+                            filled.css('order', i);
+
                             if (tile['content-template'])
                             {
                                 getTemplateAsync(tile['content-template'], function(template){
@@ -116,14 +118,13 @@
 <body>
 
 <div class="hub">
-    <div class="hub-item">
+    <div class="hub-item prime">
         <header class="prime">
             <div class="header-lead">
                 <p class="header-greeting">Hello.</p>
                 <p>My name is Rikki Tooley, and I'm an independent software developer.</p>
             </div>
         </header>
-
         <div id="burrito">
             <!-- tiles loaded in here -->
         </div>

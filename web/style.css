@@ -51,19 +51,22 @@ header.prime p:first-letter {
 }
 
 #burrito {
+    min-height: 140px;
+    max-height: 60%;
+    width: 100%;
     padding-left: 2em;
+    margin-top: 2em;
+    position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
 }
 
 #burrito .tile {
-    float: left;
     margin-right: 14px;
     margin-bottom: 14px;
-}
-
-#burrito:last-child:after {
-    content:"";
-    display:table;
-    clear:both;
 }
 
 .hub {
@@ -71,16 +74,19 @@ header.prime p:first-letter {
     position: relative;
     display: flex;
     height: 100%;
+    min-height: 400px;
 }
 
 .hub-item {
     float: left;
     width: 90%;
     min-width: 1000px;
-    flex-wrap: nowrap;
     margin-right: 5%;
     padding-left: 2em;
-    align-items: stretch;
+}
+
+.hub-item.prime header.prime {
+    flex-grow: 1;
 }
 
 .hub .hub-item:nth-of-type(2) {
