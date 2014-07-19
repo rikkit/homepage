@@ -5,13 +5,10 @@
     <title>Rikki Tooley's Sweet Sweet Page</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="res/css/nprogress.css"/>
+    <link rel="stylesheet" href="lib/jam/nprogress/nprogress.css"/>
+
     <script src="lib/jam/require.js"></script>
-
     <script type="text/javascript" src="res/js/tiles.js"></script>
-    <script type="text/javascript" src="res/js/nprogress.js"></script>
-
-    <!-- TODO tidy up the script section somehow?? -->
     <script type="text/javascript">
         function greeting(random){
             var dt = new Date();
@@ -38,11 +35,15 @@
             return greetings[index];
         }
 
-        require(['jquery', 'jquery.cycle', 'jquery-easing'], function (jQuery) {
+        require(['nprogress', 'jquery', 'jquery.cycle', 'jquery-easing'], function (NProgress, jQuery) {
 
             $(window).bind('beforeunload', function() {
                 NProgress.done();
             });
+
+            function startNProgress() {
+                NProgress.start();
+            }
 
             $(document).ready(function() {
     //            var hubItemsCount = $('.hub').children().length;
@@ -70,6 +71,7 @@
                                 var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
                                 filled.css("order", i.toString());
+                                filled.find('.tile-link').click(startNProgress);
 
                                 if (tile.size)
                                 {
@@ -102,12 +104,6 @@
                             });
                         })(index);
                     }
-
-                    // tiles should be in place now
-
-                    $('.tile > .tile-link').click(function() {
-                        NProgress.start();
-                    });
                 });
 
                 $('#header-greeting').text(greeting(Math.random()));

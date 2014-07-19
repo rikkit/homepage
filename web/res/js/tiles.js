@@ -76,7 +76,7 @@ function metroTileAnimation(tile, offset){
         if (faces.length)
         {
             var content = faces.find('.tile-content');
-            var delayMs = offset * 40;
+            var delayMs = offset * 50;
 
             faces.cycle({
                 timeout: 0,
@@ -88,8 +88,8 @@ function metroTileAnimation(tile, offset){
             if (content.children().length > 1)
             {
                 content.cycle({
-                    delay: 4250 + delayMs,
-                    timeout: 4500,
+                    delay: 5800 + delayMs,
+                    timeout: 6000,
                     speed: 1050,
                     easing: 'easeOutQuint',
                     fx: 'scrollUp'
@@ -98,7 +98,7 @@ function metroTileAnimation(tile, offset){
 
             setTimeout(function(){
                 faces.cycle('next');
-            }, 5000 + delayMs);
+            }, 6000 + delayMs);
         }
     }
 }

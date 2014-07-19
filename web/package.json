@@ -8,7 +8,8 @@
             "jquery": null,
             "async": null,
             "jquery.cycle": null,
-            "jquery-easing": null
+            "jquery-easing": null,
+            "nprogress": null
         }
     }
 }
