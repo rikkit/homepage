@@ -6,11 +6,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="res/css/nprogress.css"/>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="http://malsup.github.io/jquery.cycle.all.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="lib/jam/require.js"></script>
 
-    <script type="text/javascript" src="lib/jquery-mousewheel/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="res/js/tiles.js"></script>
     <script type="text/javascript" src="res/js/nprogress.js"></script>
 
@@ -41,77 +38,72 @@
             return greetings[index];
         }
 
-        $(window).bind('beforeunload', function() {
-            NProgress.done();
-        });
+        require(['jquery', 'jquery.cycle', 'jquery-easing'], function (jQuery) {
 
-        $(document).ready(function() {
-            $("body").mousewheel(function(event, delta) {
-
-                this.scrollLeft -= (delta * 30);
-
-                event.preventDefault();
-
+            $(window).bind('beforeunload', function() {
+                NProgress.done();
             });
 
-//            var hubItemsCount = $('.hub').children().length;
-//            var windowWidth = $(window).width();
-//            $('.hub-item').each(function(index)
-//            {
-//                $(this).css({'width' : windowWidth * 0.9 + 'px'});
-//            })
-//
-//            var desiredWidth = hubItemsCount * windowWidth * 0.95; // TODO reevaluate this when window size changes
-//
-//            $('.hub').css({'width' : desiredWidth + 'px'});
+            $(document).ready(function() {
+    //            var hubItemsCount = $('.hub').children().length;
+    //            var windowWidth = $(window).width();
+    //            $('.hub-item').each(function(index)
+    //            {
+    //                $(this).css({'width' : windowWidth * 0.9 + 'px'});
+    //            })
+    //
+    //            var desiredWidth = hubItemsCount * windowWidth * 0.95; // TODO reevaluate this when window size changes
+    //
+    //            $('.hub').css({'width' : desiredWidth + 'px'});
 
-            $.get("./api/all", null, function(tiles) {
+                $.get("./api/all", null, function(tiles) {
 
-                var space = $('#burrito');
-                space.children().remove();
+                    var space = $('#burrito');
+                    space.children().remove();
 
-                for (var i = 0; i < tiles.length; i++) {
-                    (function (i){
-                        var tile = tiles[i];
-                        var animation = getAnimation(tile['animation']);
+                    for (var index = 0; index < tiles.length; index++) {
+                        (function (i){
+                            var tile = tiles[i];
+                            var animation = getAnimation(tile['animation']);
 
-                        getTemplateAsync(tiles[i]['tile-template'], function(template){
-                            var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
+                            getTemplateAsync(tiles[i]['tile-template'], function(template){
+                                var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
-                            filled.css('order', i);
+                                filled.css("order", i.toString());
 
-                            if (tile['content-template'])
-                            {
-                                getTemplateAsync(tile['content-template'], function(template){
-                                    var slides = fillContentTemplates(template.clone(), tile.data);
+                                if (tile['content-template'])
+                                {
+                                    getTemplateAsync(tile['content-template'], function(template){
+                                        var slides = fillContentTemplates(template.clone(), tile.data);
 
-                                    var content = filled.find('.tile-content');
-                                    content.children().remove();
+                                        var content = filled.find('.tile-content');
+                                        content.children().remove();
 
-                                    for (var i=0; i < slides.length; i++){
-                                        content.append(slides[i]);
-                                    }
+                                        for (var i=0; i < slides.length; i++){
+                                            content.append(slides[i]);
+                                        }
 
+                                        space.append(filled);
+                                        animation(filled, i);
+                                    });
+                                }
+                                else {
                                     space.append(filled);
                                     animation(filled, i);
-                                });
-                            }
-                            else {
-                                space.append(filled);
-                                animation(filled, i);
-                            }
-                        });
-                    })(i);
-                }
+                                }
+                            });
+                        })(index);
+                    }
 
-                // tiles should be in place now
+                    // tiles should be in place now
 
-                $('.tile > .tile-link').click(function() {
-                    NProgress.start();
+                    $('.tile > .tile-link').click(function() {
+                        NProgress.start();
+                    });
                 });
-            });
 
-            $('#header-greeting').text(greeting(Math.random()));
+                $('#header-greeting').text(greeting(Math.random()));
+            });
         });
     </script>
 </head>

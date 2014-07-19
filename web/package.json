@@ -6,7 +6,9 @@
         "packageDir": "lib/jam",
         "dependencies": {
             "jquery": null,
-            "async": null
+            "async": null,
+            "jquery.cycle": null,
+            "jquery-easing": null
         }
     }
 }
