@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Client component for my homepage",
     "jam" : {
-        "packageDir": "lib",
+        "packageDir": "lib/jam",
         "dependencies": {
             "jquery": null,
             "async": null
