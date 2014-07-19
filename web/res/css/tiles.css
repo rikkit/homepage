@@ -126,6 +126,12 @@ ul.tile-content {
 .tile.github .title {
     margin-bottom: 5px;
     margin-bottom: calc(0.5em - 2px);
+    margin-left: 12px;
+    margin-left: calc(1em - 2px);
+}
+
+.tile.github .fill-template h3.template-lead {
+    margin-left: 12px;
 }
 
 .tile.github .front {

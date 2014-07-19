@@ -66,10 +66,18 @@
                             var tile = tiles[i];
                             var animation = getAnimation(tile['animation']);
 
-                            getTemplateAsync(tiles[i]['tile-template'], function(template){
+                            getTemplateAsync(tile['tile-template'], function(template){
                                 var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
                                 filled.css("order", i.toString());
+
+                                if (tile.size)
+                                {
+                                    filled.addClass(tile.size);
+                                }
+                                else {
+                                    filled.addClass('medium');
+                                }
 
                                 if (tile['content-template'])
                                 {

@@ -76,7 +76,7 @@ function metroTileAnimation(tile, offset){
         if (faces.length)
         {
             var content = faces.find('.tile-content');
-            var delayMs = offset * 1750;
+            var delayMs = offset * 40;
 
             faces.cycle({
                 timeout: 0,
@@ -98,7 +98,7 @@ function metroTileAnimation(tile, offset){
 
             setTimeout(function(){
                 faces.cycle('next');
-            }, delayMs);
+            }, 5000 + delayMs);
         }
     }
 }

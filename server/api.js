@@ -77,6 +77,7 @@ function buildTopArtistsTile(post) {
             'title': 'Last.fm',
             'style': 'lastfm',
             'href': 'http://last.fm/user/tehrikkit',
+            'size': 'large',
             'data': artists
         };
 
@@ -95,6 +96,7 @@ function buildGithubProjectsTile(post) {
             'title': 'Github',
             'style': 'github',
             'href': 'http://github.com/rikkit',
+            'size': 'wide',
             'data': repos
         };
 
@@ -106,11 +108,11 @@ function buildGithubProjectsTile(post) {
 
 function buildBlogTile(post) {
     var tile = {
-        'tile-template': 'ms-01',
+        'tile-template': 'tt-02',
         'content-template': null,
-        'animation': 'ease-01',
         'title': 'Blog',
         'style': 'blog',
+        'size': 'medium',
         'href': 'http://rikk.it/blog'
     };
 
@@ -124,6 +126,7 @@ function buildMapTile(post) {
         'animation': 'ease-01',
         'title': 'Hometown',
         'style': 'map',
+        'size': 'wide',
         'href': 'http://her.is/uLjXEx',
         'data': []
     };
