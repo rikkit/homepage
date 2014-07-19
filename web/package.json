@@ -1,0 +1,12 @@
+{
+    "name": "homepage-client",
+    "version": "0.0.1",
+    "description": "Client component for my homepage",
+    "jam" : {
+        "packageDir": "lib",
+        "dependencies": {
+            "jquery": null,
+            "async": null
+        }
+    }
+}

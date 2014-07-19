@@ -1,2 +1,6 @@
 /.idea
 /server/node_modules
+/web/lib/async
+/web/lib/jquery
+/web/lib/require.config.js
+/web/lib/require.js

@@ -1,12 +1,3 @@
-[submodule "web/lib/gh3js"]
-	path = web/lib/gh3js
-	url = git@github.com:k33g/gh3.git
-[submodule "web/lib/lastfmjs"]
-	path = web/lib/lastfmjs
-	url = git@github.com:fxb/javascript-last.fm-api.git
-[submodule "web/lib/includejs"]
-	path = web/lib/includejs
-	url = git@github.com:CapMousse/include.js.git
 [submodule "web/lib/jquery-mousewheel"]
 	path = web/lib/jquery-mousewheel
 	url = git@github.com:brandonaaron/jquery-mousewheel.git
