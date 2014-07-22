@@ -35,7 +35,7 @@
             return greetings[index];
         }
 
-        require(['nprogress', 'jquery', 'jquery.cycle', 'jquery-easing'], function (NProgress, jQuery) {
+        require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQuery, NProgress) {
 
             $(window).bind('beforeunload', function() {
                 NProgress.done();

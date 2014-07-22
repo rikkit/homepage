@@ -19,6 +19,7 @@
   "license": "MIT",
   "jam": {
     "packageDir": "web/lib/jam",
+    "baseUrl": "web",
     "dependencies": {
       "jquery": null,
       "async": null,
