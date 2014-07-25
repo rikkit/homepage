@@ -33,14 +33,22 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
     }
 
     var burritoSize;
+    var animating;
     function rewrapBurrito() {
-        const medTileHeight = 134;
+        if (animating) return;
+
+        const medTileHeight = 140;
         var testHeight = 0.60 * window.outerHeight;
         var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
         newHeight += 70; // account for padding
 
         if (newHeight > burritoSize) {
-            $('#burrito').css('height', newHeight);
+            animating = true;
+            $('#burrito').animate({
+                'height': newHeight + 'px'
+            }, 1000, 'easeOutQuint', function() {
+                animating = false;
+            });
         }
     }
     $(window).resize(rewrapBurrito);
