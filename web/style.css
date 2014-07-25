@@ -51,17 +51,16 @@ header.prime p:first-letter {
 }
 
 #burrito {
-    min-height: 270px;
-    height: 60%;
+    min-height: 338px;
+    margin: 0;
+    padding: 3em 3em 2em 3em;
     width: 100%;
-    padding-left: 2em;
-    margin-top: 2em;
-    position: relative;
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
+    background: #222;
 }
 
 #burrito .tile {
@@ -69,20 +68,18 @@ header.prime p:first-letter {
     margin-bottom: 14px;
 }
 
+#cholula {
+    padding-right: 270px;
+}
+
 .hub {
-    overflow: visible;
     position: relative;
-    display: flex;
-    height: 100%;
     min-height: 400px;
 }
 
 .hub-item {
-    float: left;
-    width: 90%;
-    min-width: 1000px;
-    margin-right: 5%;
     padding-left: 2em;
+    max-height: 100%;
 }
 
 .hub-item.prime header.prime {

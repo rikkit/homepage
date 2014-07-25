@@ -22,7 +22,6 @@
     "baseUrl": "web",
     "dependencies": {
       "jquery": null,
-      "async": null,
       "jquery.cycle": null,
       "jquery-easing": null,
       "nprogress": null
