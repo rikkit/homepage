@@ -1,5 +1,14 @@
 @import "res/css/tiles.css";
 
+/* LESS variables */
+@paper-colour: #fff;
+@paper-font-subtle: #444;
+@paper-font-normal: #111;
+//@accent-highlight: #55BCFF;
+@accent-strong: #1E77D6;
+@accent-mid: #0A2645;
+@accent-mute: #080100;
+
 * {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -17,12 +26,6 @@ body {
     margin: 0;
     padding: 0;
     overflow: visible;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: default;
 }
 
 .header-greeting {
@@ -48,7 +51,7 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
-    background: #222;
+    background: @accent-mute;
 }
 
 #burrito .tile {
@@ -69,7 +72,8 @@ body {
     padding-left: 3em;
     padding-right: 3em;
     max-height: 100%;
-    background-color: #eee;
+    background-color: @paper-colour;
+    color: @paper-font-normal;
 }
 
 .hub .hub-item:first-of-type {
@@ -84,7 +88,7 @@ body {
 
 .hub-item > header .tagline {
     text-transform: uppercase;
-    color: #333;
+    color: @paper-font-subtle;
 }
 
 .hub-item > header h1 {
