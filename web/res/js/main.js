@@ -38,7 +38,7 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         if (animating) return;
 
         const medTileHeight = 140;
-        var testHeight = 0.60 * window.outerHeight;
+        var testHeight = 0.65 * window.outerHeight;
         var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
         newHeight += 42; // account for padding
 
