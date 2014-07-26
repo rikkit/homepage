@@ -1,4 +1,4 @@
-@import "res/css/tiles.css";
+@import "res/css/tiles";
 
 /* LESS variables */
 @paper-colour: #fff;
@@ -28,19 +28,6 @@ body {
     overflow: visible;
 }
 
-.header-greeting {
-    font-size: 3em;
-    line-height: 1em;
-    margin-bottom: 0.25em !important;
-    font-weight: lighter;
-}
-
-.header-lead {
-    margin-bottom: 1em;
-    margin-left: 1.5em;
-    font-size: 2em;
-}
-
 #burrito {
     min-height: 338px;
     margin: 0;
@@ -52,52 +39,48 @@ body {
     align-items: flex-start;
     align-content: flex-start;
     background: @accent-mute;
-}
 
-#burrito .tile {
-    margin-right: 14px;
-    margin-bottom: 14px;
-}
-
-#cholula {
-    padding-right: 270px;
+    .tile {
+        margin-right: 14px;
+        margin-bottom: 14px;
+    }
 }
 
 .hub {
     position: relative;
     min-height: 400px;
-}
 
-.hub-item {
-    padding-left: 3em;
-    padding-right: 3em;
-    max-height: 100%;
-    background-color: @paper-colour;
-    color: @paper-font-normal;
-}
+    .hub-item {
+        padding-left: 3em;
+        padding-right: 3em;
+        max-height: 100%;
+        background-color: @paper-colour;
+        color: @paper-font-normal;
 
-.hub .hub-item:first-of-type {
-    background: none;
-}
+        header {
+            margin-top: 2em;
+            margin-bottom: 2em;
+            margin-left: 1em;
 
-.hub-item > header {
-    margin-top: 2em;
-    margin-bottom: 2em;
-    margin-left: 1em;
-}
+            .tagline {
+                text-transform: uppercase;
+                color: @paper-font-subtle;
+            }
 
-.hub-item > header .tagline {
-    text-transform: uppercase;
-    color: @paper-font-subtle;
-}
+            h1 {
+                font-weight: lighter;
+                font-size: 3em;
+                margin-top: 0.33em;
+                margin-bottom: 0;
+            }
 
-.hub-item > header h1 {
-    font-weight: lighter;
-    font-size: 3em;
-    margin-top: 0.33em;
-    margin-bottom: 0;
-}
+            h1:first-letter {
+                margin-left: -0.1em;
+            }
+        }
+    }
 
-.hub-item > header h1:first-letter {
-    margin-left: -0.1em;
+    .hub-item:first-of-type {
+        background: none;
+    }
 }
