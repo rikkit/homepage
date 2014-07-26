@@ -1,5 +1,4 @@
 /.idea
 /node_modules
 /web/lib/jam
-/web/style.css
-/web/res/css/tiles.css
+/web/res/css/*.css
