@@ -40,7 +40,7 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         const medTileHeight = 140;
         var testHeight = 0.60 * window.outerHeight;
         var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
-        newHeight += 70; // account for padding
+        newHeight += 42; // account for padding
 
         if (newHeight > burritoSize) {
             animating = true;

@@ -25,18 +25,6 @@ body {
     cursor: default;
 }
 
-header.prime {
-    padding-top: 4em;
-}
-
-header.prime p {
-    margin: 0;
-}
-
-header.prime p:first-letter {
-    margin-left: -0.1em;
-}
-
 .header-greeting {
     font-size: 3em;
     line-height: 1em;
@@ -53,7 +41,7 @@ header.prime p:first-letter {
 #burrito {
     min-height: 338px;
     margin: 0;
-    padding: 3em 3em 2em 3em;
+    padding: 3em 3em 1em 3em;
     width: 100%;
     display: flex;
     flex-flow: column wrap;
@@ -78,18 +66,34 @@ header.prime p:first-letter {
 }
 
 .hub-item {
-    padding-left: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
     max-height: 100%;
-}
-
-.hub-item.prime header.prime {
-    flex-grow: 1;
-}
-
-.hub .hub-item:nth-of-type(2) {
-    background: #fdd700;
+    background-color: #eee;
 }
 
 .hub .hub-item:first-of-type {
     background: none;
+}
+
+.hub-item > header {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: 1em;
+}
+
+.hub-item > header .tagline {
+    text-transform: uppercase;
+    color: #333;
+}
+
+.hub-item > header h1 {
+    font-weight: lighter;
+    font-size: 3em;
+    margin-top: 0.33em;
+    margin-bottom: 0;
+}
+
+.hub-item > header h1:first-letter {
+    margin-left: -0.1em;
 }
