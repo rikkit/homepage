@@ -25,7 +25,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    overflow: visible;
+
+    background: @accent-mute;
 }
 
 #burrito {
@@ -38,7 +39,6 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
-    background: @accent-mute;
 
     .tile {
         margin-right: 14px;
@@ -48,17 +48,18 @@ body {
 
 .hub {
     position: relative;
-    min-height: 400px;
+    background-color: @paper-colour;
 
     .hub-item {
+        padding-top: 2em;
+        padding-bottom: 2em;
         padding-left: 3em;
         padding-right: 3em;
-        max-height: 100%;
-        background-color: @paper-colour;
+        min-height: 600px;
         color: @paper-font-normal;
 
         header {
-            margin-top: 2em;
+            margin-top: 0;
             margin-bottom: 2em;
             margin-left: 1em;
 
@@ -78,9 +79,5 @@ body {
                 margin-left: -0.1em;
             }
         }
-    }
-
-    .hub-item:first-of-type {
-        background: none;
     }
 }
