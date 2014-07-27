@@ -4,7 +4,7 @@
 @paper-colour: #fff;
 @paper-font-subtle: #444;
 @paper-font-normal: #111;
-//@accent-highlight: #55BCFF;
+@accent-highlight: #55BCFF;
 @accent-strong: #1E77D6;
 @accent-mid: #0A2645;
 @accent-mute: #080100;
@@ -79,5 +79,20 @@ body {
                 margin-left: -0.1em;
             }
         }
+    }
+}
+
+#nprogress {
+    .bar {
+        background: @accent-highlight;
+    }
+
+    .spinner-icon {
+        border-top-color: @accent-highlight;
+        border-left-color: @accent-highlight;
+    }
+
+    .peg {
+        box-shadow: 0 0 10px @accent-highlight, 0 0 5px @accent-highlight;
     }
 }

@@ -28,10 +28,6 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         NProgress.done();
     });
 
-    function startNProgress() {
-        NProgress.start();
-    }
-
     var burritoSize;
     var animating;
     function rewrapBurrito() {
@@ -40,7 +36,7 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         const medTileHeight = 140;
         var testHeight = 0.65 * window.outerHeight;
         var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
-        newHeight += 42; // account for padding
+        newHeight += 47; // account for padding
 
         if (newHeight > burritoSize) {
             animating = true;
@@ -53,7 +49,23 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
     }
     $(window).resize(rewrapBurrito);
 
+    function countdownProgress(secs) {
+        NProgress.start();
+        var counter = 0;
+        var interval = 750;
+
+        setInterval(function() {
+            counter += interval;
+
+            if (counter < secs)
+                NProgress.set(counter / secs);
+            else NProgress.done();
+        }, interval);
+    }
+
     $(document).ready(function() {
+        countdownProgress(3500);
+
         burritoSize = $('#burrito').height();
         rewrapBurrito();
 
@@ -73,7 +85,7 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
                         var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
                         filled.css("order", i.toString());
-                        filled.find('.tile-link').click(startNProgress);
+                        filled.find('.tile-link').click(NProgress.start);
 
                         if (tile.size)
                         {

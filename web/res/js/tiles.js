@@ -98,7 +98,7 @@ function metroTileAnimation(tile, offset){
 
             setTimeout(function(){
                 faces.cycle('next');
-            }, 6000 + delayMs);
+            }, 4000 + delayMs);
         }
     }
 }
