@@ -1,10 +1,17 @@
-var async = require('async');
+var async = require('async'),
+    fs = require('fs');
 
 var LastFmNode = require('lastfm').LastFmNode;
 var github = require('octonode');
 
 function makeErr(code, message, label) {
     return {'code':code,'error':message, 'label': label};
+}
+
+function cacheObject(name, object, post) {
+    fs.writeFile(name + '.json', JSON.stringify(object), function (err) {
+        post(err);
+    });
 }
 
 function refreshTopArtists(yep, nope){
@@ -143,20 +150,49 @@ function buildMapTile(post) {
     post(null, tile);
 }
 
+var cache;
 exports.all = function(req, res) {
-    async.parallel([
-        buildTopArtistsTile,
-        buildGithubProjectsTile,
-        buildMapTile,
-        buildBlogTile
-    ], function(err, results) {
-        if (err) {
-            console.log(err);
-            res.send(err.code);
-        }
-        else
-            res.send(results);
-    });
+    const cacheExpiry = 4*24*3600000; // four days
+    var d = new Date();
+    d.setTime(d.getTime()-(cacheExpiry));
+
+    if (!cache || new Date(cache.date).getTime() - d.getTime() > cacheExpiry)
+    {
+        fs.readFile('cache.json', function(err, json){
+            if (json) {
+                cache = JSON.parse(json);
+                res.send(cache.tiles);
+            }
+            else {
+                async.parallel([
+                    buildTopArtistsTile,
+                    buildGithubProjectsTile,
+                    buildMapTile,
+                    buildBlogTile
+                ], function(err, results) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err.code);
+                    }
+                    else {
+                        var toCache = {
+                            date: new Date(),
+                            tiles: results
+                        };
+
+                        cache = toCache;
+
+                        cacheObject('cache', toCache, function(err){
+                            res.send(cache.tiles);
+                        })
+                    }
+                });
+            }
+        })
+    }
+    else {
+        res.send(cache.tiles);
+    }
 };
 
 
