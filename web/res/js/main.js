@@ -1,3 +1,7 @@
+define('jquery', [], function() {
+    return jQuery;
+});
+
 function greeting(random){
     var dt = new Date();
     var hours = dt.getHours();
