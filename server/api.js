@@ -5,7 +5,7 @@ var LastFmNode = require('lastfm').LastFmNode;
 var github = require('octonode');
 
 function makeErr(code, message, label) {
-    return {'code':code,'error':message, 'label': label};
+    return {'code':code,'error':message, 'label': label.toString()};
 }
 
 function cacheObject(name, object, post) {
@@ -45,7 +45,41 @@ function refreshTopArtists(yep, nope){
             data.push(artist);
         }
 
-        // TODO cache data var
+        yep(data);
+    });
+}
+
+function refreshTopAlbums(yep, nope){
+    var lastfm = new LastFmNode({
+        api_key: '4823457a7472a620207cf21ad7663f57',    // sign-up for a key at http://www.last.fm/api
+        secret: '7f26392d49ddd3251532c75ab4e0dc7f',
+        useragent: 'homepage/v1 (node)' // optional. defaults to lastfm-node.
+    });
+
+    var lastRequest = lastfm.request('user.getTopAlbums', {
+        user: 'tehrikkit',
+        limit: 7,
+        period: '7day'
+    });
+
+    lastRequest.on('error', function(error){
+        nope(error);
+    });
+
+    lastRequest.on('success', function(json){
+        var data = [];
+
+        for (var i = 0; i < json.topalbums.album.length; i++) {
+            var lastAlbum = json.topalbums.album[i];
+
+            var a = {
+                'name': lastAlbum.name,
+                'image': lastAlbum.image[3]['#text'],
+                'overlay': true
+            };
+
+            data.push(a);
+        }
 
         yep(data);
     });
@@ -86,6 +120,25 @@ function buildTopArtistsTile(post) {
             'href': 'http://last.fm/user/tehrikkit',
             'size': 'large',
             'data': artists
+        };
+
+        post(null, tile);
+    }, function(err){
+        post(makeErr(500, err, arguments.callee));
+    });
+}
+
+function buildTopAlbumsTile(post) {
+    refreshTopAlbums(function(albums){
+        var tile = {
+            'tile-template': 'tt-01',
+            'content-template': 'ct-fill',
+            'animation': 'ease-01',
+            'title': 'Last.fm',
+            'style': 'lastfm albums',
+            'href': 'http://last.fm/user/tehrikkit',
+            'size': 'large',
+            'data': albums
         };
 
         post(null, tile);
@@ -165,7 +218,7 @@ exports.all = function(req, res) {
             }
             else {
                 async.parallel([
-                    buildTopArtistsTile,
+                    buildTopAlbumsTile,
                     buildGithubProjectsTile,
                     buildMapTile,
                     buildBlogTile
