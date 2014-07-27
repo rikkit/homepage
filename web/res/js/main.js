@@ -23,7 +23,7 @@ function greeting(random){
     return greetings[index];
 }
 
-require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQuery, NProgress) {
+require(['jquery', 'nprogress', './res/js/game.js', 'jquery.cycle', 'jquery-easing'], function (jQuery, NProgress, game) {
     $(window).bind('beforeunload', function() {
         NProgress.done();
     });
@@ -64,6 +64,10 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
     }
 
     $(document).ready(function() {
+
+        var canvas = document.getElementById('game');
+        game.start(canvas);
+
         countdownProgress(3500);
 
         burritoSize = $('#burrito').height();
