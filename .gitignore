@@ -1,4 +1,7 @@
+# IDEs
 /.idea
+*.komodoproject
+
 /server/node_modules
 /web/node_modules
 /web/lib/jam
