@@ -2,8 +2,9 @@
 /.idea
 *.komodoproject
 
-/server/node_modules
-/web/node_modules
-/web/lib/jam
-/web/res/css/*.css
+*.log
+
+node_modules/
+/web-old/lib/jam
+/web-old/res/css/*.css
 cache.json

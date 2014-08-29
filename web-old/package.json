@@ -1,0 +1,17 @@
+{
+  "name": "homepage-web",
+  "version": "0.0.1",
+  "description": "Client for my homepage",
+  "author": "Rikki Tooley",
+  "license": "MIT",
+  "jam": {
+    "packageDir": "lib/jam",
+    "baseUrl": "./",
+    "dependencies": {
+      "jquery": null,
+      "jquery.cycle": null,
+      "jquery-easing": null,
+      "nprogress": null
+    }
+  }
+}
