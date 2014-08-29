@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var api = require('./api.js');
 var path = require('path');
 
@@ -7,6 +8,7 @@ var path = path.normalize(__dirname + homepath);
 
 var app = express();
 
+app.use(cors());
 app.use(express.static(path));
 console.log(path);
 
