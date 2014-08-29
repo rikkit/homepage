@@ -1,5 +1,6 @@
 /.idea
-/node_modules
+/server/node_modules
+/web/node_modules
 /web/lib/jam
 /web/res/css/*.css
 cache.json
