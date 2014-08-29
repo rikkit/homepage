@@ -6,9 +6,10 @@ Currently it's architected as a client-server kinda deal: **Node.JS** on the bac
 
 # Licence
 
-Feel free to use whatever code in this project you find useful. Images and other non-code assets may be licensed differently: please ask if you want to use them.
+Feel free to use whatever code in this project you find useful, no licence or attribution needed. Images and other non-code assets may be licensed differently: please ask if you want to use them.
 
 # Contact
 
 Twitter: @rikkilt
+
 Email: rikki@inflatablefriends.co.uk
