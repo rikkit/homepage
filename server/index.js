@@ -3,7 +3,7 @@ var cors = require('cors');
 var api = require('./api.js');
 var path = require('path');
 
-var homepath = '/../web';
+var homepath = '/../web/dist';
 var path = path.normalize(__dirname + homepath);
 
 var app = express();
