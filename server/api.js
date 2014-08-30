@@ -228,9 +228,16 @@ exports.all = function(req, res) {
                         res.send(err.code);
                     }
                     else {
+                        var i = 0;
+                        results.forEach(function(result){
+                              result.id = i++;
+                        });
+                        
                         var toCache = {
                             date: new Date(),
-                            tiles: results
+                            tiles: {
+                                'tiles' : results
+                            }
                         };
 
                         cache = toCache;

@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.static(path));
 console.log(path);
 
-app.get('/api/all', api.all);
+app.get('/tiles', api.all);
 
 var port = process.argv[2];
 console.log('listening on port ' + port)
