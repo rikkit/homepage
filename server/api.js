@@ -1,8 +1,9 @@
 var async = require('async'),
-    fs = require('fs');
+    fs = require('fs'),
+    shortId = require('shortid');
 
-var LastFmNode = require('lastfm').LastFmNode;
-var github = require('octonode');
+var LastFmNode = require('lastfm').LastFmNode,
+    github = require('octonode');
 
 function makeErr(code, message, label) {
     return {'code':code,'error':message, 'label': label.toString()};
@@ -37,9 +38,10 @@ function refreshTopArtists(yep, nope){
             var lastArtist = json.topartists.artist[i];
 
             var artist = {
-                'name': lastArtist.name,
-                'image': lastArtist.image[3]['#text'],
-                'overlay': true
+                id: shortId.generate(),
+                name: lastArtist.name,
+                image: lastArtist.image[3]['#text'],
+                overlay: true
             };
 
             data.push(artist);
@@ -73,9 +75,10 @@ function refreshTopAlbums(yep, nope){
             var lastAlbum = json.topalbums.album[i];
 
             var a = {
-                'name': lastAlbum.name,
-                'image': lastAlbum.image[3]['#text'],
-                'overlay': true
+                id: shortId.generate(),
+                name: lastAlbum.name,
+                image: lastAlbum.image[3]['#text'],
+                overlay: true
             };
 
             data.push(a);
@@ -100,7 +103,13 @@ function refreshGithubProjects(yep, nope) {
         else {
             var data = [];
             for (var i=0; i<repos.length; i++){
-                data.push({'name': repos[i].name, 'overlay': false});
+                data.push(
+                    {
+                        id: shortId.generate(),
+                        name: repos[i].name,
+                        overlay: false
+                    }
+                );
             }
 
             // TODO cache data var
@@ -111,7 +120,8 @@ function refreshGithubProjects(yep, nope) {
 
 function buildTopArtistsTile(post) {
     refreshTopArtists(function(artists){
-        var tile = {
+        var tile = {           
+            id: shortId.generate(),
             'tile-template': 'tt-01',
             'content-template': 'ct-fill',
             'animation': 'ease-01',
@@ -119,7 +129,7 @@ function buildTopArtistsTile(post) {
             'style': 'lastfm',
             'href': 'http://last.fm/user/tehrikkit',
             'size': 'large',
-            'data': artists
+            'tile-data': artists
         };
 
         post(null, tile);
@@ -131,6 +141,7 @@ function buildTopArtistsTile(post) {
 function buildTopAlbumsTile(post) {
     refreshTopAlbums(function(albums){
         var tile = {
+            id: shortId.generate(),
             'tile-template': 'tt-01',
             'content-template': 'ct-fill',
             'animation': 'ease-01',
@@ -138,7 +149,7 @@ function buildTopAlbumsTile(post) {
             'style': 'lastfm albums',
             'href': 'http://last.fm/user/tehrikkit',
             'size': 'large',
-            'data': albums
+            'tile-data': albums
         };
 
         post(null, tile);
@@ -150,6 +161,7 @@ function buildTopAlbumsTile(post) {
 function buildGithubProjectsTile(post) {
     refreshGithubProjects(function(repos) {
         var tile = {
+            id: shortId.generate(),
             'tile-template': 'tt-01',
             'content-template': 'ct-fill',
             'animation': 'ease-01',
@@ -157,7 +169,7 @@ function buildGithubProjectsTile(post) {
             'style': 'github',
             'href': 'http://github.com/rikkit',
             'size': 'wide',
-            'data': repos
+            'tile-data': repos
         };
 
         post(null, tile);
@@ -168,6 +180,7 @@ function buildGithubProjectsTile(post) {
 
 function buildBlogTile(post) {
     var tile = {
+        id: shortId.generate(),
         'tile-template': 'tt-02',
         'content-template': null,
         'title': 'Blog',
@@ -181,6 +194,7 @@ function buildBlogTile(post) {
 
 function buildMapTile(post) {
     var tile = {
+        id: shortId.generate(),
         'tile-template': 'tt-01',
         'content-template': 'ct-fill',
         'animation': 'ease-01',
@@ -194,9 +208,10 @@ function buildMapTile(post) {
     for (var i=1; i<=9; i++)
     {
         tile.data.push({
-            'name': 'Bath, UK',
-            'image':  '/res/img/bath_' + i + '.jpg',
-            'overlay': true
+            id: shortId.generate(),
+            name: 'Bath, UK',
+            image:  '/res/img/bath_' + i + '.jpg',
+            overlay: true
         });
     }
 
@@ -227,12 +242,7 @@ exports.all = function(req, res) {
                         console.log(err);
                         res.send(err.code);
                     }
-                    else {
-                        var i = 0;
-                        results.forEach(function(result){
-                              result.id = i++;
-                        });
-                        
+                    else {                        
                         var toCache = {
                             date: new Date(),
                             tiles: {
