@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 options: {
                     patterns: [{
                         match: 'API_ROOT',
-                        replacement: 'var API_ROOT = "api.rikk.it";'
+                        replacement: 'var API_ROOT = "http://api.rikk.it";'
                     }]
                 },
                 files: [{
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 options: {
                     patterns: [{
                         match: 'API_ROOT',
-                        replacement: 'var API_ROOT = "localhost:4420";'
+                        replacement: 'var API_ROOT = "http://localhost:4420";'
                     }]
                 },
                 files: [{
