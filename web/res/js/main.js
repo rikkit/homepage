@@ -2,6 +2,8 @@ define('jquery', [], function() {
     return jQuery;
 });
 
+@@API_ROOT
+
 function greeting(random){
     var dt = new Date();
     var hours = dt.getHours();
@@ -75,7 +77,7 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
 
         $('body').css('display', 'block');
 
-        $.get("./api/all", null, function(tiles) {
+        $.get(API_ROOT + "/all", null, function(tiles) {
 
             var space = $('#burrito');
             space.children().remove();
