@@ -7,6 +7,7 @@
 /web/lib/jam
 /web/res/css/*.css
 cache.json
+/web/built/
 
 # Ignore config
 /server/config.json

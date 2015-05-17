@@ -122,20 +122,16 @@ var loadedTemplates = [];
 function loadTemplateAsync(id, post) {
     var filename = './res/html/' + id + '.html';
 
-    $.get(filename, null, function(html) {
+    $.get(filename, function(html) {
         var template = $($.parseHTML(html));
 
-        loadedTemplates.push({id: id, template: template});
+        loadedTemplates.push({ id: id, template: template });
 
         post(template);
-    })
+    });
 }
 
 function getTemplateAsync(id, post) {
-    if (!id) {
-        id = '01';
-    }
-
     var matchId = function(x) {
         return x.id == id;
     }

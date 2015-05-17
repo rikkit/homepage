@@ -2,7 +2,7 @@ define('jquery', [], function() {
     return jQuery;
 });
 
-var API_ROOT = "localhost:4420";
+var API_ROOT = "http://localhost:4420";
 
 function greeting(random){
     var dt = new Date();
@@ -77,10 +77,11 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
 
         $('body').css('display', 'block');
 
-        $.get(API_ROOT + "/all", function(tiles) {
+        $.get(API_ROOT + "/all", function(data) {
             var space = $('#burrito');
             space.children().remove();
 
+            var tiles = data.tiles;
             for (var index = 0; index < tiles.length; index++) {
                 (function (i){
                     var tile = tiles[i];
