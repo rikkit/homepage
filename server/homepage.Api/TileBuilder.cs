@@ -4,9 +4,9 @@ namespace homepage.Api
 {
     public abstract class TileBuilder
     {
-        private dynamic _config;
+        protected ApiConfigManager _config;
 
-        protected TileBuilder(object config)
+        protected TileBuilder(ApiConfigManager config)
         {
             _config = config;
         }

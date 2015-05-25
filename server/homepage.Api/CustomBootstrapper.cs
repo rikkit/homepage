@@ -2,14 +2,17 @@ using System;
 using System.IO;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Bootstrappers.Ninject;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Ninject;
 
 namespace homepage.Api
 {
-    public class CustomBootstrapper : DefaultNancyBootstrapper
+    public class CustomBootstrapper : NinjectNancyBootstrapper
     {
-        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        protected override void ApplicationStartup(IKernel container, IPipelines pipelines)
         {
             const string configFile = "config.json";
             var configPath = Path.GetFullPath(configFile);
@@ -19,12 +22,17 @@ namespace homepage.Api
             }
 
             var configText = File.ReadAllText(configPath);
-            var config = JsonConvert.DeserializeObject(configText);
+            var json = JObject.Parse(configText);
+            var config = new ApiConfigManager(json);
 
-            container.Register<TileBuilderFactory>(new TileBuilderFactory(config));
+            container.Bind<ApiConfigManager>().ToConstant(config);
+            container.Bind<TileBuilderFactory>().ToSelf();
+
+            var apiModule = container.Get<ApiModule>();
+            container.Bind<ApiModule>().ToConstant(apiModule);
         }
 
-        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+        protected override void RequestStartup(IKernel container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
 

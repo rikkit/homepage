@@ -5,9 +5,9 @@ namespace homepage.Api
 {
     public class TileBuilderFactory
     {
-        private readonly object _config;
+        private readonly ApiConfigManager _config;
 
-        public TileBuilderFactory(object config)
+        public TileBuilderFactory(ApiConfigManager config)
         {
             _config = config;
         }
