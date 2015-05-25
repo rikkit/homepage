@@ -6,6 +6,7 @@ using Nancy.Bootstrappers.Ninject;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Ninject;
 
 namespace homepage.Api
@@ -24,6 +25,8 @@ namespace homepage.Api
             var configText = File.ReadAllText(configPath);
             var json = JObject.Parse(configText);
             var config = new ApiConfigManager(json);
+
+            container.Bind<JsonSerializer>().To<CustomJsonSerializer>();
 
             container.Bind<ApiConfigManager>().ToConstant(config);
             container.Bind<TileBuilderFactory>().ToSelf();

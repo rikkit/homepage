@@ -17,8 +17,9 @@ namespace homepage.Api
             var httpClient = new HttpClient();
 
             return new List<TileBuilder>
-            { 
-                new TopAlbumsTileBuilder(_config, httpClient), 
+            {
+                new TopAlbumsTileBuilder(_config, httpClient),
+                new GithubTileBuilder(_config)
             };
         }
     }

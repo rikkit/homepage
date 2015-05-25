@@ -6,6 +6,9 @@ namespace homepage.Api
 {
     public class Tile
     {
+        [JsonProperty("builtUtc")]
+        public DateTimeOffset BuiltUtc { get; set; }
+
         [JsonProperty("tile-template")]
         public string Template { get; set; }
 

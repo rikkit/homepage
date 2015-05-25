@@ -36,24 +36,24 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
 
     var burritoSize;
     var animating;
-    function rewrapBurrito() {
-        if (animating) return;
+    //function rewrapBurrito() {
+    //    if (animating) return;
 
-        var medTileHeight = 140;
-        var testHeight = 0.65 * window.outerHeight;
-        var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
-        newHeight += 47; // account for padding
+    //    var medTileHeight = 140;
+    //    var testHeight = 0.65 * window.outerHeight;
+    //    var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
+    //    newHeight += 47; // account for padding
 
-        if (newHeight > burritoSize) {
-            animating = true;
-            $("#burrito").animate({
-                'height': newHeight + "px"
-            }, 1000, "easeOutQuint", function() {
-                animating = false;
-            });
-        }
-    }
-    $(window).resize(rewrapBurrito);
+    //    if (newHeight > burritoSize) {
+    //        animating = true;
+    //        $("#burrito").animate({
+    //            'height': newHeight + "px"
+    //        }, 1000, "easeOutQuint", function() {
+    //            animating = false;
+    //        });
+    //    }
+    //}
+    //$(window).resize(rewrapBurrito);
 
     function countdownProgress(secs) {
         NProgress.start();
@@ -73,9 +73,38 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         countdownProgress(3500);
 
         burritoSize = $('#burrito').height();
-        rewrapBurrito();
+        //rewrapBurrito();
 
         $('body').css('display', 'block');
+
+        function buildTileContent(template) {
+            var slides = fillContentTemplates(template.clone(), tile.data);
+
+            var content = shellTile.find('.tile-content');
+            content.children().remove();
+
+            for (var i = 0; i < slides.length; i++) {
+                content.append(slides[i]);
+            }
+
+            space.append(shellTile);
+            animation(shellTile, offset);
+        }
+
+        function buildTemplate(template) {
+            var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
+
+            filled.css("order", i.toString());
+            filled.find('.tile-link').click(NProgress.start);
+
+            if (tile.size) {
+                filled.addClass(tile.size);
+            } else {
+                filled.addClass('medium');
+            }
+
+            getTemplateAsync(tile['content-template'], buildTileContent(filled));
+        }
 
         $.get(API_ROOT + "/all", function(data) {
             var space = $('#burrito');
@@ -84,44 +113,10 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
             var tiles = data.tiles;
             for (var index = 0; index < tiles.length; index++) {
                 (function (i){
-                    var tile = tiles[i];
-                    var animation = getAnimation(tile['animation']);
+                    var tileData = tiles[i];
+                    var animFunc = getAnimation(tileData['animation']);
 
-                    getTemplateAsync(tile['tile-template'], function(template){
-                        var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
-
-                        filled.css("order", i.toString());
-                        filled.find('.tile-link').click(NProgress.start);
-
-                        if (tile.size)
-                        {
-                            filled.addClass(tile.size);
-                        }
-                        else {
-                            filled.addClass('medium');
-                        }
-
-                        if (tile['content-template'])
-                        {
-                            getTemplateAsync(tile['content-template'], function(template){
-                                var slides = fillContentTemplates(template.clone(), tile.data);
-
-                                var content = filled.find('.tile-content');
-                                content.children().remove();
-
-                                for (var i=0; i < slides.length; i++){
-                                    content.append(slides[i]);
-                                }
-
-                                space.append(filled);
-                                animation(filled, i);
-                            });
-                        }
-                        else {
-                            space.append(filled);
-                            animation(filled, i);
-                        }
-                    });
+                        getTemplateAsync(tile['tile-template'], );
                 })(index);
             }
         }).fail(function () {

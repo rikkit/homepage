@@ -19,7 +19,7 @@ namespace homepage.Api
 
         private async Task<object> GetAll()
         {
-            var tasks = _tileBuilders.Select(builder => builder.Build());
+            var tasks = _tileBuilders.Select(builder => builder.GetTileAsync());
             var tiles = await Task.WhenAll(tasks);
 
             var response = new

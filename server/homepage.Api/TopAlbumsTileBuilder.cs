@@ -16,7 +16,7 @@ namespace homepage.Api
             _lastfmClient = new LastfmClient(config.LastfmApiKey, config.LastfmSecret, httpClient);
         }
 
-        public async override Task<Tile> Build()
+        protected async override Task<Tile> BuildAsync()
         {
             var albums = await _lastfmClient.User.GetTopAlbums(_config.LastfmUsername, _config.LastfmAlbumTimeSpan, 0, _config.LastfmAlbumCount);
 

@@ -70,7 +70,7 @@ function fillContentTemplates(original, data){
     return filled;
 }
 
-function metroTileAnimation(tile, offset){
+function metroTileAnimation(tile, offset, name){
     if (tile.length){
         var faces = tile.find('> .faces');
         if (faces.length)
@@ -96,7 +96,8 @@ function metroTileAnimation(tile, offset){
                 });
             }
 
-            setTimeout(function(){
+            setTimeout(function () {
+                console.log("Flipped tile " + name);
                 faces.cycle('next');
             }, 4000 + delayMs);
         }
@@ -136,12 +137,13 @@ function getTemplateAsync(id, post) {
         return x.id == id;
     }
 
-    if (trueForAny(loadedTemplates, matchId)) {
-        var to = firstInList(loadedTemplates, matchId);
-        if (to) {
-            post(to.template);
-        }
-    }
+    // TODO this was causing duplicate templates
+    //if (trueForAny(loadedTemplates, matchId)) {
+    //    var to = firstInList(loadedTemplates, matchId);
+    //    if (to) {
+    //        post(to.template);
+    //    }
+    //}
 
     loadTemplateAsync(id, post);
 }

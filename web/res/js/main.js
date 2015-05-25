@@ -2,7 +2,7 @@ define('jquery', [], function() {
     return jQuery;
 });
 
-var API_ROOT = "http://localhost:4420";
+@@API_ROOT
 
 function greeting(random){
     var dt = new Date();
@@ -25,7 +25,6 @@ function greeting(random){
     }
     var index = parseInt(random * greetings.length);
 
-    console.log('Chose greeting  ' + index );
     return greetings[index];
 }
 
@@ -36,24 +35,24 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
 
     var burritoSize;
     var animating;
-    function rewrapBurrito() {
-        if (animating) return;
+    //function rewrapBurrito() {
+    //    if (animating) return;
 
-        var medTileHeight = 140;
-        var testHeight = 0.65 * window.outerHeight;
-        var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
-        newHeight += 47; // account for padding
+    //    var medTileHeight = 140;
+    //    var testHeight = 0.65 * window.outerHeight;
+    //    var newHeight = Math.floor(testHeight / medTileHeight) * medTileHeight;
+    //    newHeight += 47; // account for padding
 
-        if (newHeight > burritoSize) {
-            animating = true;
-            $("#burrito").animate({
-                'height': newHeight + "px"
-            }, 1000, "easeOutQuint", function() {
-                animating = false;
-            });
-        }
-    }
-    $(window).resize(rewrapBurrito);
+    //    if (newHeight > burritoSize) {
+    //        animating = true;
+    //        $("#burrito").animate({
+    //            'height': newHeight + "px"
+    //        }, 1000, "easeOutQuint", function() {
+    //            animating = false;
+    //        });
+    //    }
+    //}
+    //$(window).resize(rewrapBurrito);
 
     function countdownProgress(secs) {
         NProgress.start();
@@ -72,62 +71,58 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
     $(document).ready(function() {
         countdownProgress(3500);
 
-        burritoSize = $('#burrito').height();
-        rewrapBurrito();
+        burritoSize = $("#burrito").height();
+        //rewrapBurrito();
 
-        $('body').css('display', 'block');
+        $("body").css("display", "block");
+
+        var space = $("#burrito");
+        space.children().remove();
+
+        function buildTileContent(template, tile, filled, order) {
+            var slides = fillContentTemplates(template.clone(), tile.data);
+
+            var content = filled.find(".tile-content");
+            content.children().remove();
+
+            for (var i = 0; i < slides.length; i++) {
+                content.append(slides[i]);
+            }
+
+            space.append(filled);
+
+            var animFunc = getAnimation(tile["animation"]);
+            animFunc(filled, order, tile.title);
+        }
+
+        function buildTile(template, tile, order) {
+            var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
+
+            filled.css("order", order.toString());
+            filled.find(".tile-link").click(NProgress.start);
+
+            if (tile.size) {
+                filled.addClass(tile.size);
+            } else {
+                filled.addClass("medium");
+            }
+
+            getTemplateAsync(tile["content-template"], function(loadedTemplate) {
+                buildTileContent(loadedTemplate, tile, filled, order);
+            });
+        }
 
         $.get(API_ROOT + "/all", function(data) {
-            var space = $('#burrito');
-            space.children().remove();
-
             var tiles = data.tiles;
-            for (var index = 0; index < tiles.length; index++) {
-                (function (i){
-                    var tile = tiles[i];
-                    var animation = getAnimation(tile['animation']);
-
-                    getTemplateAsync(tile['tile-template'], function(template){
-                        var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
-
-                        filled.css("order", i.toString());
-                        filled.find('.tile-link').click(NProgress.start);
-
-                        if (tile.size)
-                        {
-                            filled.addClass(tile.size);
-                        }
-                        else {
-                            filled.addClass('medium');
-                        }
-
-                        if (tile['content-template'])
-                        {
-                            getTemplateAsync(tile['content-template'], function(template){
-                                var slides = fillContentTemplates(template.clone(), tile.data);
-
-                                var content = filled.find('.tile-content');
-                                content.children().remove();
-
-                                for (var i=0; i < slides.length; i++){
-                                    content.append(slides[i]);
-                                }
-
-                                space.append(filled);
-                                animation(filled, i);
-                            });
-                        }
-                        else {
-                            space.append(filled);
-                            animation(filled, i);
-                        }
-                    });
-                })(index);
-            }
+            tiles.forEach(function (tile, i) {
+                getTemplateAsync(tile["tile-template"], function(loadedTemplate) {
+                    buildTile(loadedTemplate, tile, i);
+                });
+            });
         }).fail(function () {
-            $("#burrito").append("Unable to connect to api");
+            space.append("Unable to connect to api");
         });
 
-        $('#header-greeting').text(greeting(Math.random()));
+        $("#header-greeting").text(greeting(Math.random()));
     });
 });

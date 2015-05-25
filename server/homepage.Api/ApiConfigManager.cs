@@ -8,6 +8,14 @@ namespace homepage.Api
     {
         private LastStatsTimeSpan _lastfmAlbumTimeSpan;
 
+        public string GithubToken { get; set; }
+
+        public string GithubUsername { get; set; }
+
+        public string LastfmApiKey { get; set; }
+
+        public string LastfmSecret { get; set; }
+
         public int LastfmAlbumCount { get; set; }
 
         public LastStatsTimeSpan LastfmAlbumTimeSpan
@@ -18,13 +26,12 @@ namespace homepage.Api
 
         public string LastfmUsername { get; set; }
 
-        public string LastfmApiKey { get; set; }
-
-        public string LastfmSecret { get; set; }
-
         public ApiConfigManager(JObject configJson)
         {
             dynamic config = configJson;
+
+            GithubUsername = config.githubUsername;
+            GithubToken = config.githubToken;
 
             LastfmApiKey = config.lastfmApiKey;
             LastfmSecret = config.lastfmSecret;
