@@ -25,7 +25,6 @@ function greeting(random){
     }
     var index = parseInt(random * greetings.length);
 
-    console.log('Chose greeting  ' + index );
     return greetings[index];
 }
 
@@ -72,57 +71,60 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
     $(document).ready(function() {
         countdownProgress(3500);
 
-        burritoSize = $('#burrito').height();
+        burritoSize = $("#burrito").height();
         //rewrapBurrito();
 
-        $('body').css('display', 'block');
+        $("body").css("display", "block");
 
-        function buildTileContent(template) {
-            var slides = fillContentTemplates(template.clone(), tile.data);
+        var space = $("#burrito");
+        space.children().remove();
 
-            var content = shellTile.find('.tile-content');
-            content.children().remove();
+        function buildTileContent(template, tile, filled, order) {
+            if (tile.data) {
+                var slides = fillContentTemplates(template.clone(), tile.data);
 
-            for (var i = 0; i < slides.length; i++) {
-                content.append(slides[i]);
+                var content = filled.find(".tile-content");
+                content.children().remove();
+
+                for (var i = 0; i < slides.length; i++) {
+                    content.append(slides[i]);
+                }
             }
 
-            space.append(shellTile);
-            animation(shellTile, offset);
+            space.append(filled);
+
+            var animFunc = getAnimation(tile["animation"]);
+            animFunc(filled, order, tile.title);
         }
 
-        function buildTemplate(template) {
+        function buildTile(template, tile, order) {
             var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
 
-            filled.css("order", i.toString());
-            filled.find('.tile-link').click(NProgress.start);
+            filled.css("order", order.toString());
+            filled.find(".tile-link").click(NProgress.start);
 
             if (tile.size) {
                 filled.addClass(tile.size);
             } else {
-                filled.addClass('medium');
+                filled.addClass("medium");
             }
 
-            getTemplateAsync(tile['content-template'], buildTileContent(filled));
+            getTemplateAsync(tile["content-template"], function(loadedTemplate) {
+                buildTileContent(loadedTemplate, tile, filled, order);
+            });
         }
 
         $.get(API_ROOT + "/all", function(data) {
-            var space = $('#burrito');
-            space.children().remove();
-
             var tiles = data.tiles;
-            for (var index = 0; index < tiles.length; index++) {
-                (function (i){
-                    var tileData = tiles[i];
-                    var animFunc = getAnimation(tileData['animation']);
-
-                        getTemplateAsync(tile['tile-template'], );
-                })(index);
-            }
+            tiles.forEach(function (tile, i) {
+                getTemplateAsync(tile["tile-template"], function(loadedTemplate) {
+                    buildTile(loadedTemplate, tile, i);
+                });
+            });
         }).fail(function () {
-            $("#burrito").append("Unable to connect to api");
+            space.append("Unable to connect to api");
         });
 
-        $('#header-greeting').text(greeting(Math.random()));
+        $("#header-greeting").text(greeting(Math.random()));
     });
 });

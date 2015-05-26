@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
@@ -19,7 +20,8 @@ namespace homepage.Api
             return new List<TileBuilder>
             {
                 new TopAlbumsTileBuilder(_config, httpClient),
-                new GithubTileBuilder(_config)
+                new GithubTileBuilder(_config),
+                new StaticTileBuilder(_config, "tt-02", "Blog", "blog", "wide", new Uri("http://rikk.it/blog"))
             };
         }
     }

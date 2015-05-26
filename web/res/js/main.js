@@ -2,7 +2,7 @@ define('jquery', [], function() {
     return jQuery;
 });
 
-@@API_ROOT
+var API_ROOT = "http://localhost:4420";
 
 function greeting(random){
     var dt = new Date();
@@ -80,13 +80,15 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
         space.children().remove();
 
         function buildTileContent(template, tile, filled, order) {
-            var slides = fillContentTemplates(template.clone(), tile.data);
+            if (tile.data) {
+                var slides = fillContentTemplates(template.clone(), tile.data);
 
-            var content = filled.find(".tile-content");
-            content.children().remove();
+                var content = filled.find(".tile-content");
+                content.children().remove();
 
-            for (var i = 0; i < slides.length; i++) {
-                content.append(slides[i]);
+                for (var i = 0; i < slides.length; i++) {
+                    content.append(slides[i]);
+                }
             }
 
             space.append(filled);
