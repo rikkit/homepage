@@ -1,6 +1,3 @@
-forever stop server/index.js
-rm server/cache.json
-
 git reset --hard master
 git pull
 
@@ -8,12 +5,20 @@ npm cache clean
 npm install -g n
 n stable
 
-cd server/
-npm install
+npm install -g grunt
+npm install -g grunt-cli
 
-cd ../web/
+cd ./web/
 jam install
+npm install
+lessc -ru ./res/css/style.less > ./res/css/style.css
+cd ..
 
-lessc -ru ./web/res/css/style.less > ./web/res/css/style.css
+xbuild /p:Configuration=Release ./homepage.sln
 
-forever start --sourceDir ./server/ index.js 8080
+if [ -f ./server/homepage.Api/bin/Release/api.lock ];
+then
+    kill `cat ./server/homepage.Api/bin/Release/api.lock`
+fi
+
+mono-service -d:./server/homepage.Api/bin/Release/ -l:./api.lock -m:homepage-api homepage.Api.exe
