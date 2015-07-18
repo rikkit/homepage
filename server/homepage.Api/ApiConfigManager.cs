@@ -30,14 +30,14 @@ namespace homepage.Api
         {
             dynamic config = configJson;
 
-            GithubUsername = config.githubUsername;
-            GithubToken = config.githubToken;
+            GithubUsername = config.github.username;
+            GithubToken = config.github.token;
 
-            LastfmApiKey = config.lastfmApiKey;
-            LastfmSecret = config.lastfmSecret;
-            LastfmUsername = config.lastfmUsername;
-            Enum.TryParse((string)config.lastfmAlbumTimespan, out _lastfmAlbumTimeSpan);
-            LastfmAlbumCount = (int)config.lastfmAlbumCount;
+            LastfmApiKey = config.lastfm.key;
+            LastfmSecret = config.lastfm.secret;
+            LastfmUsername = config.lastfm.username;
+            Enum.TryParse((string)config.lastfm.albumTimespan, out _lastfmAlbumTimeSpan);
+            LastfmAlbumCount = (int)config.lastfm.albumCount;
         }
     }
 }
