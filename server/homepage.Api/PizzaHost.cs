@@ -9,7 +9,7 @@ namespace homepage.Api
         private static NancyHost _host;
         private static Uri _uri;
 
-        private const string DEFAULT_API_ROOT = "http://localhost:4420";
+        private const string DEFAULT_API_ROOT = "http://localhost:5520";
 
         public Uri Uri => _uri;
 
