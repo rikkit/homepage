@@ -1,15 +1,17 @@
 # homepage
 
-This is the source for my homepage. It's a useful place for me to practise whichever frameworks take my fancy.
+Source for rikk.it.
 
-Currently it's architected as a client-server kinda deal: **Node.JS** on the back-end, and **Ember.JS** on the front-end. I'm all about JavaScript right now.
+Backend is in C# with Nancy, frontend is plain JS.
+
+# Setup
+
+Add api.rikk.it to the hosts file.
+
+```lessc -ru ./res/css/style.less > ./res/css/style.css```
+
+Build and run homepage.Api.
 
 # Licence
 
-Feel free to use whatever code in this project you find useful, no licence or attribution needed. Images and other non-code assets may be licensed differently: please ask if you want to use them.
-
-# Contact
-
-Twitter: @rikkilt
-
-Email: rikki@inflatablefriends.co.uk
+Code is MIT licensed, assets and logos might be licensed differently.

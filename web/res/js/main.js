@@ -2,7 +2,7 @@ define('jquery', [], function() {
     return jQuery;
 });
 
-var API_ROOT = "http://localhost:4420";
+var API_ROOT = "http://api.rikk.it:5520";
 
 function greeting(random){
     var dt = new Date();
