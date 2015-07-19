@@ -2,7 +2,8 @@
 /.idea
 *.komodoproject
 
-/server/node_modules
+homepage.sln.ide/
+node_modules/
 /web/node_modules
 /web/lib/jam
 /web/res/css/*.css
