@@ -1,20 +1,24 @@
 using System;
 using System.IO;
+using Autofac;
 using Nancy;
 using Nancy.Bootstrapper;
-using Nancy.Bootstrappers.Ninject;
-using Nancy.TinyIoc;
+using Nancy.Bootstrappers.Autofac;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using Ninject;
 
 namespace homepage.Api
 {
-    public class CustomBootstrapper : NinjectNancyBootstrapper
+    public class CustomBootstrapper : AutofacNancyBootstrapper
     {
-        protected override void ApplicationStartup(IKernel container, IPipelines pipelines)
+        protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
         {
+            base.ConfigureApplicationContainer(existingContainer);
+
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CustomJsonSerializer>().As<JsonSerializer>();
+            builder.RegisterType<TileBuilderFactory>().AsSelf();
+
             const string configFile = "config.json";
             var configPath = Path.GetFullPath(configFile);
             if (!File.Exists(configPath))
@@ -26,16 +30,16 @@ namespace homepage.Api
             var json = JObject.Parse(configText);
             var config = new ApiConfigManager(json);
 
-            container.Bind<JsonSerializer>().To<CustomJsonSerializer>();
-
-            container.Bind<ApiConfigManager>().ToConstant(config);
-            container.Bind<TileBuilderFactory>().ToSelf();
-
-            var apiModule = container.Get<ApiModule>();
-            container.Bind<ApiModule>().ToConstant(apiModule);
+            builder.RegisterInstance(config);
+            builder.Update(existingContainer.ComponentRegistry);
         }
 
-        protected override void RequestStartup(IKernel container, IPipelines pipelines, NancyContext context)
+        protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
+        {
+            base.ApplicationStartup(container, pipelines);
+        }
+
+        protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
 
