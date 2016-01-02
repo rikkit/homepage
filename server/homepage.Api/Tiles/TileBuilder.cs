@@ -23,6 +23,7 @@ namespace homepage.Api
                 }
                 else
                 {
+                    // TODO this isn't good
                     RefreshAsync();
                 }
             }
