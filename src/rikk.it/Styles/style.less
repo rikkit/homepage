@@ -20,33 +20,29 @@ body {
     background: @accent-mute;
 }
 
-#foil {
-    width: 60%;
-    margin: 4em auto 0 auto;    
-}
-
 #intro {
     color: #ccc;
+    margin-top: 2em;
+    margin-bottom: 2em;
 
-    header {
-        margin-top: 0;
-        margin-bottom: 2em;
+    .tagline {
+        text-transform: uppercase;
+        color: #777;
+    }
 
-        .tagline {
-            text-transform: uppercase;
-            color: #777;
-        }
+    h1 {
+        font-weight: lighter;
+        font-size: 3em;
+        margin-top: 0.33em;
+        margin-bottom: 0;
+    }
 
-        h1 {
-            font-weight: lighter;
-            font-size: 3em;
-            margin-top: 0.33em;
-            margin-bottom: 0;
-        }
-
-        h1:first-letter {
-            margin-left: -0.05em;
-        }
+    h1:first-letter {
+        margin-left: -0.05em;
+    }
+    
+    .tiles {
+        margin-top: 2em;
     }
 }
 
