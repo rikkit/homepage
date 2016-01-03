@@ -18,7 +18,7 @@ namespace homepage.Api
 
         protected async override Task<Tile> BuildAsync()
         {
-            var albums = await _lastfmClient.User.GetTopAlbums(_config.LastfmUsername, _config.LastfmAlbumTimeSpan, 0, _config.LastfmAlbumCount);
+            var albums = await _lastfmClient.User.GetTopAlbums(_config.LastfmUsername, _config.LastfmAlbumTimeSpan, 1, _config.LastfmAlbumCount);
 
             var data = albums.Select(a => new TileContent
             {
@@ -30,7 +30,7 @@ namespace homepage.Api
             return new Tile
             {
                 Title = "Last.fm",
-                CssClass = "lastfm albums",
+                Style = "lastfm albums",
                 Size = "large",
                 Link = new Uri("http://last.fm/user/tehrikkit"),
                 Content = data

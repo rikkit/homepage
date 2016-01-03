@@ -1,9 +1,10 @@
-﻿@model IEnumerable<homepage.Api.Tile>
+﻿@using Mustache
+@model IEnumerable<homepage.Api.Tile>
 
 <div class="tiles">
     @foreach (var tile in Model)
     {
-        // TODO render each tile
-        <h1>@tile.Title</h1>
+        var html = tile.RenderHtml();
+        @Html.Raw(html);
     }
 </div>

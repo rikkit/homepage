@@ -1,0 +1,20 @@
+<div class="tile {{Size}} {{Style}}">
+    <a class="tile-link" href="{{Link}}"> </a>
+    <div class="faces">
+        <div class="front"> </div>
+        <div class="back">
+            <ul class="tile-content">
+                {{#each Content}}
+                <li class="fill-template template-image" style="background-image: url(&quot;{{Image}}&quot;)">
+                    <h3 class="template-lead">{{Name}}</h3>
+                    {{#if Overlay}}
+                    <div class="template-overlay"></div>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ul>
+            <div class="tile-badge"> </div>
+        </div>
+    </div>
+    <p class="title">{{Title}}</p>
+</div>

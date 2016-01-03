@@ -1,8 +1,36 @@
-define('jquery', [], function() {
-    return jQuery;
+require.config({
+    "packages": [
+        {
+            "name": "jquery",
+            "location": "../lib/jquery",
+            "main": "dist/jquery.js"
+        },
+        {
+            "name": "jquery-easing",
+            "location": "../lib/jquery-easing",
+            "main": "jquery.easing.js"
+        },
+        {
+            "name": "jquery.cycle",
+            "location": "../lib/jquery-cycle",
+            "main": "jquery.cycle.all.js"
+        },
+        {
+            "name": "nprogress",
+            "location": "../lib/nprogress",
+            "main": "nprogress.js"
+        }
+    ],
+    "shim": {
+        "nprogress": {
+            "exports": "NProgress"
+        }
+    }
 });
 
-var API_ROOT = "http://api.rikk.it:5520";
+define('jquery', [], function () {
+    return jQuery;
+});
 
 function greeting(random){
     var dt = new Date();
@@ -70,61 +98,21 @@ require(['jquery', 'nprogress', 'jquery.cycle', 'jquery-easing'], function (jQue
 
     $(document).ready(function() {
         countdownProgress(2500);
-
-        burritoSize = $("#burrito").height();
-        //rewrapBurrito();
-
+        
         $("body").css("display", "block");
 
-        var space = $("#burrito");
-        space.children().remove();
+        var space = $(".tiles");
+        var tiles = space.children(".tile");
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = $(tiles[i]);
 
-        function buildTileContent(template, tile, filled, order) {
-            if (tile.data) {
-                var slides = fillContentTemplates(template.clone(), tile.data);
+            tile.find(".tile-link").click(NProgress.start);
+            tile.css("order", i.toString());
 
-                var content = filled.find(".tile-content");
-                content.children().remove();
-
-                for (var i = 0; i < slides.length; i++) {
-                    content.append(slides[i]);
-                }
-            }
-
-            space.append(filled);
-
-            var animFunc = getAnimation(tile["animation"]);
-            animFunc(filled, order, tile.title);
+            var animFunc = getAnimation();
+            animFunc(tile, i, i);
         }
-
-        function buildTile(template, tile, order) {
-            var filled = fillTileTemplate(template.clone(), tile.title, tile.href, tile.style);
-
-            filled.css("order", order.toString());
-            filled.find(".tile-link").click(NProgress.start);
-
-            if (tile.size) {
-                filled.addClass(tile.size);
-            } else {
-                filled.addClass("medium");
-            }
-
-            getTemplateAsync(tile["content-template"], function(loadedTemplate) {
-                buildTileContent(loadedTemplate, tile, filled, order);
-            });
-        }
-
-        $.get(API_ROOT + "/all", function(data) {
-            var tiles = data.tiles;
-            tiles.forEach(function (tile, i) {
-                getTemplateAsync(tile["tile-template"], function(loadedTemplate) {
-                    buildTile(loadedTemplate, tile, i);
-                });
-            });
-        }).fail(function () {
-            space.append("Unable to connect to api");
-        });
-
+        
         $("#header-greeting").text(greeting(Math.random()));
     });
 });

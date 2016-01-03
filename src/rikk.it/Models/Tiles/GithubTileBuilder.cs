@@ -47,7 +47,7 @@ namespace homepage.Api
             var tile = new Tile
             {
                 Title = "Github",
-                CssClass = "github",
+                Style = "github",
                 Size = "wide",
                 Link = new Uri("https://github.com/rikkit"),
                 Content = data

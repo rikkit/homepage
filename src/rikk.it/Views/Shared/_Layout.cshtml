@@ -9,7 +9,6 @@
         <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link type="text/css" rel="stylesheet" href="~/css/site.css" />
         <link type="text/css" rel="stylesheet" href="~/css/less/style.css" />
-        <link type="text/css" rel="stylesheet" href="~/css/less/tiles.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -43,7 +42,9 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/requirejs/require.js"></script>
+        <script src="~/js/main.js" asp-append-version="true"></script>
+        <script src="~/js/tiles.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"

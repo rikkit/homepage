@@ -11,9 +11,9 @@ namespace homepage.Api
         {
             _tile = new Tile
             {
-                Template = template,
+                TemplateName = template,
                 Title = title,
-                CssClass = style,
+                Style = style,
                 Size = size,
                 Link = uri
             };

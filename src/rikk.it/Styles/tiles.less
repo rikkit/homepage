@@ -1,3 +1,20 @@
+.tiles {
+    color: #777;
+    height: 280px;
+    margin: 0 -1em; // align header text with tile labels in left column
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    .tile {
+        margin-right: 14px;
+        margin-bottom: 14px;
+    }
+}
+
 .tile {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -46,7 +63,7 @@
         z-index: 10;
     }
 
-    .badge {
+    .tile-badge {
         height: 24px;
         width: 24px;
         position: absolute;
@@ -63,7 +80,7 @@
     height: inherit;
 }
 
-.tile .front, .tile .back, .tile .badge, ul.tile-content > li {
+.tile .front, .tile .back, .tile .tile-badge, ul.tile-content > li {
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -114,11 +131,11 @@ ul.tile-content {
     color: #ffffff;
 
     .front {
-        background-image: url('../img/lastfm.png');
+        background-image: url('/img/lastfm.png');
     }
 
-    .badge {
-        background-image: url('../img/lastfm.badge.png');
+    .tile-badge {
+        background-image: url('/img/lastfm.badge.png');
         margin: 0.3em 0.75em;
     }
 
@@ -145,11 +162,11 @@ ul.tile-content {
     }
 
     .front {
-        background-image: url('../img/github.png');
+        background-image: url('/img/github.png');
     }
 
-    .badge {
-        background-image: url('../img/github.badge.png');
+    .tile-badge {
+        background-image: url('/img/github.badge.png');
     }
 }
 
@@ -167,11 +184,11 @@ ul.tile-content {
 
     .front {
         background-color: #1d468e;
-        background-image: url('../img/heremaps.png');
+        background-image: url('/img/heremaps.png');
     }
 
-    .badge {
-        background-image: url('../img/heremaps.badge.png');
+    .tile-badge {
+        background-image: url('/img/heremaps.badge.png');
     }
 
     .fill-template .template-overlay {
