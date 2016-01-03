@@ -59,6 +59,10 @@ gulp.task("less", function() {
         .pipe(gulp.dest(paths.lessDest));
 });
 
+gulp.task("watch", function() {
+    gulp.watch(paths.less, ['less']);
+});
+
 gulp.task(
     "build",
     [
