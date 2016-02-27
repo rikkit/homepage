@@ -9,7 +9,20 @@ namespace homepage.Generator
 {
     public class Program
     {
-        public static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
+        public static void Main(string[] args)
+        {
+            try
+            {
+                MainAsync(args).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                var consoleColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.ToString());
+                Console.ForegroundColor = consoleColor;
+            }
+        }
 
         private static async Task MainAsync(string[] args)
         {
