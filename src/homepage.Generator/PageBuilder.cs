@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using homepage.Generator.Tiles;
 using HtmlTags;
+using Humanizer;
 using MarkdownSharp;
 using Mustache;
 
@@ -12,8 +14,6 @@ namespace homepage.Generator
 {
     public class PageBuilder
     {
-        private const string MD_META_PREFIX = "--";
-        private const string MD_META_TITLE_PREFIX = MD_META_PREFIX + "title";
 
         private readonly string _sourceDir;
         private readonly ApiConfig _config;
@@ -35,56 +35,68 @@ namespace homepage.Generator
 
         public async Task Build()
         {
-            if (!File.Exists(_outDir))
+            if (!Directory.Exists(_sourceDir))
+            {
+                Console.WriteLine($"Didn't find any pages in {_sourceDir}.");
+                return;
+            }
+
+            if (!Directory.Exists(_outDir))
             {
                 Console.WriteLine($"Creating directory {_outDir}");
                 Directory.CreateDirectory(_outDir);
             }
 
+            Console.WriteLine($"Building tiles...");
             var tileRoot = await BuildTileRoot(_config);
 
+            Console.WriteLine($"Building pages...");
             var sourceFiles = EnumerateSourceFiles(_sourceDir)
                 .Where(path => MarkdownExtensions.Any(path.EndsWith))
                 .ToList();
             
-            Console.WriteLine($"Found {sourceFiles.Count} markdown files");
-            
+            Console.WriteLine($"Found {sourceFiles.Count} markdown files in {_sourceDir}");
+
             var outDirUri = new Uri(_outDir);
             var sourceDirUri = new Uri(_sourceDir);
-            var markdown = new Markdown();
-            var formatCompiler = new FormatCompiler();
+            var markdownParser = new Markdown();
+            var formatCompiler = new FormatCompiler {RemoveNewLines = false};
             var generator = formatCompiler.Compile(Templates.skeleton);
             foreach (var sourceFile in sourceFiles)
             {
-                var articleLines = File.ReadAllLines(sourceFile).ToList();
-                var articleMeta = articleLines.TakeWhile(line => line.StartsWith(MD_META_PREFIX));
-                var articleTitle = articleMeta.FirstOrDefault(line => line.StartsWith(MD_META_TITLE_PREFIX));
+                var pageLines = File.ReadAllLines(sourceFile).ToList();
+                var pageMeta = PageMeta.Parse(pageLines);
 
-                var sourceFileName = Path.GetFileNameWithoutExtension(sourceFile);
-                articleTitle = articleTitle?.Replace(MD_META_TITLE_PREFIX, "") ?? sourceFileName;
-
-                var articleMarkdownLines = articleLines.SkipWhile(line => line.StartsWith(MD_META_PREFIX));
-                var articleMarkdown = string.Join(Environment.NewLine, articleMarkdownLines);
-                var articleHtml = markdown.Transform(articleMarkdown);
+                var articleLines = pageLines.SkipWhile(line => line.StartsWith(PageMeta.MD_META_PREFIX));
+                var articleMarkdown = string.Join(Environment.NewLine, articleLines);
+                var articleHtml = markdownParser.Transform(articleMarkdown);
 
                 var sourceFileDir = new Uri(EnsureTerminatingDirectorySeparator(Path.GetDirectoryName(sourceFile)));
                 var sourceRelativeUri1 = sourceFileDir.MakeRelativeUri(sourceDirUri);
                 var sourceRelativeUri2 = sourceDirUri.MakeRelativeUri(sourceFileDir);
-                
+
+                var sourceFileName = Path.GetFileNameWithoutExtension(sourceFile);
                 var pageData = new
                 {
-                    title = articleTitle,
+                    title = pageMeta.Title ?? sourceFileName.Humanize("-"),
                     content = articleHtml,
                     tiles = tileRoot.RenderFromTop().ToHtmlString(),
-                    webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? "."
+                    webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? ".",
+                    date = pageMeta.Date?.Humanize() ?? ""
                 };
                 var html = generator.Render(pageData);
-
+                
                 var outFileName = $"{sourceFileName.ToLowerInvariant()}.html";
                 var outFileDir = new Uri(outDirUri, sourceRelativeUri2);
                 var outFilePath = new Uri(outFileDir, outFileName);
+
+                if (!Directory.Exists(outFileDir.AbsolutePath))
+                {
+                    Directory.CreateDirectory(outFileDir.AbsolutePath);
+                }
+
                 File.WriteAllText(outFilePath.AbsolutePath, html);
-                Console.WriteLine($"Wrote {sourceFileName}");
+                Console.WriteLine($"Built {outFilePath.AbsolutePath.Replace(outDirUri.AbsolutePath, "")}");
             }
         }
         

@@ -19,6 +19,12 @@
         </div>
     </header>
 <article class="container body-content">
+    <header>
+        <h1>{{title}}</h1>
+        {{#if date}}
+        <span class="date">{{date}}</span>
+        {{/if}}
+    </header>
     {{content}}
 </article>
 <div class="tiles">
