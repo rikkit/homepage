@@ -5,6 +5,7 @@
 @accent-strong: #1E77D6;
 @accent-mid: #0A2645;
 @accent-mute: #080100;
+@background-light: #fff;
 
 * {
     -moz-box-sizing: border-box;
@@ -36,7 +37,7 @@ body {
         margin-top: 0.33em;
         margin-bottom: 0;
     }
-
+    
     h1:first-letter {
         margin-left: -0.05em;
     }
@@ -58,5 +59,13 @@ body {
 
     .peg {
         box-shadow: 0 0 10px @accent-highlight, 0 0 5px @accent-highlight;
+    }
+}
+
+article.container {
+    background: @background-light;
+    
+    > header {
+        margin-bottom: 1em;
     }
 }
