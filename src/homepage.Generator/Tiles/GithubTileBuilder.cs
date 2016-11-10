@@ -34,7 +34,7 @@ namespace homepage.Generator.Tiles
 
             var tile = new Tile
             {
-                Title = "Github",
+                Title = "Current Projects",
                 Style = "github",
                 Size = "wide",
                 Link = new Uri("https://github.com/rikkit"),

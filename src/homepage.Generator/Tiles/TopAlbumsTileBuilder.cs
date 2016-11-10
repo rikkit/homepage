@@ -30,7 +30,7 @@ namespace homepage.Generator.Tiles
 
             return new Tile
             {
-                Title = "Last.fm",
+                Title = "Now Playing",
                 Style = "lastfm albums",
                 Size = "large",
                 Link = new Uri("http://last.fm/user/tehrikkit"),

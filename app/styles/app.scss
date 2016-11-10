@@ -1,11 +1,11 @@
 @import "tiles";
 
 /* LESS variables */
-@accent-highlight: #55BCFF;
-@accent-strong: #1E77D6;
-@accent-mid: #0A2645;
-@accent-mute: #080100;
-@background-light: #fff;
+$accent-highlight: #55BCFF;
+$accent-strong: #1E77D6;
+$accent-mid: #0A2645;
+$accent-mute: #080100;
+$background-light: #fff;
 
 * {
     -moz-box-sizing: border-box;
@@ -18,7 +18,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background: @accent-mute;
+    background: $accent-mute;
 }
 
 #intro {
@@ -49,23 +49,28 @@ body {
 
 #nprogress {
     .bar {
-        background: @accent-highlight;
+        background: $accent-highlight;
     }
 
     .spinner-icon {
-        border-top-color: @accent-highlight;
-        border-left-color: @accent-highlight;
+        border-top-color: $accent-highlight;
+        border-left-color: $accent-highlight;
     }
 
     .peg {
-        box-shadow: 0 0 10px @accent-highlight, 0 0 5px @accent-highlight;
+        box-shadow: 0 0 10px $accent-highlight, 0 0 5px $accent-highlight;
     }
 }
 
 article.container {
-    background: @background-light;
+    background: $background-light;
     
     > header {
         margin-bottom: 1em;
     }
+}
+
+.center-block {
+    width: 80%;
+    margin: 0 auto;
 }

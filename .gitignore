@@ -131,3 +131,5 @@ node_modules/
 /src/rikk.it/wwwroot/css/less
 min/
 out/
+public/
+typings/
