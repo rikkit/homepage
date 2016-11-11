@@ -8,6 +8,9 @@ namespace homepage.Generator.Tiles
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("body")]
+        public string Body { get; set; }
+
         [JsonProperty("image")]
         public Uri Image { get; set; }
 

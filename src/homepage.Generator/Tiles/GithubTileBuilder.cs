@@ -36,7 +36,7 @@ namespace homepage.Generator.Tiles
             {
                 Title = "Current Projects",
                 Style = "github",
-                Size = "wide",
+                Size = "large",
                 Link = new Uri("https://github.com/rikkit"),
                 Content = data
             };
@@ -47,8 +47,8 @@ namespace homepage.Generator.Tiles
         private async Task<IEnumerable<TileContent>> GetTileData()
         {
             var events = await _client.Activity.Events.GetAllUserPerformedPublic(_config.Username);
-            var activeRepos = events.OrderByDescending(e => e.CreatedAt)
-                .Where(e => e.CreatedAt > DateTimeOffset.UtcNow.AddMonths(-1))
+            var activeRepoIds = events.OrderByDescending(e => e.CreatedAt)
+                .Where(e => e.CreatedAt > DateTimeOffset.UtcNow.AddMonths(-3))
                 .Where(e =>
                 {
                     switch (e.Type)
@@ -61,14 +61,18 @@ namespace homepage.Generator.Tiles
                             return false;
                     }
                 })
-                .Select(e => e.Repo.Name)
+                .Select(e => e.Repo.Id)
                 .Distinct();
 
-            var data = activeRepos.Select(name => new TileContent
+            var activeRepos = await Task.WhenAll(activeRepoIds.Select(id => _client.Repository.Get(id)));
+
+            var data = activeRepos.Select(repo => new TileContent
             {
-                Name = name,
+                Name = repo.Name,
+                Body = $"{repo.Description} ({repo.Language})",
                 Overlay = false
             });
+
             return data;
         }
     }
