@@ -1,12 +1,22 @@
 # homepage
 
-This is the source for [rikk.it](http://rikk.it). The site is built using JQuery and a static site generator written in C#.
+This is the source for [rikk.it](http://rikk.it). The site is built using JQuery/TypeScript and a static site generator written in C#.
 
-# Setup (Windows)
+# Setup (PowerShell/ Windows)
 
-1. Install npm and VS 2015/ MSBuild.
-1. Add ```msbuild``` to your path. ```C:\Program Files (x86)\MSBuild\14.0\Bin\```
-1. Run ```./build.ps1```. This will install bower, less and clean-css into the global npm directory, if they're not already there.
+```
+# first install npm and MSBuild for C# 6
+
+Set-Alias msbuild "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+
+npm install -g brunch
+npm install -g typings
+npm install
+typings install
+nuget restore
+
+./build.ps1
+```
 
 # Licence
 
