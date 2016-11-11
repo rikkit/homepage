@@ -75,11 +75,11 @@ export class Tile {
             if (faces.length)
             {
                 var content = faces.find('.tile-content');
-                var delayMs = offset * 50;
+                var delayMs = offset * 177;
                 
                 faces.cycle({
                     timeout: 0,
-                    speed: 1050,
+                    speed: 1200,
                     easing: 'easeOutQuint',
                     fx: 'scrollUp'
                 });
@@ -87,9 +87,9 @@ export class Tile {
                 if (content.children().length > 1)
                 {
                     content.cycle({
-                        delay: 5800 + delayMs,
-                        timeout: 6000,
-                        speed: 1050,
+                        delay: 8000 + delayMs,
+                        timeout: 8000 + delayMs,
+                        speed: 1200,
                         easing: 'easeOutQuint',
                         fx: 'scrollUp'
                     });
