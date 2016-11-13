@@ -48,9 +48,14 @@ $tile-unit: 14px;
         background: transparent;
     }
 
-    &:active {
+    &:hover {
         -ms-transform: perspective(250px) translateZ(-10px);
         transform: perspective(250px) translateZ(-10px);
+    }
+
+    &:active {
+        -ms-transform: perspective(250px) translateZ(-20px);
+        transform: perspective(250px) translateZ(-20px);
     }
 
     .title {
