@@ -77,6 +77,11 @@ $tile-unit: 14px;
         right: 0;
         margin: 0.5em 0.75em;
         z-index: 10;
+        background-size: cover;
+    }
+
+    .front {
+        background-size: cover;
     }
 }
 
@@ -144,11 +149,11 @@ ul.tile-content {
     color: #ffffff;
 
     .front {
-        background-image: url('/img/lastfm.png');
+        background-image: url('/img/lastfm-tile.png');
     }
 
     .tile-badge {
-        background-image: url('/img/lastfm.badge.png');
+        background-image: url('/img/lastfm-badge.png');
         margin: 0.3em 0.75em;
     }
 
@@ -169,11 +174,11 @@ ul.tile-content {
     }
 
     .front {
-        background-image: url('/img/github.png');
+        background-image: url('/img/github-tile.png');
     }
 
     .tile-badge {
-        background-image: url('/img/github.badge.png');
+        background-image: url('/img/github-badge.png');
     }
 }
 
@@ -185,6 +190,14 @@ ul.tile-content {
 
     }
     
+    .front {
+        background-image: url('/img/twitter-tile.png');
+    }
+
+    .tile-badge {
+        background-image: url('/img/twitter-badge.png');
+    }
+
     /*.template-image.overlay {
         background-color: #1da1f2;
     }*/
