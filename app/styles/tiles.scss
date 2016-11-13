@@ -2,11 +2,10 @@ $tile-unit: 14px;
 
 .tiles {
     color: #777;
-    height: 280px;
     margin: 0 -0.5em; // align header text with tile labels in left column
-    width: 100%;
+   
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
