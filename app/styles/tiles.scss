@@ -180,6 +180,10 @@ ul.tile-content {
     &.tweets {
 
     }
+    
+    /*.template-image.overlay {
+        background-color: #1da1f2;
+    }*/
 }
 
 .tile.blog {
@@ -205,7 +209,6 @@ ul.tile-content {
 }
 
 .template-image.overlay {
-    background-color: #bbb;
+    background-color: #ccc;
     background-blend-mode: multiply;
 }
-
