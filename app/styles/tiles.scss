@@ -173,6 +173,15 @@ ul.tile-content {
     }
 }
 
+.tile.twitter {
+    background: #1da1f2;
+    color: #fff;
+
+    &.tweets {
+
+    }
+}
+
 .tile.blog {
     background: #111;
     background-image: url('http://rikk.it/blog/content/images/2015/05/fight-club-final-scene.jpg');
@@ -193,9 +202,10 @@ ul.tile-content {
     .tile-badge {
         background-image: url('/img/heremaps.badge.png');
     }
+}
 
-    .fill-template .template-overlay {
-        background-color: rgba(0, 0, 0, 0.2);
-    }
+.template-image.overlay {
+    background-color: #bbb;
+    background-blend-mode: multiply;
 }
 

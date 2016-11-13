@@ -6,12 +6,12 @@ using IF.Lastfm.Core.Api;
 
 namespace homepage.Generator.Tiles
 {
-    public class TopAlbumsTileBuilder : TileBuilder
+    public class LastfmTileBuilder : TileBuilder
     {
         private readonly LastfmClient _lastfmClient;
         private readonly LastfmApiConfig _config;
 
-        public TopAlbumsTileBuilder(LastfmApiConfig config, HttpClient httpClient)
+        public LastfmTileBuilder(LastfmApiConfig config, HttpClient httpClient)
         {
             _config = config;
             _lastfmClient = new LastfmClient(config.Key, config.Secret, httpClient);

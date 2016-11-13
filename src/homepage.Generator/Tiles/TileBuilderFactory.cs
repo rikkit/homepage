@@ -19,9 +19,10 @@ namespace homepage.Generator.Tiles
 
             return new List<TileBuilder>
             {
-                new TopAlbumsTileBuilder(_config.Lastfm, httpClient),
+                new LastfmTileBuilder(_config.Lastfm, httpClient),
                 new GithubTileBuilder(_config.GitHub),
-                new StaticTileBuilder("tt-02", "Blog", "blog", "wide", new Uri("http://rikk.it/blog"))
+                new StaticTileBuilder("tt-02", "Blog", "blog", "wide", new Uri("http://rikk.it/blog")),
+                new TwitterTileBuilder(_config.Twitter, httpClient)
             };
         }
     }
