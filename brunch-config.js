@@ -27,6 +27,10 @@ module.exports = {
           'vendor/'
         ]
       }
+    },
+    brunchTypescript: {
+      removeComments: true,
+      target: "ES6"
     }
   }
 }

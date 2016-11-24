@@ -19,20 +19,21 @@ $(window).bind('beforeunload', function() {
     NProgress.done();
 });
 
-$(document).ready(function() {
+$(document).ready(async () => {
     countdownProgress(2500);
     
     $("body").css("display", "block");
 
-    var space = $(".tiles");
-    var tiles = space.children(".tile");
-    for (var i = 0; i < tiles.length; i++) {
-        var tile = $(tiles[i]);
+    let tiles :JQuery[] = $(".tiles .tile").toArray()
+        .map((element => $(element)));
+    
+    let tileCount = 0;
+    for (let tile of tiles) {
+        let jq = $(tile);
+        jq.find(".tile-link").click(NProgress.start);
+        jq.css("order", tileCount.toString());
+    } 
 
-        tile.find(".tile-link").click(NProgress.start);
-        tile.css("order", i.toString());
-
-        let tileHelper = new Tile();
-        tileHelper.metroTileAnimation(tile, i, i);
-    }
+    let tileHelper = new Tile(tiles);
+    await tileHelper.animate();
 });

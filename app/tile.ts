@@ -1,10 +1,75 @@
 /// <reference path="../typings/index.d.ts" />
 
 export class Tile {
+    private tiles :JQuery[];
+    private currentIndex :number = 0;
+    private maxIndex :number;
+
+    public constructor(tiles :JQuery[]) {
+        this.tiles = tiles;
+        this.maxIndex = tiles.length;
+    }
+
+    public async animate() {
+        const averageDelay = 300;
+        
+        let tile = this.tiles[this.currentIndex];
+        let tileDelay = averageDelay;
+        
+        if (!(tile.data("initialised") as boolean || false))
+        {
+            await setTimeout(
+                () => this.initialiseTileAnimate(tile), tileDelay);
+            tile.data("initialised", true);
+        }
+
+        await setTimeout(
+            () => this.faceAnimate(tile),
+            tileDelay);
+
+            
+        this.currentIndex++;
+        if (this.currentIndex >= this.maxIndex) {
+            this.currentIndex = 0;
+        }
+
+        setTimeout(this.animate, 100);
+    }
+
+    private initialiseTileAnimate(tile :JQuery) {
+        var faces = tile.find('> .faces');
+        var content = faces.find('.tile-content');
+        
+        faces.cycle({
+            timeout: 0,
+            speed: 1200,
+            easing: 'easeOutQuint',
+            fx: 'scrollUp'
+        });
+
+        content.cycle({
+            timeout: 0, // disable autoadvance
+            speed: 1200,
+            easing: 'easeOutQuint',
+            fx: 'scrollUp'
+        });
+
+        faces.cycle('next');
+    }
+
+    private faceAnimate(tile :JQuery) {
+        var content = tile.find('> .faces .tile-content');
+
+        if (content.children().length > 1)
+        {
+            content.cycle("next")
+        }
+    }
+
 /**
  * Fill the provided TILE template with provided data
  */
-    fillTileTemplate(tileTemplate, title, href, cssStyle) {
+    static fillTileTemplate(tileTemplate, title, href, cssStyle) {
         "use strict";
 
         var titleElement = tileTemplate.find('.title');
@@ -31,7 +96,7 @@ export class Tile {
      * @param id
      * @param data
      */
-    fillContentTemplates(original, data){
+    static fillContentTemplates(original, data){
         "use strict";
 
         var filled = [];
@@ -69,13 +134,12 @@ export class Tile {
         return filled;
     }
 
-    metroTileAnimation(tile :JQuery, offset, name){
+    static metroTileAnimation(tile :JQuery, offset, name){
         if (tile.length){
             var faces = tile.find('> .faces');
             if (faces.length)
             {
                 var content = faces.find('.tile-content');
-                var delayMs = offset * 177;
                 
                 faces.cycle({
                     timeout: 0,
@@ -87,8 +151,8 @@ export class Tile {
                 if (content.children().length > 1)
                 {
                     content.cycle({
-                        delay: 8000 + delayMs,
-                        timeout: 8000 + delayMs,
+                        delay: offset,
+                        timeout: 0, // disable autoadvance
                         speed: 1200,
                         easing: 'easeOutQuint',
                         fx: 'scrollUp'
@@ -98,7 +162,7 @@ export class Tile {
                 setTimeout(function () {
                     console.log("Flipped tile " + name);
                     faces.cycle('next');
-                }, 4000 + delayMs);
+                }, offset);
             }
         }
     }
@@ -108,7 +172,7 @@ export class Tile {
      * @param id
      * @returns {metroTileAnimation}
      */
-    public getAnimation(id){
+    public static getAnimation(id) :Function {
         switch (id){
             case 'ease-01':
                 return this.metroTileAnimation;
