@@ -49,8 +49,8 @@ $tile-unit: 14px;
     }
 
     &:hover {
-        -ms-transform: perspective(250px) translateZ(-10px);
-        transform: perspective(250px) translateZ(-10px);
+        -ms-transform: perspective(250px) translateZ(-6px);
+        transform: perspective(250px) translateZ(-6px);
     }
 
     &:active {
