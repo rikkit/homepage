@@ -5,7 +5,6 @@ module.exports = {
       jQuery: 'jquery',
       NProgress: 'nprogress'
   }},
-  // See http://brunch.io for documentation.
   files: {
     javascripts: {
       joinTo: {
@@ -29,8 +28,7 @@ module.exports = {
       }
     },
     brunchTypescript: {
-      removeComments: true,
-      target: "ES6"
+      ignoreErrors: true
     }
   }
 }

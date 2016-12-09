@@ -10,22 +10,26 @@ export class Tile {
         this.maxIndex = tiles.length;
     }
 
-    public async animate() {
+    private delay = async (ms) => {        
+        await new Promise(r => setTimeout(r, ms))
+    }
+
+    public animate = async () => {
         const averageDelay = 300;
+        const tileDelayVariance = 0.2 * averageDelay;
+
+        let tileDelay = averageDelay - tileDelayVariance + (Math.random() * tileDelayVariance);        
+        await this.delay(tileDelay);
         
         let tile = this.tiles[this.currentIndex];
-        let tileDelay = averageDelay;
-        
         if (!(tile.data("initialised") as boolean || false))
         {
-            await setTimeout(
-                () => this.initialiseTileAnimate(tile), tileDelay);
+            this.initialiseTileAnimate(tile);
             tile.data("initialised", true);
         }
-
-        await setTimeout(
-            () => this.faceAnimate(tile),
-            tileDelay);
+        else {
+            this.faceAnimate(tile);
+        }
 
             
         this.currentIndex++;
@@ -33,7 +37,7 @@ export class Tile {
             this.currentIndex = 0;
         }
 
-        setTimeout(this.animate, 100);
+        setTimeout(this.animate, 4000);
     }
 
     private initialiseTileAnimate(tile :JQuery) {

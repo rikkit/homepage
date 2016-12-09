@@ -35,5 +35,6 @@ $(document).ready(async () => {
     } 
 
     let tileHelper = new Tile(tiles);
-    await tileHelper.animate();
+
+    await setTimeout(tileHelper.animate, 3000);
 });
