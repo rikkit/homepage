@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using generator.Tiles;
 using HeyRed.MarkdownSharp;
@@ -75,23 +76,21 @@ namespace generator
                 .ToList();
             
             Console.WriteLine($"Found {sourceFiles.Count} files in {_sourceDir}");
-
-            var outDirUri = new Uri(_outDir);
-            var sourceDirUri = new Uri(_sourceDir);
+            
             var markdownParser = new Markdown();
             var formatCompiler = new FormatCompiler {RemoveNewLines = false};
             var markdownGenerator = formatCompiler.Compile(_templateManager.Templates["skeleton"]);
             foreach (var sourceFile in sourceFiles)
             {
-                var sourceFileDir = new Uri(EnsureTerminatingDirectorySeparator(Path.GetDirectoryName(sourceFile.path)));
-                var sourceRelativeUri1 = sourceFileDir.MakeRelativeUri(sourceDirUri);
-                var sourceRelativeUri2 = sourceDirUri.MakeRelativeUri(sourceFileDir);
+                // dir structure should be maintained from source to out,
+                // need to get the relative path from the source file to the root of all source files.
+                var sourceToWebrootPath = GetRelativePath(sourceFile.path, _sourceDir);
                 var sourceFileName = Path.GetFileNameWithoutExtension(sourceFile.path);
+                var webrootToSourceFileDirPath = GetRelativePath(_sourceDir, Path.GetDirectoryName(sourceFile.path));
 
                 var outFileName = $"{sourceFileName.ToLowerInvariant()}.html";
-                var outFileDir = new Uri(outDirUri, sourceRelativeUri2);
-                var outFilePath = new Uri(outFileDir, outFileName);
-
+                var outFilePath = Path.Combine(_outDir, webrootToSourceFileDirPath, outFileName);
+                
                 string pageHtml;
                 if (sourceFile.type == SourceType.Html)
                 {
@@ -101,7 +100,7 @@ namespace generator
                     {
                         title = sourceFileName,
                         tiles = tileRoot,
-                        webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? ".",
+                        webroot = sourceToWebrootPath.NullIfEmpty() ?? ".",
                         date = ""
                     };
                     pageHtml = compiler.Render(pageData);
@@ -120,7 +119,7 @@ namespace generator
                         title = pageMeta.Title ?? sourceFileName.Humanize("-"),
                         content = articleHtml,
                         tiles = tileRoot,
-                        webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? ".",
+                        webroot = sourceToWebrootPath.NullIfEmpty() ?? ".",
                         date = pageMeta.Date?.Humanize() ?? ""
                     };
 
@@ -131,16 +130,17 @@ namespace generator
                     throw new Exception($"Source type {sourceFile.type} not supported");
                 }
 
-                if (!Directory.Exists(outFileDir.AbsolutePath))
+                var outFileDir = Path.GetDirectoryName(outFilePath);
+                if (!Directory.Exists(outFileDir))
                 {
-                    Directory.CreateDirectory(outFileDir.AbsolutePath);
+                    Directory.CreateDirectory(outFileDir);
                 }
 
-                File.WriteAllText(outFilePath.AbsolutePath, pageHtml);
+                File.WriteAllText(outFilePath, pageHtml);
 
                 var colour = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Built {outFilePath.AbsolutePath.Replace(outDirUri.AbsolutePath, "")}");
+                Console.WriteLine($"Built {outFilePath.Replace(outFileDir, "")}");
                 Console.ForegroundColor = colour;
             }
         }
@@ -195,6 +195,43 @@ namespace generator
             return lastSep >= 0
                 ? path + path[lastSep]
                 : path + Path.DirectorySeparatorChar;
+        }
+        
+
+        private static string GetRelativePath(string from, string to)
+        {
+            from = Path.GetFullPath(from);
+            to = Path.GetFullPath(to);
+            
+            var fromFrags = from.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToArray();
+            var toFrags = to.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToArray();
+
+            int commonRootIndex = 0;
+            for (int i = 0; i < fromFrags.Length; i++)
+            {
+                if (toFrags.Length <= i
+                    || fromFrags[i] != toFrags[i])
+                {
+                    break;
+                }
+
+                commonRootIndex++;
+            }
+
+            var levelDiff = fromFrags.Length - 1 - commonRootIndex;
+
+            var dirUpFragment = ".." + Path.DirectorySeparatorChar;
+            var sb = new StringBuilder();
+            for (int i = 0; i < levelDiff; i++) sb.Append(dirUpFragment);
+            foreach (var toFrag in toFrags.Skip(commonRootIndex).Where(f => !string.IsNullOrWhiteSpace(f)))
+            {
+                sb.Append(toFrag);
+                sb.Append(Path.DirectorySeparatorChar);
+            }
+
+            var relativePath = sb.ToString(0, sb.Length > 0 ? sb.Length - 1 : 0);
+
+            return relativePath;
         }
     }
 }
