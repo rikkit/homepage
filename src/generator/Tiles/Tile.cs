@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Mustache;
 using Newtonsoft.Json;
 
@@ -43,7 +44,7 @@ namespace generator.Tiles
         public string RenderHtml()
         {
             var formatter = new FormatCompiler();
-            var rootHtml = Templates.ResourceManager.GetString(TemplateName);
+            var rootHtml = Templates.ResourceManager.GetString(TemplateName, CultureInfo.InvariantCulture);
             if (string.IsNullOrEmpty(rootHtml))
             {
                 return null;

@@ -133,3 +133,4 @@ min/
 out/
 public/
 typings/
+/src/generator/config.json

@@ -25,10 +25,10 @@ namespace generator
 
         private static async Task MainAsync(string[] args)
         {
-            var sourceDir = args.Take(1).SingleOrDefault() ?? "./pages";
+            var sourceDir = args.Take(1).SingleOrDefault() ?? "../../pages";
             sourceDir = Path.GetFullPath(sourceDir);
 
-            var outDir = args.Skip(1).Take(1).SingleOrDefault() ?? "./out";
+            var outDir = args.Skip(1).Take(1).SingleOrDefault() ?? "../../public";
             outDir = Path.GetFullPath(outDir);
 
             var apiConfig = GetConfig();
