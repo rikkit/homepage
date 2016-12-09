@@ -1,25 +1,38 @@
 /// <reference path="../typings/index.d.ts" />
 
+import Utils from "./utils";
+
 export class Tile {
     private tiles :JQuery[];
     private currentIndex :number = 0;
     private maxIndex :number;
+    private isAnimating :boolean = true;
 
     public constructor(tiles :JQuery[]) {
         this.tiles = tiles;
         this.maxIndex = tiles.length;
     }
-
-    private delay = async (ms) => {        
-        await new Promise(r => setTimeout(r, ms))
+    
+    public toggle = async () => {
+        if (!this.isAnimating) {
+            this.isAnimating = true;
+            await this.animate();
+        }
+        else {
+            this.isAnimating = false;
+        }        
     }
 
     public animate = async () => {
+        if (!this.isAnimating) {
+            return;
+        }
+
         const averageDelay = 300;
         const tileDelayVariance = 0.2 * averageDelay;
 
         let tileDelay = averageDelay - tileDelayVariance + (Math.random() * tileDelayVariance);        
-        await this.delay(tileDelay);
+        await Utils.delay(tileDelay);
         
         let tile = this.tiles[this.currentIndex];
         if (!(tile.data("initialised") as boolean || false))
@@ -30,14 +43,17 @@ export class Tile {
         else {
             this.faceAnimate(tile);
         }
-
             
         this.currentIndex++;
         if (this.currentIndex >= this.maxIndex) {
             this.currentIndex = 0;
         }
 
-        setTimeout(this.animate, 4000);
+        // increases the delay before animation can be toggled before the next animation starts
+        await Utils.delay(3900);
+        if (this.isAnimating) {
+            setTimeout(this.animate, 100);
+        }
     }
 
     private initialiseTileAnimate(tile :JQuery) {
@@ -68,74 +84,6 @@ export class Tile {
         {
             content.cycle("next")
         }
-    }
-
-/**
- * Fill the provided TILE template with provided data
- */
-    static fillTileTemplate(tileTemplate, title, href, cssStyle) {
-        "use strict";
-
-        var titleElement = tileTemplate.find('.title');
-        if (titleElement) {
-            titleElement.text(title);
-        }
-
-        var tileLink = tileTemplate.find('.tile-link');
-        if (tileLink) {
-            tileLink.attr('href', href);
-        }
-
-        if (!tileTemplate.hasClass(cssStyle))
-        {
-            tileTemplate.toggleClass(cssStyle);
-        }
-
-        return tileTemplate;
-    }
-
-    /**
-     * Fill content-templates with data.
-     * @param ul
-     * @param id
-     * @param data
-     */
-    static fillContentTemplates(original, data){
-        "use strict";
-
-        var filled = [];
-
-        for (var i = 0; i < data.length; i++){
-            var d = data[i];
-            var template = original.clone();
-
-            if (d.image){
-                // look for .template-image, if not default to main template for image
-                var imagediv = template.find('.template-image');
-                if (!imagediv.length)
-                {
-                    imagediv = template;
-                }
-
-                imagediv.css({
-                    'background-image' : 'url("' + d.image + '")'
-                });
-            }
-
-            if (d.name)
-            {
-                template.find('.template-lead').text(d.name);
-            }
-
-            if (d.overlay != true){
-                template.find('.template-overlay').remove();
-            }
-
-            filled.push(template);
-            console.log("Template filled: " + d.name + '; ' + d.image);
-        }
-
-        return filled;
     }
 
     static metroTileAnimation(tile :JQuery, offset, name){
@@ -170,71 +118,4 @@ export class Tile {
             }
         }
     }
-
-    /**
-     * TODO make metroTileAnimation configurable
-     * @param id
-     * @returns {metroTileAnimation}
-     */
-    public static getAnimation(id) :Function {
-        switch (id){
-            case 'ease-01':
-                return this.metroTileAnimation;
-            default:
-                return this.metroTileAnimation;
-        }
-    }
-
-    loadedTemplates = [];
-
-    loadTemplateAsync(id, post) {
-        var filename = './res/html/' + id + '.html';
-
-        $.get(filename, function(html) {
-            var template = $($.parseHTML(html));
-
-            this.loadedTemplates.push({ id: id, template: template });
-
-            post(template);
-        });
-    }
-
-    getTemplateAsync(id, post) {
-        var matchId = function(x) {
-            return x.id == id;
-        }
-
-        // TODO this was causing duplicate templates
-        //if (trueForAny(loadedTemplates, matchId)) {
-        //    var to = firstInList(loadedTemplates, matchId);
-        //    if (to) {
-        //        post(to.template);
-        //    }
-        //}
-
-        this.loadTemplateAsync(id, post);
-    }
-
-    trueForAny(list, predicate){
-        "use strict";
-
-        for (var i = 0; i < list.length; i++) {
-            if (predicate(list[i])){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    firstInList(list, predicate) {
-        "use strict";
-
-        for (var i = 0; i < list.length; i++) {
-            if (predicate(list[i])){
-                return list[i];
-            }
-        }
-    }
-
 }

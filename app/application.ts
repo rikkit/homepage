@@ -1,11 +1,13 @@
 /// <reference path="../typings/index.d.ts" />
 import {Tile} from "./tile";
+import Utils from "./utils";
 
 declare function require(name:string);
 require('jquery');
 require('jquery-cycle');
 require('jquery-easing');
 require('nprogress');
+require('mousetrap');
 
 function countdownProgress(secs) {
     NProgress.start();
@@ -42,5 +44,16 @@ $(document).ready(async () => {
 
     let tileHelper = new Tile(tiles);
 
-    await setTimeout(tileHelper.animate, 3000);
+    let playbackIcon = $($.parseHTML('<i id="tile-playback-state" class="fa"></i>'));
+    $("body").after(playbackIcon);
+
+    Mousetrap.bind('space', () => {
+        playbackIcon.toggleClass('fa-pause')
+        tileHelper.toggle();
+        console.info("Toggled")
+        return true;
+    });
+
+    await Utils.delay(3000);
+    tileHelper.animate();
 });
