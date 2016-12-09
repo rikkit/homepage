@@ -1,6 +1,12 @@
 /// <reference path="../typings/index.d.ts" />
 import {Tile} from "./tile";
 
+declare function require(name:string);
+require('jquery');
+require('jquery-cycle');
+require('jquery-easing');
+require('nprogress');
+
 function countdownProgress(secs) {
     NProgress.start();
     var counter = 0;
