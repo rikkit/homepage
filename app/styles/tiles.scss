@@ -96,6 +96,10 @@ $tile-unit: 14px;
     background-repeat: no-repeat;
 }
 
+.tile .back {
+    position: relative;
+}
+
 .tile .back, ul.tile-content > li {
     background-size: cover;
 }
