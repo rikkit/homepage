@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "homepage.Generator", "src\homepage.Generator\homepage.Generator.csproj", "{B55B7BD0-5618-44A2-8C36-AA5A1F8B99CF}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "generator", "src\generator\generator.xproj", "{4B5E2D8F-274B-4D44-BFB3-5E657769863E}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B55B7BD0-5618-44A2-8C36-AA5A1F8B99CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B55B7BD0-5618-44A2-8C36-AA5A1F8B99CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B55B7BD0-5618-44A2-8C36-AA5A1F8B99CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B55B7BD0-5618-44A2-8C36-AA5A1F8B99CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B5E2D8F-274B-4D44-BFB3-5E657769863E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B5E2D8F-274B-4D44-BFB3-5E657769863E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B5E2D8F-274B-4D44-BFB3-5E657769863E}.Release|Any CPU.ActiveCfg = Release|Any CPU
