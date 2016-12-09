@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace homepage.Generator
+namespace generator
 {
     public class Program
     {
@@ -45,9 +45,10 @@ namespace homepage.Generator
         private static ApiConfig GetConfig()
         {
             const string configPath = "./config.json";
-            if (!File.Exists(configPath))
+            var fullConfigPath = Path.GetFullPath(configPath);
+            if (!File.Exists(fullConfigPath))
             {
-                throw new ApplicationException($"{configPath} is missing");
+                throw new Exception($"{fullConfigPath} is missing");
             }
 
             var configJson = File.ReadAllText(configPath);

@@ -1,4 +1,4 @@
-namespace homepage.Generator
+namespace generator
 {
     public static class StringExtensions
     {

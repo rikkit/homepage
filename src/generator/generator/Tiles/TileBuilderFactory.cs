@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public class TileBuilderFactory
     {

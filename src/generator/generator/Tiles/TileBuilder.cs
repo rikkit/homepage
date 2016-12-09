@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public abstract class TileBuilder
     {

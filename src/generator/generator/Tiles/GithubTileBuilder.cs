@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Internal;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public class GithubTileBuilder : TileBuilder
     {

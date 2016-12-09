@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Mustache;
 using Newtonsoft.Json;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public class Tile
     {

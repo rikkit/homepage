@@ -5,19 +5,21 @@
   },
 
   "dependencies": {
-    "HtmlTags": "4.2.0",
-    "Humanizer.Core": "2.0.1",
-    "Inflatable.Lastfm": "0.2.4.274",
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.1"
-    },
-    "Newtonsoft.Json": "9.0.1"
+    "Humanizer.Core": "2.1.0",
+    "Inflatable.Lastfm": "1.0.0.294",
+    "Markdown": "2.2.0",
+    "Microsoft.NETCore.App": "1.1.0",
+    "Mustache": "1.0.1",
+    "Newtonsoft.Json": "9.0.1",
+    "Octokit": "0.23.1-PullRequest1503"
   },
 
   "frameworks": {
     "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
+  },
+  "runtimes": {
+    "win10-x64": {} 
   }
 }

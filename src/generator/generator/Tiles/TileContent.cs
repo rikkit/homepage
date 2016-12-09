@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public class TileContent
     {

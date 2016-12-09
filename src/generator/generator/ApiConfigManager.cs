@@ -1,9 +1,7 @@
-using System;
 using IF.Lastfm.Core.Api.Enums;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace homepage.Generator
+namespace generator
 {
     public class GitHubApiConfig
     {

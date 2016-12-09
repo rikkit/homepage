@@ -4,10 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public class TwitterTileBuilder : TileBuilder
     {
@@ -100,7 +99,7 @@ namespace homepage.Generator.Tiles
             var tokenType = jo.Value<string>("token_type");
             if (tokenType != "bearer")
             {
-                throw new ApplicationException("Expected acceess token to be type `bearer`");
+                throw new Exception("Expected acceess token to be type `bearer`");
             }
 
             var accessToken = jo.Value<string>("access_token");

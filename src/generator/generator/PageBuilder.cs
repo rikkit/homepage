@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using homepage.Generator.Tiles;
-using HtmlTags;
+using generator.Tiles;
+using HeyRed.MarkdownSharp;
 using Humanizer;
-using MarkdownSharp;
 using Mustache;
 
-namespace homepage.Generator
+namespace generator
 {
     public class PageBuilder
     {
@@ -47,7 +45,7 @@ namespace homepage.Generator
             }
 
             Console.WriteLine($"Building tiles...");
-            var tileRoot = await BuildTileRoot(_config);
+            var tileRoot = await BuildTileHtml(_config);
 
             Console.WriteLine($"Building pages...");
             var sourceFiles = EnumerateSourceFiles(_sourceDir)
@@ -100,7 +98,7 @@ namespace homepage.Generator
                     var pageData = new
                     {
                         title = sourceFileName,
-                        tiles = tileRoot.RenderFromTop().ToHtmlString(),
+                        tiles = tileRoot,
                         webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? ".",
                         date = ""
                     };
@@ -119,7 +117,7 @@ namespace homepage.Generator
                     {
                         title = pageMeta.Title ?? sourceFileName.Humanize("-"),
                         content = articleHtml,
-                        tiles = tileRoot.RenderFromTop().ToHtmlString(),
+                        tiles = tileRoot,
                         webroot = sourceRelativeUri1.ToString().NullIfEmpty() ?? ".",
                         date = pageMeta.Date?.Humanize() ?? ""
                     };
@@ -128,7 +126,7 @@ namespace homepage.Generator
                 }
                 else
                 {
-                    throw new ApplicationException($"Source type {sourceFile.type} not supported");
+                    throw new Exception($"Source type {sourceFile.type} not supported");
                 }
 
                 if (!Directory.Exists(outFileDir.AbsolutePath))
@@ -141,7 +139,7 @@ namespace homepage.Generator
             }
         }
         
-        private async Task<HtmlTag> BuildTileRoot(ApiConfig apiConfig)
+        private async Task<string> BuildTileHtml(ApiConfig apiConfig)
         {
             var tileBuilderFactory = new TileBuilderFactory(apiConfig);
             var tileBuilders = tileBuilderFactory.GetBuilders();
@@ -149,15 +147,13 @@ namespace homepage.Generator
             var tileTasks = tileBuilders.Select(b => b.GetTileAsync());
             var tiles = await Task.WhenAll(tileTasks);
 
-            var tileRoot = new HtmlTag("div").AddClass("tiles");
-
-            foreach (var tile in tiles)
-            {
-                var html = tile.RenderHtml();
-                tileRoot.AppendHtml(html);
-            }
-
-            return tileRoot;
+            const string tileRootStart = "<div class=\"tiles\">";
+            var tilesHtml = tiles
+                .Select(tile => tile.RenderHtml())
+                .Aggregate(tileRootStart, (a, b) => a + b);
+            tilesHtml += "</div>";
+            
+            return tilesHtml;
         }
 
         private static IEnumerable<string> EnumerateSourceFiles(string sourceDir)

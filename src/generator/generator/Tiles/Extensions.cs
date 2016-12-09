@@ -1,6 +1,6 @@
 using System;
 
-namespace homepage.Generator.Tiles
+namespace generator.Tiles
 {
     public static class Extensions
     {
