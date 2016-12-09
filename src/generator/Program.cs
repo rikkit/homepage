@@ -25,18 +25,29 @@ namespace generator
 
         private static async Task MainAsync(string[] args)
         {
-            var sourceDir = args.Take(1).SingleOrDefault() ?? "../../pages";
+            var configPath = args.Skip(0).Take(1).SingleOrDefault() ?? "../../config.json";
+            configPath = Path.GetFullPath(configPath);
+
+            var sourceDir = args.Skip(1).Take(1).SingleOrDefault() ?? "../../pages";
             sourceDir = Path.GetFullPath(sourceDir);
 
-            var outDir = args.Skip(1).Take(1).SingleOrDefault() ?? "../../public";
+            var outDir = args.Skip(2).Take(1).SingleOrDefault() ?? "../../public";
             outDir = Path.GetFullPath(outDir);
 
-            var templateDir = args.Skip(2).Take(1).SingleOrDefault() ?? "../../res/html";
+            var templateDir = args.Skip(3).Take(1).SingleOrDefault() ?? "../../res/html";
+            templateDir = Path.GetFullPath(templateDir);
             var templateManager = new TemplateManager();
-            templateManager.LoadFromDirectory(Path.GetFullPath(templateDir));
+            templateManager.LoadFromDirectory(templateDir);
 
-            var apiConfig = GetConfig();
-            
+            var colour = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine($"Config path: {configPath}");
+            Console.WriteLine($"Page path: {sourceDir}");
+            Console.WriteLine($"Out path: {outDir}");
+            Console.WriteLine($"Template path: {templateDir}");
+            Console.ForegroundColor = colour;
+
+            var apiConfig = GetConfig(configPath);
             var pageBuilder = new PageBuilder(sourceDir, outDir, apiConfig, templateManager);
 
             await pageBuilder.Build();
@@ -46,9 +57,8 @@ namespace generator
 #endif
         }
 
-        private static ApiConfig GetConfig()
+        private static ApiConfig GetConfig(string configPath)
         {
-            const string configPath = "./config.json";
             var fullConfigPath = Path.GetFullPath(configPath);
             if (!File.Exists(fullConfigPath))
             {

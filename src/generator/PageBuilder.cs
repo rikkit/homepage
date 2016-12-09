@@ -22,7 +22,7 @@ namespace generator
         private readonly string _sourceDir;
         private readonly ApiConfig _config;
         private readonly string _outDir;
-        private TemplateManager _templateManager;
+        private readonly TemplateManager _templateManager;
 
         public PageBuilder(string sourceDir, string outDir, ApiConfig config, TemplateManager templateManager)
         {
@@ -137,7 +137,11 @@ namespace generator
                 }
 
                 File.WriteAllText(outFilePath.AbsolutePath, pageHtml);
+
+                var colour = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Built {outFilePath.AbsolutePath.Replace(outDirUri.AbsolutePath, "")}");
+                Console.ForegroundColor = colour;
             }
         }
         
