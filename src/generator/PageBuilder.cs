@@ -22,12 +22,14 @@ namespace generator
         private readonly string _sourceDir;
         private readonly ApiConfig _config;
         private readonly string _outDir;
+        private TemplateManager _templateManager;
 
-        public PageBuilder(string sourceDir, string outDir, ApiConfig config)
+        public PageBuilder(string sourceDir, string outDir, ApiConfig config, TemplateManager templateManager)
         {
             _sourceDir = EnsureTerminatingDirectorySeparator(sourceDir);
             _outDir = EnsureTerminatingDirectorySeparator(outDir);
             _config = config;
+            _templateManager = templateManager;
         }
 
         public async Task Build()
@@ -45,7 +47,7 @@ namespace generator
             }
 
             Console.WriteLine($"Building tiles...");
-            var tileRoot = await BuildTileHtml(_config);
+            var tileRoot = await BuildTileHtml();
 
             Console.WriteLine($"Building pages...");
             var sourceFiles = EnumerateSourceFiles(_sourceDir)
@@ -78,7 +80,7 @@ namespace generator
             var sourceDirUri = new Uri(_sourceDir);
             var markdownParser = new Markdown();
             var formatCompiler = new FormatCompiler {RemoveNewLines = false};
-            var markdownGenerator = formatCompiler.Compile(Templates.skeleton);
+            var markdownGenerator = formatCompiler.Compile(_templateManager.Templates["skeleton"]);
             foreach (var sourceFile in sourceFiles)
             {
                 var sourceFileDir = new Uri(EnsureTerminatingDirectorySeparator(Path.GetDirectoryName(sourceFile.path)));
@@ -139,9 +141,9 @@ namespace generator
             }
         }
         
-        private async Task<string> BuildTileHtml(ApiConfig apiConfig)
+        private async Task<string> BuildTileHtml()
         {
-            var tileBuilderFactory = new TileBuilderFactory(apiConfig);
+            var tileBuilderFactory = new TileBuilderFactory(_config);
             var tileBuilders = tileBuilderFactory.GetBuilders();
 
             var tileTasks = tileBuilders.Select(b => b.GetTileAsync());
@@ -149,7 +151,7 @@ namespace generator
 
             const string tileRootStart = "<div class=\"tiles\">";
             var tilesHtml = tiles
-                .Select(tile => tile.RenderHtml())
+                .Select(tile => tile.RenderHtml(_templateManager))
                 .Aggregate(tileRootStart, (a, b) => a + b);
             tilesHtml += "</div>";
             

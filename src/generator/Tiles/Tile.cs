@@ -37,14 +37,15 @@ namespace generator.Tiles
         
         public Tile()
         {
-            TemplateName = "tt_01";
+            TemplateName = "tt-01";
             Size = "large";
         }
 
-        public string RenderHtml()
+        public string RenderHtml(TemplateManager templateManager)
         {
             var formatter = new FormatCompiler();
-            var rootHtml = Templates.ResourceManager.GetString(TemplateName, CultureInfo.InvariantCulture);
+
+            var rootHtml = templateManager.Templates[TemplateName];
             if (string.IsNullOrEmpty(rootHtml))
             {
                 return null;

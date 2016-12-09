@@ -31,9 +31,13 @@ namespace generator
             var outDir = args.Skip(1).Take(1).SingleOrDefault() ?? "../../public";
             outDir = Path.GetFullPath(outDir);
 
+            var templateDir = args.Skip(2).Take(1).SingleOrDefault() ?? "../../res/html";
+            var templateManager = new TemplateManager();
+            templateManager.LoadFromDirectory(Path.GetFullPath(templateDir));
+
             var apiConfig = GetConfig();
             
-            var pageBuilder = new PageBuilder(sourceDir, outDir, apiConfig);
+            var pageBuilder = new PageBuilder(sourceDir, outDir, apiConfig, templateManager);
 
             await pageBuilder.Build();
 
