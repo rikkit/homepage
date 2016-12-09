@@ -21,7 +21,7 @@ namespace generator.Tiles
             {
                 new LastfmTileBuilder(_config.Lastfm, httpClient),
                 new GithubTileBuilder(_config.GitHub),
-                new StaticTileBuilder("tt-02", "Blog", "blog", "wide", new Uri("http://rikk.it/blog")),
+                //new StaticTileBuilder("tt-02", "Blog", "blog", "wide", new Uri("http://rikk.it/blog")),
                 new TwitterTileBuilder(_config.Twitter, httpClient)
             };
         }
