@@ -134,3 +134,8 @@ out/
 public/
 typings/
 /src/generator/config.json
+
+# Terraform
+/terraform/.terraform/
+/terraform/terraform.tfvars
+/terraform/terraform.tf
