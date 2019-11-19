@@ -38,7 +38,7 @@ resource "digitalocean_record" "mail_cname" {
 resource "digitalocean_record" "mail_mx" {
   domain   = digitalocean_domain.rikk_it.name
   type     = "MX"
-  name     = "mail"
+  name     = "@"
   value    = "614e34c75a0d4eaf20719231a5a989.pamx1.hotmail.com."
   priority = 10
   ttl      = 1800
