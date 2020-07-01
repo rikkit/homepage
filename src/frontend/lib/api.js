@@ -55,7 +55,7 @@ export async function getAllPostsForHome(preview) {
     `
     query Posts($where: JSON){
       posts(sort: "created_at:desc", where: $where) {
-        title        
+        title
         slug
         created_at
         excerpt
@@ -84,7 +84,7 @@ export async function getPostAndMorePosts(slug, preview) {
     `
   query PostBySlug($where: JSON, $where_ne: JSON) {
     posts(where: $where) {
-      title        
+      title
       slug
       created_at
       excerpt

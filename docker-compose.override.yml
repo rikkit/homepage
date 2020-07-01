@@ -4,15 +4,15 @@ services:
   frontend:
     command: yarn dev
     volumes:
-      - ./node_modules:/usr/src/backend/node_modules
+      - ./src/frontend:/usr/src/frontend
+      - ./node_modules:/usr/src/frontend/node_modules
     environment:
       HTTPS_PROXY: https://proxy
   backend:
     command: yarn dev
     volumes:
+      - ./src/backend:/usr/src/backend
       - ./node_modules:/usr/src/backend/node_modules
-      - ./src/backend/.tmp:/usr/src/backend/.tmp
-      - ./src/backend/public:/usr/src/backend/public
     ports:
       - "1337:1337"
   proxy:
