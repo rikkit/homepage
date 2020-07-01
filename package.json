@@ -1,6 +1,11 @@
 {
+  "private": true,
   "name": "rikk.it",
-  "version": "0.0.0",
+  "author": {
+    "name": "Rikki Tooley",
+    "url": "http://rikk.it"
+  },
+  "version": "0.0.1",
   "dependencies": {
     "jquery": "3.5.0",
     "jquery-cycle": "3.0.3",
@@ -9,16 +14,9 @@
     "nprogress": "0.2.0"
   },
   "devDependencies": {
-    "auto-reload-brunch": "^2.0.0",
-    "bootstrap-sass": "^3.3.7",
-    "brunch": "^2.0.0",
-    "brunch-typescript": "^2.0.0",
-    "clean-css-brunch": "^2.0.0",
-    "css-brunch": "^2.0.0",
-    "javascript-brunch": "^2.0.0",
-    "promise": "^7.1.1",
-    "sass-brunch": "^2.6.3",
-    "typescript": "^2.1.4",
-    "uglify-js-brunch": "^2.0.0"
-  }
+    "typescript": "~3.9"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
