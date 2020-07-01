@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  frontend:
+    command: yarn dev
+    volumes:
+      - ./node_modules:/usr/src/backend/node_modules
+    environment:
+      HTTPS_PROXY: https://proxy
+  backend:
+    command: yarn dev
+    volumes:
+      - ./node_modules:/usr/src/backend/node_modules
+      - ./src/backend/.tmp:/usr/src/backend/.tmp
+      - ./src/backend/public:/usr/src/backend/public
+    ports:
+      - "1337:1337"
+  proxy:
+    volumes:
+      - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/nginx.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    networks:
+      default:
+        ipv4_address: 172.33.0.80
+    extra_hosts:
+      - "dev.rikk.it:172.33.0.80"
+      - "api-dev.rikk.it:172.33.0.80"
+  certbot:
+    volumes:
+      - ~/.digitalocean.ini:/root/.digitalocean.ini
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.33.0.0/16

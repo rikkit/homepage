@@ -89,9 +89,6 @@ export async function getPostAndMorePosts(slug, preview) {
       created_at
       excerpt
       content
-      ogImage: coverImage{
-        url
-      }
       coverImage {
         url
       }

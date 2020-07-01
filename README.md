@@ -2,21 +2,15 @@
 
 This is the source for [rikk.it](http://rikk.it). The site is built using JQuery/TypeScript and a static site generator written in C#.
 
-# Setup (PowerShell/ Windows)
+# Setup (dev)
 
-```
-# first install npm and MSBuild for C# 6
+Run in WSL 2 (Ubuntu)
 
-Set-Alias msbuild "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+## Containers
 
-npm install -g brunch
-npm install -g typings
-npm install
-typings install
-nuget restore
-
-./build.ps1
-```
+1. Get DO API key and save to ~/.digitalocean.ini `dns_digitalocean_token = xxxxx`
+1. Create SSL cert for local dev `dc run --entrypoint certbot certbot certonly  --dns-digitalocean --dns-digitalocean-credentials /root/.digitalocean.ini --agree-tos --email hello@rikk.it --domain dev.rikk.it`
+1. 
 
 # Licence
 
