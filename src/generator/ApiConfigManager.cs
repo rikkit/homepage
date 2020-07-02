@@ -38,18 +38,18 @@ namespace generator
         [JsonProperty("username")]
         public string Username { get; set; }
 
-        [JsonProperty("albumChartPeriod")]
-        public LastStatsTimeSpan AlbumChartPeriod { get; set; } = LastStatsTimeSpan.Month;
+        [JsonProperty("period")]
+        public LastStatsTimeSpan Period { get; set; } = LastStatsTimeSpan.Month;
 
-        [JsonProperty("albumChartCount")]
-        public int AlbumChartCount { get; set; }
+        [JsonProperty("count")]
+        public int Count { get; set; } = 5;
     }
 
     public class ApiConfig
     {
         [JsonProperty("github")]
         public GitHubApiConfig GitHub { get; set; }
-        
+
         [JsonProperty("lastfm")]
         public LastfmApiConfig Lastfm { get; set; }
 

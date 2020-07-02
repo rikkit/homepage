@@ -19,14 +19,16 @@ namespace generator.Tiles
 
         protected override async Task<Tile> BuildAsync()
         {
-            var albums = await _lastfmClient.User.GetTopAlbums(_config.Username, _config.AlbumChartPeriod, 1, _config.AlbumChartCount);
+            var artists = await _lastfmClient.User.GetTopArtists(_config.Username, _config.Period, 1, _config.Count);
 
-            var data = albums.Select(a => new TileContent
+            var data = artists.Select(a => new TileContent
             {
                 Name = a.Name,
-                Image = a.Images.Largest,
-                Overlay = true
+                Overlay = true,
+                Body = String.Join(",", a.Tags.Select(tag => tag.Name.ToLower())),
             });
+
+            Console.WriteLine(String.Join("\n", artists.SelectMany(x => x.MainImage)));
 
             return new Tile
             {

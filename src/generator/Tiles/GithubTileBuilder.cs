@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Octokit;
 using Octokit.Internal;
 
@@ -49,6 +50,7 @@ namespace generator.Tiles
             var events = await _client.Activity.Events.GetAllUserPerformedPublic(_config.Username);
             var activeRepoIds = events.OrderByDescending(e => e.CreatedAt)
                 .Where(e => e.CreatedAt > DateTimeOffset.UtcNow.AddMonths(-3))
+                .Where(e => e.Public)
                 .Where(e =>
                 {
                     switch (e.Type)
@@ -64,14 +66,25 @@ namespace generator.Tiles
                 .Select(e => e.Repo.Id)
                 .Distinct();
 
-            var activeRepos = await Task.WhenAll(activeRepoIds.Select(id => _client.Repository.Get(id)));
-
-            var data = activeRepos.Select(repo => new TileContent
+            var data = new List<TileContent>();
+            foreach (var id in activeRepoIds)
             {
-                Name = repo.Name,
-                Body = $"{repo.Description} ({repo.Language})",
-                Overlay = false
-            });
+                try
+                {
+                    var repo = await _client.Repository.Get(id);
+
+                    data.Add(new TileContent
+                    {
+                        Name = $"{repo.Owner.Login}/{repo.Name}",
+                        Body = $"{repo.Description} ({repo.Language})",
+                        Overlay = false
+                    });
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"GitHub | Error when getting repo {id}: {e.Message}");
+                }
+            }
 
             return data;
         }

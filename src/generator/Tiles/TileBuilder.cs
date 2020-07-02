@@ -11,15 +11,7 @@ namespace generator.Tiles
         {
             if (_cachedTile == null || _cachedTile.BuiltUtc < DateTimeOffset.UtcNow.AddDays(-1))
             {
-                if (_cachedTile == null)
-                {
-                    await RefreshAsync();
-                }
-                else
-                {
-                    // TODO this isn't good
-                    RefreshAsync();
-                }
+                await RefreshAsync();
             }
 
             return _cachedTile;

@@ -15,6 +15,10 @@ services:
       - ./node_modules:/usr/src/backend/node_modules
     ports:
       - "1337:1337"
+  generator:
+    volumes:
+      - ./data/tiles/:/usr/src/data/
+      - ./src/generator/bin/Release/netcoreapp3.1/publish/:/usr/src/app
   proxy:
     volumes:
       - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/nginx.conf

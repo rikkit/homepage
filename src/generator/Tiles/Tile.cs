@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Mustache;
 using Newtonsoft.Json;
 
 namespace generator.Tiles
@@ -34,28 +33,11 @@ namespace generator.Tiles
 
         [JsonProperty("data")]
         public IEnumerable<TileContent> Content { get; set; }
-        
+
         public Tile()
         {
             TemplateName = "tt-01";
             Size = "large";
-        }
-
-        public string RenderHtml(TemplateManager templateManager)
-        {
-            var formatter = new FormatCompiler();
-
-            var rootHtml = templateManager.Templates[TemplateName];
-            if (string.IsNullOrEmpty(rootHtml))
-            {
-                return null;
-            }
-
-            var rootTemplate = formatter.Compile(rootHtml);
-
-            var html = rootTemplate.Render(this);
-
-            return html;
         }
     }
 }

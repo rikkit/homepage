@@ -29,7 +29,8 @@ namespace generator.Tiles
             {
                 {"screen_name", _config.Username},
                 {"exclude_replies", true.ToString() },
-                {"trim_user", true.ToString() }
+                {"trim_user", true.ToString() },
+                {"include_rts", false.ToString()},
             };
             var tweetsUrl = $"{TWITTER_API_ROOT}/1.1/statuses/user_timeline.json?" + string.Join("&", tweetParams.Select(x => $"{x.Key}={x.Value}"));
             var message = new HttpRequestMessage(HttpMethod.Get, tweetsUrl)
@@ -42,7 +43,7 @@ namespace generator.Tiles
             var response = await _httpClient.SendAsync(message);
             var json = await response.Content.ReadAsStringAsync();
             var tweetList = JArray.Parse(json);
-            var tweets = tweetList.Select(jo =>
+            var tweets = tweetList.Take(_config.Count).Select(jo =>
             {
                 var tileData = new TileContent
                 {
@@ -121,7 +122,7 @@ namespace generator.Tiles
             var response = await _httpClient.SendAsync(postMessage);
             if (!response.IsSuccessStatusCode)
             {
-                Console.WriteLine($"Didn't invalidate access token {token}\n{response.ReasonPhrase}");
+                Console.Error.WriteLine($"Twitter | Didn't invalidate access token {token}: {response.ReasonPhrase}");
             }
         }
     }

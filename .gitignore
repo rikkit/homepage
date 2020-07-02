@@ -135,3 +135,7 @@ data/certbot/conf/*
 !data/certbot/conf/letsencrypt-recommended-ssl.conf
 !data/certbot/conf/letsencrypt-dhparams.pem
 data/certbot/www/*
+
+# Generator data
+data/tiles/config.json
+data/tiles/tiles.json

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using generator.Tiles;
 using Newtonsoft.Json;
 
 namespace generator
@@ -25,39 +27,31 @@ namespace generator
 
         private static async Task MainAsync(string[] args)
         {
-            var configPath = args.Skip(0).Take(1).SingleOrDefault() ?? "../../config.json";
-            configPath = Path.GetFullPath(configPath);
+            if (args.Length != 2)
+            {
+                Console.Error.WriteLine("Usage: generator.exe <config.json> <output.json>");
+				return;
+            }
 
-            var sourceDir = args.Skip(1).Take(1).SingleOrDefault() ?? "../../pages";
-            sourceDir = Path.GetFullPath(sourceDir);
+            var configPath = Path.GetFullPath(args.ElementAtOrDefault(0));
+            var apiConfig = GetConfigFromFile(configPath);
+            var outputPath = Path.GetFullPath(args.ElementAtOrDefault(1));
 
-            var outDir = args.Skip(2).Take(1).SingleOrDefault() ?? "../../public";
-            outDir = Path.GetFullPath(outDir);
+            Console.WriteLine($"Generating tile json. Config: {configPath}, Out: {outputPath}");
 
-            var templateDir = args.Skip(3).Take(1).SingleOrDefault() ?? "../../res/html";
-            templateDir = Path.GetFullPath(templateDir);
-            var templateManager = new TemplateManager();
-            templateManager.LoadFromDirectory(templateDir);
+            var httpClient = new HttpClient();
 
-            var colour = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine($"Config path: {configPath}");
-            Console.WriteLine($"Page path: {sourceDir}");
-            Console.WriteLine($"Out path: {outDir}");
-            Console.WriteLine($"Template path: {templateDir}");
-            Console.ForegroundColor = colour;
+            var tileData = new {
+                github = await new GithubTileBuilder(apiConfig.GitHub).GetTileAsync(),
+                lastfm = await new LastfmTileBuilder(apiConfig.Lastfm, httpClient).GetTileAsync(),
+                twitter = await new TwitterTileBuilder(apiConfig.Twitter, httpClient).GetTileAsync(),
+            };
 
-            var apiConfig = GetConfig(configPath);
-            var pageBuilder = new PageBuilder(sourceDir, outDir, apiConfig, templateManager);
-
-            await pageBuilder.Build();
-
-#if DEBUG
-            Console.ReadLine();
-#endif
+			await File.WriteAllTextAsync(outputPath, JsonConvert.SerializeObject(tileData));
+			Console.WriteLine("...complete");
         }
 
-        private static ApiConfig GetConfig(string configPath)
+        private static ApiConfig GetConfigFromFile(string configPath)
         {
             var fullConfigPath = Path.GetFullPath(configPath);
             if (!File.Exists(fullConfigPath))

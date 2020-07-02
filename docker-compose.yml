@@ -12,6 +12,10 @@ services:
     build:
       context: .
       dockerfile: src/backend/Dockerfile
+  generator:
+    build:
+      context: src/generator/
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do dotnet generator.dll /usr/src/data/config.json /usr/src/data/tiles.json; sleep 12h & wait $${!}; done;'"
   proxy:
     image: nginx:1.19-alpine
     ports:
