@@ -30,7 +30,7 @@ namespace generator
             if (args.Length != 2)
             {
                 Console.Error.WriteLine("Usage: generator.exe <config.json> <output.json>");
-				return;
+                return;
             }
 
             var configPath = Path.GetFullPath(args.ElementAtOrDefault(0));
@@ -41,14 +41,15 @@ namespace generator
 
             var httpClient = new HttpClient();
 
-            var tileData = new {
+            var tileData = new
+            {
                 github = await new GithubTileBuilder(apiConfig.GitHub).GetTileAsync(),
-                lastfm = await new LastfmTileBuilder(apiConfig.Lastfm, httpClient).GetTileAsync(),
+                lastfm = await new LastfmTileBuilder(apiConfig.Lastfm, apiConfig.Spotify, httpClient).GetTileAsync(),
                 twitter = await new TwitterTileBuilder(apiConfig.Twitter, httpClient).GetTileAsync(),
             };
 
-			await File.WriteAllTextAsync(outputPath, JsonConvert.SerializeObject(tileData));
-			Console.WriteLine("...complete");
+            await File.WriteAllTextAsync(outputPath, JsonConvert.SerializeObject(tileData));
+            Console.WriteLine("...complete");
         }
 
         private static ApiConfig GetConfigFromFile(string configPath)
