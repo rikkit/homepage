@@ -6,7 +6,7 @@ export default function CoverImage({ title, url, slug }) {
   }
 
   const imageUrl = `${
-    url.startsWith('/') ? process.env.NEXT_PUBLIC_STRAPI_API_URL : ''
+    url.startsWith('/') ? process.env.API_URL : ''
     }${url}`
   return (
     <div className="-mx-5 sm:mx-0">

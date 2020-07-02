@@ -1,45 +1,32 @@
 import Container from '@/components/container'
-import MoreStories from '@/components/more-stories'
-import HeroPost from '@/components/hero-post'
-import Intro from '@/components/intro'
 import Layout from '@/components/layout'
-import { getAllPostsForHome } from '@/lib/api'
+import { getAllPostsForHome, getTileData } from '@/lib/api'
 import Head from 'next/head'
-import { CMS_NAME } from '@/lib/constants'
-import { InferGetStaticPropsType, GetStaticProps } from "next"
 
+type Props = Unwrap<ReturnType<typeof getStaticProps>>["props"]
 
-export default function Index({ allPosts, preview }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Index({ allPosts, tiles, preview }: Props) {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
-    <>
-      <Layout preview={preview}>
-        <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
-        </Head>
-        <Container>
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
-      </Layout>
-    </>
-  )
-}
+    <Layout preview={preview}>
+      <Head>
+        <title>Rikki Tooley</title>
+      </Head>
+      <Container>
+        <span className="tagline">Full stack developer</span>
+        <h1>Rikki Tooley</h1>
+        {tiles.github.title}
+      </Container>
+    </Layout>
+  );
+};
 
-export const getStaticProps: GetStaticProps  = async ({ preview = null }) => {
-  const allPosts = (await getAllPostsForHome(preview)) || []
+export const getStaticProps = async ({ preview = null }) => {
+  const allPosts = (await getAllPostsForHome(preview)) || [];
+  const tiles = await getTileData();
+
   return {
-    props: { allPosts, preview },
+    props: { allPosts, tiles, preview },
   }
-}
+};

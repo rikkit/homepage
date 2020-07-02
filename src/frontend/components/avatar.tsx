@@ -6,7 +6,7 @@ export default function Avatar({ name, avatar }) {
       {url && (
         <img
           src={`${
-            url.startsWith('/') ? process.env.NEXT_PUBLIC_STRAPI_API_URL : ''
+            url.startsWith('/') ? process.env.API_URL : ''
             }${url}`}
           className="w-12 h-12 rounded-full mr-4 grayscale"
           alt={name}

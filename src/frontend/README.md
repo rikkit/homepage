@@ -10,7 +10,7 @@ This example showcases Next.js's [Static Generation](https://nextjs.org/docs/bas
 
 Once you have access to [the environment variables you'll need](#step-7-set-up-environment-variables), deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-strapi&env=STRAPI_PREVIEW_SECRET,NEXT_PUBLIC_STRAPI_API_URL&envDescription=Required%20to%20connect%20the%20app%20with%20Strapi&envLink=https://vercel.link/cms-strapi-env)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-strapi&env=STRAPI_PREVIEW_SECRET,API_URL&envDescription=Required%20to%20connect%20the%20app%20with%20Strapi&envLink=https://vercel.link/cms-strapi-env)
 
 ### Related examples
 
@@ -142,7 +142,7 @@ cp .env.local.example .env.local
 Then set each variable on `.env.local`:
 
 - `STRAPI_PREVIEW_SECRET` can be any random string (but avoid spaces), like `MY_SECRET` - this is used for [Preview Mode](https://nextjs.org/docs/advanced-features/preview-mode).
-- `NEXT_PUBLIC_STRAPI_API_URL` should be set as `http://localhost:1337` (no trailing slash).
+- `API_URL` should be set as `http://localhost:1337` (no trailing slash).
 
 ### Step 8. Run Next.js in development mode
 
@@ -204,4 +204,4 @@ To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [
 
 Alternatively, you can deploy using our template by clicking on the Deploy button below.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-strapi&env=STRAPI_PREVIEW_SECRET,NEXT_PUBLIC_STRAPI_API_URL&envDescription=Required%20to%20connect%20the%20app%20with%20Strapi&envLink=https://vercel.link/cms-strapi-env)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?c=1&s=https://github.com/vercel/next.js/tree/canary/examples/cms-strapi&env=STRAPI_PREVIEW_SECRET,API_URL&envDescription=Required%20to%20connect%20the%20app%20with%20Strapi&envLink=https://vercel.link/cms-strapi-env)

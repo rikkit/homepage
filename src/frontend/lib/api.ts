@@ -1,5 +1,5 @@
 async function fetchAPI(query, { variables } = {}) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+  const res = await fetch(`${process.env.API_URL}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,6 +48,11 @@ export async function getAllPostsWithSlug() {
     }
   `)
   return data?.allPosts
+}
+
+export async function getTileData(): Promise<TileData> {
+  const res = await fetch(`${process.env.WEB_URL}/tiles.json`);
+  return res.json();
 }
 
 export async function getAllPostsForHome(preview) {

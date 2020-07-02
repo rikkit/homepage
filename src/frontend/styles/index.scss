@@ -1,6 +1,45 @@
 
 @import "~bulma";
 
+:root {
+  --colour-highlight: #55BCFF;
+  --colour-strong: #1E77D6;
+  --colour-mid: #0A2645;
+  --colour-mute: #080100;
+  --colour-light: #efefef;
+
+  --font-size-h1: clamp(36px, 4.6vw, 60px);
+  --font-size-h2: clamp(28px, 3.7vw, 48px);
+  --font-size-h3: clamp(22px, 2.8vw, 36px);
+  --font-size-h4: clamp(14px, 1.9vw, 24px);
+  --font-size-normal: clamp(14px, 1vw, 20px);
+}
+
 .grayscale {
   filter: grayscale(1);
 }
+
+html {
+  box-sizing: border-box;
+  background: var(--colour-mute);
+  color: var(--colour-light);
+  font-size: var(--font-size-normal);
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--colour-mute);
+  color: var(--colour-light);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  margin-bottom: 0.5ch;
+}
+
+h2 {
+  font-size: var(--font-size-h1);
+}
+

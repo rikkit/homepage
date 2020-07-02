@@ -6,6 +6,7 @@ services:
     volumes:
       - ./src/frontend:/usr/src/frontend
       - ./node_modules:/usr/src/frontend/node_modules
+      - ./data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
     environment:
       HTTPS_PROXY: https://proxy
   backend:
