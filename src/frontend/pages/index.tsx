@@ -1,7 +1,9 @@
 import Container from '@/components/container'
 import Layout from '@/components/layout'
+import { Tile } from "@/components/Tile/Tile"
 import { getAllPostsForHome, getTileData } from '@/lib/api'
 import Head from 'next/head'
+import React from "react"
 
 type Props = Unwrap<ReturnType<typeof getStaticProps>>["props"]
 
@@ -16,7 +18,10 @@ export default function Index({ allPosts, tiles, preview }: Props) {
       <Container>
         <span className="tagline">Full stack developer</span>
         <h1>Rikki Tooley</h1>
-        {tiles.github.title}
+
+        <div className="tiles">
+          <Tile tile={tiles.lastfm} />
+        </div>
       </Container>
     </Layout>
   );
