@@ -67,7 +67,7 @@ namespace generator.Tiles
             return new Tile
             {
                 Title = "@rikkilt",
-                Style = "twitter tweets",
+                Style = "twitter",
                 Size = "large",
                 Link = new Uri("https://twitter.com/rikkilt"),
                 Content = tweets

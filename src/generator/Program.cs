@@ -44,7 +44,7 @@ namespace generator
             var tileData = new
             {
                 github = await new GithubTileBuilder(apiConfig.GitHub).GetTileAsync(),
-                lastfm = await new LastfmTileBuilder(apiConfig.Lastfm, apiConfig.Spotify, httpClient).GetTileAsync(),
+                lastfm = await new LastfmTileBuilder(apiConfig.Lastfm, httpClient).GetTileAsync(),
                 twitter = await new TwitterTileBuilder(apiConfig.Twitter, httpClient).GetTileAsync(),
             };
 

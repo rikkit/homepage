@@ -45,12 +45,6 @@ namespace generator
         public int Count { get; set; } = 5;
     }
 
-    public class SpotifyApiConfig
-    {
-        [JsonProperty("key")]
-        public string Key { get; set; }
-    }
-
     public class ApiConfig
     {
         [JsonProperty("github")]
@@ -58,9 +52,6 @@ namespace generator
 
         [JsonProperty("lastfm")]
         public LastfmApiConfig Lastfm { get; set; }
-
-        [JsonProperty("spotify")]
-        public SpotifyApiConfig Spotify { get; set; }
 
         [JsonProperty("twitter")]
         public TwitterApiConfig Twitter { get; set; }
