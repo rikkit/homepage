@@ -1,0 +1,92 @@
+$tile-unit: 14px;
+$margin: 10%;
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tile {
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  filter: drop-shadow(0 0 20px var(--colour-mid));
+
+  &:hover {
+    .clip {
+      clip-path: circle(50%);
+    }
+  }
+
+  &.large {
+    --size: clamp(250px, 20vw, 350px);
+  }
+
+  &.lastfm {    
+    .front {
+      background-color:  #dc1303;
+      background-image: url('/img/lastfm-tile.png');
+    }
+  }
+}
+
+.front {
+  background-size: cover;
+}
+
+.link {
+  position: absolute;
+  display: block;
+  z-index: 50;
+  background: transparent;
+}
+
+.title {
+  position: absolute;
+  left: -25%;
+  top: calc(-1 * var(--font-size-normal));
+  z-index: 1;
+  font-size: var(--font-size-normal);
+  transform: translateY(var(--size));
+  transition: var(--ease-quintic);
+}
+
+.label {
+  position: absolute;
+  left: -25%;
+  bottom: 0;
+  z-index: 1;
+  font-size: var(--font-size-normal);
+  transform: translateY(var(--size));
+  transition: var(--ease-quintic);
+  animation: fade-in forwards var(--ease-quintic);
+}
+
+.clip {
+  clip-path: circle(40%);
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transition: var(--ease-quintic);
+}
+
+.faces {
+  transition: var(--ease-quintic);
+}
+
+.face {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  background-size: cover;
+}

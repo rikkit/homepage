@@ -4,6 +4,8 @@ import { Tile } from "@/components/Tile/Tile"
 import { getAllPostsForHome, getTileData } from '@/lib/api'
 import Head from 'next/head'
 import React from "react"
+import classnames from "classnames";
+import style from "./index.module.scss";
 
 type Props = Unwrap<ReturnType<typeof getStaticProps>>["props"]
 
@@ -19,8 +21,8 @@ export default function Index({ allPosts, tiles, preview }: Props) {
         <span className="tagline">Full stack developer</span>
         <h1>Rikki Tooley</h1>
 
-        <div className="tiles">
-          <Tile tile={tiles.lastfm} />
+        <div className={classnames(style.lastfmRow)}>
+          <Tile className={style.lastfmTile} tile={tiles.lastfm} />
         </div>
       </Container>
     </Layout>
