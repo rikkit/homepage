@@ -82,6 +82,7 @@ $margin: 10%;
   font-size: var(--font-size-normal);
   transform: translateY(var(--size));
   transition: var(--ease-quintic);
+  transition-delay: 0.1s;
 }
 
 .label {

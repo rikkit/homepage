@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import style from "./Tile.module.scss";
 
 interface Props {
@@ -10,8 +10,16 @@ interface Props {
 export const Tile = ({ tile, className }: Props) => {
 
   const [index, setIndex] = useState(0);
+  const [timer, setTimer] = useState<number>();
+
+  useEffect(() => {
+    const delay = 4000 + (Math.random() * 100) + (Math.random() * 500);
+    const timer = window.setTimeout(() => setIndex((index + 1) % tile.data.length), delay);
+    setTimer(timer);
+  }, [index]);
 
   const onScroll = useCallback((e: React.WheelEvent) => {
+    clearTimeout(timer);
     setIndex((e.deltaY > 0 ? Math.min(index + 1, tile.data.length - 1) : Math.max(index - 1, 0)))
   }, [index])
 
