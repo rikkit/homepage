@@ -8,13 +8,16 @@ interface Props {
 }
 
 export const Tile = ({ tile, className }: Props) => {
+  if (!tile) {
+    return null;
+  }
 
   const [index, setIndex] = useState(0);
   const [timer, setTimer] = useState<number>();
 
   useEffect(() => {
-    const delay = 4000 + (Math.random() * 100) + (Math.random() * 500);
-    const timer = window.setTimeout(() => setIndex((index + 1) % tile.data.length), delay);
+    const delay = 5000 + (Math.random() * 100) + (Math.random() * 1000);
+    const timer = window.setTimeout(() => setIndex((index + 1) % (tile.data.length + 1)), delay);
     setTimer(timer);
   }, [index]);
 

@@ -4,7 +4,7 @@
 type Unwrap<T> = T extends Promise<infer U> ? U : T;
 
 interface Tile {
-  builtUtc: Date;
+  builtUtc: string;
   title: string;
   style: string;
   href: string;
@@ -15,7 +15,7 @@ interface Tile {
 interface TileContent {
   name: string;
   body: string;
-  image: string;
+  image?: string;
   overlay: boolean;
 }
 
@@ -23,4 +23,15 @@ interface TileData {
   github: Tile;
   lastfm: Tile;
   twitter: Tile;
+  blogs: Tile;
+}
+
+interface Post {
+  title: string;
+  slug: string;
+  created_at: string;
+  excerpt: string;
+  coverImage?: {
+    url?: string;
+  }
 }

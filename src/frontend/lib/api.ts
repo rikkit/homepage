@@ -50,12 +50,30 @@ export async function getAllPostsWithSlug() {
   return data?.allPosts
 }
 
-export async function getTileData(): Promise<TileData> {
+export async function getTileData(preview: boolean): Promise<TileData> {
   const res = await fetch(`${process.env.WEB_URL}/tiles.json`);
-  return res.json();
+  const staticData = await res.json() as Partial<TileData>;
+  const blogs = await getAllPostsForHome(preview);
+
+  return {
+    ...staticData,
+    blogs: {
+      builtUtc: new Date().toISOString(),
+      href: "",
+      size: "large",
+      style: "blogs",
+      title: "Blogs",
+      data: blogs.map(b => ({
+        name: b.title,
+        body: b.excerpt,
+        image: b.coverImage?.url?.startsWith("/") ? `${process.env.API_URL}${b.coverImage.url}` : b.coverImage?.url ?? null,
+        overlay: false
+      }))
+    }
+  } as TileData;
 }
 
-export async function getAllPostsForHome(preview) {
+export async function getAllPostsForHome(preview: boolean) {
   const data = await fetchAPI(
     `
     query Posts($where: JSON){
@@ -66,9 +84,6 @@ export async function getAllPostsForHome(preview) {
         excerpt
         coverImage {
           url
-        }
-        author {
-          username
         }
       }
     }
@@ -81,7 +96,7 @@ export async function getAllPostsForHome(preview) {
       },
     }
   )
-  return data?.posts
+  return data?.posts as Post[];
 }
 
 export async function getPostAndMorePosts(slug, preview) {

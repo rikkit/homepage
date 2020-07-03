@@ -59,6 +59,12 @@ $margin: 10%;
       background-color: #1da1f2;
     }
   }
+ 
+  &.blogs {
+    .front {
+      background-color: var(--colour-mid);
+    }
+  }
 }
 
 .front {

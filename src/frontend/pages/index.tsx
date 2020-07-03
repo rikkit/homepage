@@ -9,9 +9,7 @@ import style from "./index.module.scss";
 
 type Props = Unwrap<ReturnType<typeof getStaticProps>>["props"]
 
-export default function Index({ allPosts, tiles, preview }: Props) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+export default function Index({ tiles, preview }: Props) {
   return (
     <Layout preview={preview}>
       <Head>
@@ -25,17 +23,17 @@ export default function Index({ allPosts, tiles, preview }: Props) {
           <Tile className={style.lastfmTile} tile={tiles.lastfm} />
           <Tile className={style.githubTile} tile={tiles.github} />
           <Tile className={style.twitterTile} tile={tiles.twitter} />
+          <Tile className={style.blogTile} tile={tiles.blogs} />
         </div>
       </Container>
     </Layout>
   );
 };
 
-export const getStaticProps = async ({ preview = null }) => {
-  const allPosts = (await getAllPostsForHome(preview)) || [];
-  const tiles = await getTileData();
+export const getStaticProps = async ({ preview = false }) => {
+  const tiles = await getTileData(preview);
 
   return {
-    props: { allPosts, tiles, preview },
+    props: { tiles, preview },
   }
 };
