@@ -1,9 +1,6 @@
 
-.lastfmRow {
-  position: relative;
-}
-
-.lastfmTile {
-  position: absolute;
-  right: 10%;
+.tiles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

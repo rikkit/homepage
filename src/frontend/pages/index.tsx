@@ -21,8 +21,10 @@ export default function Index({ allPosts, tiles, preview }: Props) {
         <span className="tagline">Full stack developer</span>
         <h1>Rikki Tooley</h1>
 
-        <div className={classnames(style.lastfmRow)}>
+        <div className={classnames(style.tiles)}>
           <Tile className={style.lastfmTile} tile={tiles.lastfm} />
+          <Tile className={style.githubTile} tile={tiles.github} />
+          <Tile className={style.twitterTile} tile={tiles.twitter} />
         </div>
       </Container>
     </Layout>

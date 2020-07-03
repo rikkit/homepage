@@ -37,6 +37,28 @@ $margin: 10%;
       background-image: url('/img/lastfm-tile.png');
     }
   }
+
+  &.github {
+    .front {
+      background-color:  #fefefe;
+      background-image: url('/img/github-tile.png');
+    }
+
+    .face {      
+      background-color:  #ededed;
+    }
+  }
+ 
+  &.twitter {
+    .front {
+      background-color: #1da1f2;
+      background-image: url('/img/twitter-tile.png');
+    }
+
+    .face {
+      background-color: #1da1f2;
+    }
+  }
 }
 
 .front {
@@ -48,6 +70,8 @@ $margin: 10%;
   display: block;
   z-index: 50;
   background: transparent;
+  width: 100%;
+  height: 100%;
 }
 
 .title {
