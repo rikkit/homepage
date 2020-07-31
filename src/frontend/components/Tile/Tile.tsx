@@ -24,11 +24,15 @@ export const Tile = ({ tile, className }: Props) => {
   const onScroll = useCallback((e: React.WheelEvent) => {
     clearTimeout(timer);
     setIndex((e.deltaY > 0 ? Math.min(index + 1, tile.data.length - 1) : Math.max(index - 1, 0)))
-  }, [index])
+  }, [index]);
+
 
   return (
-    <div className={classnames(style.tile, style[tile.size], style[tile.style], className)} onWheel={onScroll}>
-      <a className={style.link} href={tile.href} />
+    <div
+      className={classnames(style.tile, style[tile.size], style[tile.style], className)}
+      onWheel={onScroll}
+    >
+      {/* <a className={style.link} href={tile.href} /> */}
 
       <div className={style.clip}>
         <div className={style.faces} style={{ transform: `translateY(calc(${-index} * var(--size)))` }}>
