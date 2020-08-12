@@ -18,14 +18,19 @@ services:
       context: src/generator/
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do dotnet generator.dll /usr/src/data/config.json /usr/src/data/tiles.json; sleep 12h & wait $${!}; done;'"
   proxy:
-    image: nginx:1.19-alpine
+    build:
+      context: src/proxy
+      dockerfile: Dockerfile
+    # This was a pain!
+    # Files get mounted as user 1000 for some reason + nginx was failing silently to load SSL certs in mount
+    # https://github.com/nginxinc/docker-nginx/pull/280#issuecomment-427963755
+    user: "1000"
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
     ports:
       - "80:80"
       - "443:443"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    depends_on:
-      - frontend
-      - backend
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx-debug -g \"daemon off;\"'"
   # https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
   certbot:
     image: certbot/dns-digitalocean
