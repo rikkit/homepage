@@ -2,7 +2,7 @@ Infrastructure is managed by Terraform.
 
 # Setup
 
-Install Terraform v0.12+
+[Install Terraform v0.13+](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
 ```bash
 cat > terraform.tf << EOM
@@ -16,7 +16,7 @@ EOM
 # Define API keys
 cat > terraform.tfvars << EOM
 digitalocean_token=""
-EOM>>
+EOM
 
 terraform init
 ```
