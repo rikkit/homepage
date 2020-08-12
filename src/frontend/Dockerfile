@@ -11,7 +11,6 @@ COPY src/frontend/styles styles
 COPY src/frontend/public public
 COPY src/frontend/next-env.d.ts next-env.d.ts
 COPY src/frontend/postcss.config.js postcss.config.js
-COPY src/frontend/tailwind.config.js tailwind.config.js
 COPY src/frontend/tsconfig.json tsconfig.json
 
 COPY /src/frontend/package.json package.local.json
