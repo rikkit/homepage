@@ -18,10 +18,16 @@ cat > terraform.tfvars << EOM
 digitalocean_token=""
 EOM
 
-terraform init
+# Wrapper script
+cat > terraform << EOM
+terraform $1 -state /mnt/s/OneDrive/backup/homepage/terraform.tfstate ${@:2}
+EOM
+chmod +x terraform
+
+./terraform init
 ```
 
-Don't check in `terraform.tf` or `terraform.tfvars`!
+Don't check in `terraform.tf`, `terraform`, `terraform.tfvars`!
 
 # DNS
 

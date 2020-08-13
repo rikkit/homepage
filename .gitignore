@@ -129,6 +129,7 @@ node_modules/
 /terraform/.terraform/
 /terraform/terraform.tfvars
 /terraform/terraform.tf
+/terraform/terraform
 
 # Certbot data
 data/certbot/conf/*

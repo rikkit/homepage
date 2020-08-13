@@ -27,19 +27,11 @@ resource "digitalocean_record" "www" {
   ttl    = 3600
 }
 
-resource "digitalocean_record" "dev" {
+resource "digitalocean_record" "api" {
   domain = digitalocean_domain.rikk_it.name
   type   = "CNAME"
-  name   = "dev"
-  value  = "127.0.0.1"
-  ttl    = 3600
-}
-
-resource "digitalocean_record" "dev" {
-  domain = digitalocean_domain.rikk_it.name
-  type   = "CNAME"
-  name   = "api-dev"
-  value  = "127.0.0.1"
+  name   = "api"
+  value  = "@"
   ttl    = 3600
 }
 
