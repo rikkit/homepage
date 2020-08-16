@@ -22,7 +22,7 @@ services:
       - ./src/generator/bin/Release/netcoreapp3.1/publish/:/usr/src/app
   proxy:
     volumes:
-      - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/nginx.conf
+      - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     # This was a pain!
