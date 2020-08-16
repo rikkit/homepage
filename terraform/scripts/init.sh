@@ -1,16 +1,14 @@
 #!/bin/bash
 set -e
 
-echo "✨ Setting up build directory..."
-
-[ -d "osrfc/" ] && rm -rf osrfc/
-git clone osrfc.git
-cd osrfc
+echo "✨ Recreating home directory"
+[ -d "homepage/" ] && rm -rf homepage/
+git clone homepage.git
+cd homepage
 git checkout master
 git status
 
-echo "🏗 Building and starting containers..."
-cp ~/osrfc.env .env
+echo "🏗 Loading deployed containers..."
 mv docker-compose.host.yml docker-compose.override.yml
 docker-compose pull -q
 docker-compose up -d

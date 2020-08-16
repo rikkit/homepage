@@ -18,7 +18,7 @@ resource "null_resource" "provision" {
   }
 
   provisioner "file" {
-    source      = "host/provision.sh"
+    source      = "scripts/provision.sh"
     destination = "~/provision.sh"
   }
 
@@ -32,9 +32,9 @@ resource "null_resource" "provision" {
 
   connection {
     type        = "ssh"
-    user        = "root"
-    private_key = file(var.host_ssh_key)
     host        = digitalocean_droplet.rikk_it.ipv4_address
+    user        = "root"
+    password    = var.host_password
   }
 }
 
@@ -45,12 +45,12 @@ resource "null_resource" "deploy" {
   }
 
   provisioner "file" {
-    content     = templatefile("./host/deploy.sh", {})
-    destination = "~/deploy.sh"
+    content     = templatefile("./scripts/init.sh", {})
+    destination = "~/init.sh"
   }
 
   provisioner "local-exec" {
-    command = templatefile("./host/deploy-local.sh", {
+    command = templatefile("./scripts/build.sh", {
       ip = digitalocean_droplet.rikk_it.ipv4_address
     })
   }
@@ -58,15 +58,15 @@ resource "null_resource" "deploy" {
   provisioner "remote-exec" {
     inline = [
       "cd ~",
-      "chmod +x ./deploy.sh",
-      "./deploy.sh",
+      "chmod +x ./init.sh",
+      "./init.sh",
     ]
   }
 
   connection {
     type        = "ssh"
-    user        = "root"
-    private_key = file(var.host_ssh_key)
     host        = digitalocean_droplet.rikk_it.ipv4_address
+    user        = "root"
+    password    = var.host_password
   }
 }

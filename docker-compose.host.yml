@@ -2,36 +2,24 @@ version: '3.3'
 
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: src/frontend/Dockerfile
-    command: yarn dev
+    image: rikkit/homepage_frontend
+    command: yarn start
     volumes:
-      - ./src/frontend:/usr/src/frontend
-      - ./node_modules:/usr/src/frontend/node_modules
-      - ./data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
-    environment:
-      HTTPS_PROXY: https://proxy
+      - ~/homepage/data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
   backend:
-    build:
-      context: .
-      dockerfile: src/backend/Dockerfile
-    command: yarn dev
+    image: rikkit/homepage_backend
+    command: yarn start
     volumes:
-      - ./src/backend:/usr/src/backend
-      - ./node_modules:/usr/src/backend/node_modules
+      - ~/homepage/backend/build:/usr/src/backend/build
+      - ~/homepage/backend/.tmp:/usr/src/backend/.tmp
     ports:
       - "1337:1337"
   generator:
-    build:
-      context: src/generator/
+    image: rikkit/homepage_generator
     volumes:
-      - ./data/tiles/:/usr/src/data/
-      - ./src/generator/bin/Release/netcoreapp3.1/publish/:/usr/src/app
+      - ~/homepage/data/tiles/:/usr/src/data/
   proxy:
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
+    image: rikkit/homepage_proxy
     volumes:
       - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt

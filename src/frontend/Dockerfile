@@ -20,4 +20,6 @@ RUN package-json-merge package.local.json package.root.json > package.json
 COPY yarn.lock yarn.lock
 RUN yarn install
 
+RUN yarn build
+
 CMD ["yarn", "dev"]
