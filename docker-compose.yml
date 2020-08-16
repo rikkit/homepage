@@ -21,10 +21,6 @@ services:
     build:
       context: src/proxy
       dockerfile: Dockerfile
-    # This was a pain!
-    # Files get mounted as user 1000 for some reason + nginx was failing silently to load SSL certs in mount
-    # https://github.com/nginxinc/docker-nginx/pull/280#issuecomment-427963755
-    user: "1000"
     sysctls:
       net.ipv4.ip_unprivileged_port_start: 0
     ports:

@@ -136,6 +136,7 @@ data/certbot/conf/*
 !data/certbot/conf/letsencrypt-recommended-ssl.conf
 !data/certbot/conf/letsencrypt-dhparams.pem
 data/certbot/www/*
+.digitalocean.ini
 
 # Generator data
 data/tiles/config.json
