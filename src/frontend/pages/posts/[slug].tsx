@@ -12,8 +12,15 @@ import PostTitle from '@/components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '@/lib/constants'
 import markdownToHtml from '@/lib/markdownToHtml'
+import { GetStaticProps } from "next"
 
-export default function Post({ post, morePosts, preview }) {
+interface Props {
+  post: Post;
+  morePosts: Post[];
+  preview: boolean;
+}
+
+export default function Post({ post, morePosts, preview }: Props) {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -50,10 +57,10 @@ export default function Post({ post, morePosts, preview }) {
       </Container>
     </Layout>
   )
-}
+};
 
-export async function getStaticProps({ params, preview = null }) {
-  const data = await getPostAndMorePosts(params.slug, preview)
+export const getStaticProps: GetStaticProps = async ({ params, preview }) => {
+  const data = await getPostAndMorePosts(params?.slug!, preview!)
   const content = await markdownToHtml(data?.posts[0]?.content || '')
 
   return {
@@ -71,7 +78,7 @@ export async function getStaticProps({ params, preview = null }) {
 export async function getStaticPaths() {
   const allPosts = await getAllPostsWithSlug()
   return {
-    paths: allPosts?.map((post) => `/posts/${post.slug}`) || [],
+    paths: allPosts?.map((post: Post) => `/posts/${post.slug}`) || [],
     fallback: true,
   }
 }

@@ -31,7 +31,13 @@ interface Post {
   slug: string;
   created_at: string;
   excerpt: string;
+  date: string;
+  author: {
+    name: string;
+    picture: string;
+  }
   coverImage?: {
     url?: string;
   }
+  content: string;
 }

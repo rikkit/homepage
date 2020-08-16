@@ -1,4 +1,4 @@
-async function fetchAPI(query, { variables } = {}) {
+async function fetchAPI(query: string, { variables }: any = {}) {
   const res = await fetch(`${process.env.API_URL}/graphql`, {
     method: 'POST',
     headers: {
@@ -19,7 +19,7 @@ async function fetchAPI(query, { variables } = {}) {
   return json.data
 }
 
-export async function getPreviewPostBySlug(slug) {
+export async function getPreviewPostBySlug(slug: string | string[]) {
   const data = await fetchAPI(
     `
   query PostBySlug($where: JSON) {
@@ -40,7 +40,7 @@ export async function getPreviewPostBySlug(slug) {
 }
 
 export async function getAllPostsWithSlug() {
-  const data = fetchAPI(`
+  const data = await fetchAPI(`
     {
       posts {
         slug
@@ -99,7 +99,7 @@ export async function getAllPostsForHome(preview: boolean) {
   return data?.posts as Post[];
 }
 
-export async function getPostAndMorePosts(slug, preview) {
+export async function getPostAndMorePosts(slug: string|string[], preview: boolean) {
   const data = await fetchAPI(
     `
   query PostBySlug($where: JSON, $where_ne: JSON) {
@@ -138,7 +138,6 @@ export async function getPostAndMorePosts(slug, preview) {
   }
   `,
     {
-      preview,
       variables: {
         where: {
           slug,

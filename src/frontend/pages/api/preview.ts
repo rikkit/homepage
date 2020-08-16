@@ -1,6 +1,7 @@
 import { getPreviewPostBySlug } from '@/lib/api'
+import type { NextApiRequest, NextApiResponse } from "next"
 
-export default async function preview(req, res) {
+export default async function preview(req: NextApiRequest, res: NextApiResponse) {
   // Check the secret and next parameters
   // This secret should only be known to this API route and the CMS
   if (
