@@ -67,7 +67,8 @@ export async function getTileData(preview: boolean): Promise<TileData> {
         name: b.title,
         body: b.excerpt,
         image: b.coverImage?.url?.startsWith("/") ? `${process.env.API_URL}${b.coverImage.url}` : b.coverImage?.url ?? null,
-        overlay: false
+        overlay: false,
+        href: `${process.env.WEB_URL}/posts/${b.slug}`,
       }))
     }
   } as TileData;

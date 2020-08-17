@@ -17,6 +17,7 @@ interface TileContent {
   body: string;
   image?: string;
   overlay: boolean;
+  href?: string;
 }
 
 interface TileData {

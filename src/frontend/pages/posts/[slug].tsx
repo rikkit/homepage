@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview }) => {
 
   return {
     props: {
-      preview,
+      preview: preview ?? null,
       post: {
         ...data?.posts[0],
         content,
