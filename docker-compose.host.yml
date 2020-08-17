@@ -10,8 +10,7 @@ services:
     image: rikkit/homepage_backend
     command: yarn start
     volumes:
-      - /root/homepage/backend/build:/usr/src/backend/build
-      - /root/homepage/backend/.tmp:/usr/src/backend/.tmp
+      - /root/homepage/data/backend/data.db:/usr/src/backend/.tmp/data.db
     ports:
       - "1337:1337"
   generator:

@@ -9,9 +9,11 @@ cd homepage
 mkdir -p ~/homepage-data
 ln -s /root/homepage-data/ /root/homepage/data
 mkdir -p data/tiles
+touch data/tiles/tiles.json
+touch data/tiles/config.json
 mkdir -p data/certbot
-touch data/certbot/tiles.json
-touch data/certbot/config.json
+mkdir -p data/backend
+touch data/backend/data.db
 touch data/.digitalocean.ini
 chmod 0700 data/.digitalocean.ini
 
