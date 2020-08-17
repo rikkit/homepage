@@ -19,6 +19,9 @@ chmod 0700 data/.digitalocean.ini
 
 git checkout next
 
+echo "🌿 Loading .env from home directory..."
+ln -s /root/.env /root/homepage/.env
+
 echo "🏗 Loading deployed containers..."
 mv docker-compose.host.yml docker-compose.override.yml
 docker-compose pull -q
@@ -38,5 +41,8 @@ if ! [ -f "./data/certbot/conf/live/${domain_api}/cert.pem" ]; then
     --dns-digitalocean --dns-digitalocean-credentials /root/.digitalocean.ini \
     --agree-tos --email ${certbot_email} --domain ${domain_api} -n
 fi
+
+echo "📄 Rebuilding NextJS..."
+docker-compose run frontend yarn build
 
 echo "✅ Deploy complete!"

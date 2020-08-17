@@ -1,4 +1,8 @@
 async function fetchAPI(query: string, { variables }: any = {}) {
+  if (!process.env.API_URL) {
+    throw new Error("API_URL environment variable not defined!");
+  }
+
   const res = await fetch(`${process.env.API_URL}/graphql`, {
     method: 'POST',
     headers: {
