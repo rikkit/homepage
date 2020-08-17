@@ -6,6 +6,7 @@ services:
     command: yarn start
     volumes:
       - /root/homepage/data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
+      - /root/homepage/data/frontend/build:/usr/src/frontend/.next
   backend:
     image: rikkit/homepage_backend
     command: yarn start
