@@ -5,7 +5,6 @@ services:
     image: rikkit/homepage_frontend
     command: yarn start
     volumes:
-      - /root/homepage/data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
       - /root/homepage/data/frontend/build:/usr/src/frontend/.next
   backend:
     image: rikkit/homepage_backend
@@ -24,6 +23,7 @@ services:
       - ./src/proxy/nginx.host.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+      - ./data/tiles/tiles.json:/var/www/data/tiles.json
   certbot:
     volumes:
       - ./data/.digitalocean.ini:/root/.digitalocean.ini
