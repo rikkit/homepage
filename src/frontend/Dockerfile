@@ -1,6 +1,13 @@
 FROM node:12
 RUN yarn global add package-json-merge
 
+ARG API_URL
+ENV API_URL "$API_URL"
+ARG STRAPI_PREVIEW_SECRET
+ENV STRAPI_PREVIEW_SECRET "$STRAPI_PREVIEW_SECRET"
+ARG WEB_URL
+ENV WEB_URL "$WEB_URL"
+
 RUN mkdir /usr/src/frontend
 WORKDIR /usr/src/frontend
 

@@ -3,9 +3,9 @@ version: '3.3'
 services:
   frontend:
     environment:
-      STRAPI_PREVIEW_SECRET:
-      API_URL:
-      WEB_URL:
+      - STRAPI_PREVIEW_SECRET
+      - API_URL
+      - WEB_URL
   backend:
   generator:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do dotnet generator.dll /usr/src/data/config.json /usr/src/data/tiles.json; sleep 12h & wait $${!}; done;'"

@@ -5,6 +5,12 @@ services:
     build:
       context: .
       dockerfile: src/frontend/Dockerfile
+
+      # https://github.com/docker/compose/issues/1837#issuecomment-316896858
+      args:
+        - STRAPI_PREVIEW_SECRET=${STRAPI_PREVIEW_SECRET}
+        - API_URL=${API_URL}
+        - WEB_URL=${WEB_URL}
     command: yarn dev
     volumes:
       - ./src/frontend:/usr/src/frontend
