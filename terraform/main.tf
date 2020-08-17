@@ -1,7 +1,10 @@
 
 variable "digitalocean_token" {}
 variable "host_ssh_key" {}
-variable "host_password" {}
+
+variable "certbot_email" {}
+variable "domain_web" {}
+variable "domain_api" {}
 
 provider "digitalocean" {
   token = var.digitalocean_token

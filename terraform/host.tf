@@ -1,6 +1,6 @@
 
 resource "digitalocean_droplet" "rikk_it" {
-  image   = "14169855"
+  image   = "ubuntu-20-04-x64"
   name    = "snorunt3"
   region  = "lon1"
   size    = "s-1vcpu-1gb"
@@ -23,6 +23,16 @@ resource "null_resource" "provision" {
     destination = "~/provision.sh"
   }
 
+  provisioner "file" {
+    source      = "../data/.digitalocean.ini"
+    destination = "~/homepage-data/.digitalocean.ini"
+  }
+
+  provisioner "file" {
+    source      = "../data/tiles/config.json"
+    destination = "~/homepage-data/tiles/config.json"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "cd ~",
@@ -35,7 +45,7 @@ resource "null_resource" "provision" {
     type        = "ssh"
     host        = digitalocean_droplet.rikk_it.ipv4_address
     user        = "root"
-    password    = var.host_password
+    private_key = file(var.host_ssh_key)
   }
 }
 
@@ -46,13 +56,17 @@ resource "null_resource" "deploy" {
   }
 
   provisioner "file" {
-    content     = templatefile("./scripts/init.sh", {})
+    content     = templatefile("./scripts/init.sh", {
+      certbot_email = var.certbot_email,
+      domain_api = var.domain_api,
+      domain_web = var.domain_web,
+    })
     destination = "~/init.sh"
   }
 
   provisioner "local-exec" {
     command = templatefile("./scripts/deploy.sh", {
-      ip = digitalocean_droplet.rikk_it.ipv4_address
+      ip = digitalocean_droplet.rikk_it.ipv4_address,
     })
   }
 
@@ -68,6 +82,7 @@ resource "null_resource" "deploy" {
     type        = "ssh"
     host        = digitalocean_droplet.rikk_it.ipv4_address
     user        = "root"
-    password    = var.host_password
+    private_key = file(var.host_ssh_key)
+    agent       = true
   }
 }

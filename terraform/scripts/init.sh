@@ -5,12 +5,34 @@ echo "✨ Recreating home directory"
 [ -d "homepage/" ] && rm -rf homepage/
 git clone homepage.git
 cd homepage
+
+mkdir -p ~/homepage-data
+ln -s /root/homepage-data/ /root/homepage/data
+mkdir -p data/tiles
+mkdir -p data/certbot
+touch data/certbot/tiles.json
+touch data/certbot/config.json
+touch data/.digitalocean.ini
+chmod 0700 data/.digitalocean.ini
+
 git checkout next
-git status
 
 echo "🏗 Loading deployed containers..."
 mv docker-compose.host.yml docker-compose.override.yml
-docker-compose pull
+docker-compose pull -q
 docker-compose up -d
+
+echo "Creating SSL.."
+if ! [ -f "./data/certbot/conf/live/${domain_web}/cert.pem" ]; then
+  docker-compose run --entrypoint certbot certbot certonly \
+    --dns-digitalocean --dns-digitalocean-credentials /root/.digitalocean.ini \
+    --agree-tos --email ${certbot_email} --domain ${domain_web} -n
+fi
+
+if ! [ -f "./data/certbot/conf/live/${domain_api}/cert.pem" ]; then
+  docker-compose run --entrypoint certbot certbot certonly \
+    --dns-digitalocean --dns-digitalocean-credentials /root/.digitalocean.ini \
+    --agree-tos --email ${certbot_email} --domain ${domain_api} -n
+fi
 
 echo "✅ Deploy complete!"
