@@ -17,14 +17,25 @@ $margin: 10%;
   user-select: none;
   cursor: pointer;
   position: relative;
+  min-width: 150px;
   width: var(--size);
-  height: var(--size);
   filter: drop-shadow(0 0 20px var(--colour-mid));
-  margin: calc(0.25 * var(--size)) calc(0.1 * var(--size));
+  margin: 20px 20px;
+
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    pointer-events: none;
+  }
 
   &:hover {
     .clip {
       clip-path: circle(50%);
+    }
+
+    .detail {
+      opacity: 1;
     }
   }
 
@@ -83,7 +94,7 @@ $margin: 10%;
 
 .title {
   position: absolute;
-  left: -25%;
+  left: -5%;
   top: calc(-1 * var(--font-size-normal));
   z-index: 1;
   font-size: var(--font-size-normal);
@@ -94,7 +105,7 @@ $margin: 10%;
 
 .label {
   position: absolute;
-  left: -25%;
+  left: -5%;
   bottom: 0;
   z-index: 1;
   font-size: var(--font-size-normal);
@@ -104,7 +115,7 @@ $margin: 10%;
 }
 
 .clip {
-  clip-path: circle(40%);
+  clip-path: circle(42%);
   overflow: hidden;
   position: absolute;
   height: 100%;
@@ -121,4 +132,13 @@ $margin: 10%;
   padding-top: 100%;
   position: relative;
   background-size: cover;
+}
+
+.detail {
+  position: absolute;
+  top: 130%;
+  opacity: 0.4;
+  transition: var(--ease-quintic);
+  width: var(--size);
+  min-width: 200px;
 }

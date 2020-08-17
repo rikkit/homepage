@@ -55,7 +55,10 @@ export const Tile = ({ tile, className, style = {} }: Props) => {
             {tile.data[index - 1].name}
           </h3>
           <div className={css.badge} />
-          {tile.data[index - 1].body && <p>{tile.data[index - 1].body}</p>}
+
+          {tile.data[index - 1].body && (
+            <p className={css.detail}>{tile.data[index - 1].body}</p>
+          )}
         </>
       )}
     </div>
