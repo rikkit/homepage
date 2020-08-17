@@ -5,23 +5,23 @@ services:
     image: rikkit/homepage_frontend
     command: yarn start
     volumes:
-      - ~/homepage/data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
+      - /root/homepage/data/tiles/tiles.json:/usr/src/frontend/public/tiles.json
   backend:
     image: rikkit/homepage_backend
     command: yarn start
     volumes:
-      - ~/homepage/backend/build:/usr/src/backend/build
-      - ~/homepage/backend/.tmp:/usr/src/backend/.tmp
+      - /root/homepage/backend/build:/usr/src/backend/build
+      - /root/homepage/backend/.tmp:/usr/src/backend/.tmp
     ports:
       - "1337:1337"
   generator:
     image: rikkit/homepage_generator
     volumes:
-      - ~/homepage/data/tiles/:/usr/src/data/
+      - /root/homepage/data/tiles/:/usr/src/data/
   proxy:
     image: rikkit/homepage_proxy
     volumes:
-      - ./src/proxy/nginx.dev.conf:/etc/nginx/conf.d/default.conf
+      - ./src/proxy/nginx.host.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     # This was a pain!
