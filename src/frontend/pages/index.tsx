@@ -3,13 +3,18 @@ import Layout from '@/components/layout'
 import { Tile } from "@/components/Tile/Tile"
 import { getAllPostsForHome, getTileData } from '@/lib/api'
 import Head from 'next/head'
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import classnames from "classnames";
 import style from "./index.module.scss";
+import { SurfaceContext } from "../components/Surface/Surface"
 
 type Props = Unwrap<ReturnType<typeof getStaticProps>>["props"]
 
 export default function Index({ tiles, preview }: Props) {
+
+  const surface = useContext(SurfaceContext);
+  surface.loadTiles(tiles);
+
   return (
     <Layout preview={preview}>
       <Head>
@@ -20,10 +25,34 @@ export default function Index({ tiles, preview }: Props) {
         <h1>Rikki Tooley</h1>
 
         <div className={classnames(style.tiles)}>
-          <Tile className={style.lastfmTile} tile={tiles.lastfm} />
-          <Tile className={style.githubTile} tile={tiles.github} />
-          <Tile className={style.twitterTile} tile={tiles.twitter} />
-          <Tile className={style.blogTile} tile={tiles.blogs} />
+          {surface.tiles.lastfm &&
+            <Tile
+              className={style.lastfmTile}
+              tile={surface.tiles.lastfm.tile}
+              style={surface.tiles.lastfm.style}
+            />
+          }
+          {surface.tiles.github &&
+            <Tile
+              className={style.githubTile}
+              tile={surface.tiles.github.tile}
+              style={surface.tiles.github.style}
+            />
+          }
+          {surface.tiles.twitter &&
+            <Tile
+              className={style.twitterTile}
+              tile={surface.tiles.twitter.tile}
+              style={surface.tiles.twitter.style}
+            />
+          }
+          {surface.tiles.blogs &&
+            <Tile
+              className={style.blogsTile}
+              tile={surface.tiles.blogs.tile}
+              style={surface.tiles.blogs.style}
+            />
+          }
         </div>
       </Container>
     </Layout>
@@ -32,7 +61,6 @@ export default function Index({ tiles, preview }: Props) {
 
 export const getStaticProps = async ({ preview = false }) => {
   const tiles = await getTileData(preview);
-
   return {
     props: { tiles, preview },
   }

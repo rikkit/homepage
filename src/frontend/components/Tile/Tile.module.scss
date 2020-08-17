@@ -20,6 +20,7 @@ $margin: 10%;
   width: var(--size);
   height: var(--size);
   filter: drop-shadow(0 0 20px var(--colour-mid));
+  margin: calc(0.25 * var(--size)) calc(0.1 * var(--size));
 
   &:hover {
     .clip {

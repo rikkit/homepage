@@ -25,6 +25,7 @@ interface TileData {
   lastfm: Tile;
   twitter: Tile;
   blogs: Tile;
+  [x: string]: Tile;
 }
 
 interface Post {

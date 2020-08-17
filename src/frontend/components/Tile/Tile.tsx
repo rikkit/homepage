@@ -1,13 +1,14 @@
 import classnames from "classnames";
 import React, { useState, useCallback, useEffect } from "react";
-import style from "./Tile.module.scss";
+import css from "./Tile.module.scss";
 
 interface Props {
   tile: Tile;
   className: string;
+  style?: React.CSSProperties;
 }
 
-export const Tile = ({ tile, className }: Props) => {
+export const Tile = ({ tile, className, style = {} }: Props) => {
   if (!tile) {
     return null;
   }
@@ -23,37 +24,37 @@ export const Tile = ({ tile, className }: Props) => {
 
   const onScroll = useCallback((e: React.WheelEvent) => {
     clearTimeout(timer);
-    setIndex((e.deltaY > 0 ? Math.min(index + 1, tile.data.length - 1) : Math.max(index - 1, 0)))
+    setIndex((e.deltaY > 0 ? Math.min(index + 1, tile.data.length) : Math.max(index - 1, 0)))
   }, [index]);
 
   return (
-    <div className={classnames(style.tile, style[tile.size], style[tile.style], className)} onWheel={onScroll}>
-      <a className={style.link} href={(tile.data?.[index]?.href) ?? tile.href} />
+    <div className={classnames(css.tile, css[tile.size], css[tile.style], className)} onWheel={onScroll} style={style}>
+      <a className={css.link} href={(tile.data?.[index - 1]?.href) ?? tile.href} />
 
-      <div className={style.clip}>
-        <div className={style.faces} style={{ transform: `translateY(calc(${-index} * var(--size)))` }}>
-          <div className={classnames(style.face, style.front)} />
+      <div className={css.clip}>
+        <div className={css.faces} style={{ transform: `translateY(calc(${-index} * var(--size)))` }}>
+          <div className={classnames(css.face, css.front)} />
 
           {(tile.data ?? []).map((face, i) => (
             <div
               key={i}
-              className={classnames(style.face, { "overlay": face.overlay })}
+              className={classnames(css.face, { "overlay": face.overlay })}
               style={{ backgroundImage: `url('${face.image}')` }}>
             </div>
           ))}
         </div>
       </div>
 
-      <h2 className={style.title} style={{ transform: `translateY(${index ? "0" : "var(--size)"})` }}>
+      <h2 className={css.title} style={{ transform: `translateY(${index ? "0" : "var(--size)"})` }}>
         {tile.title}
       </h2>
 
       {index > 0 && (
         <>
-          <h3 className={style.label} style={{ transform: `translateY(${index ? "0" : "var(--size)"})` }}>
+          <h3 className={css.label} style={{ transform: `translateY(${index ? "0" : "var(--size)"})` }}>
             {tile.data[index - 1].name}
           </h3>
-          <div className={style.badge} />
+          <div className={css.badge} />
           {tile.data[index - 1].body && <p>{tile.data[index - 1].body}</p>}
         </>
       )}
