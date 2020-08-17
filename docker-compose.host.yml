@@ -24,24 +24,8 @@ services:
       - ./src/proxy/nginx.host.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    # This was a pain!
-    # Files get mounted as same id as WSL owner + nginx was failing silently to load SSL certs in mount
-    # https://github.com/nginxinc/docker-nginx/pull/280#issuecomment-427963755
-    user: "1000"
-    networks:
-      default:
-        ipv4_address: 172.33.0.80
-    extra_hosts:
-      - "dev.rikk.it:172.33.0.80"
-      - "api-dev.rikk.it:172.33.0.80"
   certbot:
     volumes:
       - ./data/.digitalocean.ini:/root/.digitalocean.ini
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-networks:
-  default:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.33.0.0/16
