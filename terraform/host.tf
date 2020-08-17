@@ -7,7 +7,8 @@ resource "digitalocean_droplet" "rikk_it" {
   backups = true
   ipv6    = true
   ssh_keys = [
-    data.digitalocean_ssh_key.snorunt.id
+    data.digitalocean_ssh_key.snorunt.id,
+    data.digitalocean_ssh_key.grizzly.id
   ]
 }
 
@@ -50,7 +51,7 @@ resource "null_resource" "deploy" {
   }
 
   provisioner "local-exec" {
-    command = templatefile("./scripts/build.sh", {
+    command = templatefile("./scripts/deploy.sh", {
       ip = digitalocean_droplet.rikk_it.ipv4_address
     })
   }

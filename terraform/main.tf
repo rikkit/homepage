@@ -1,5 +1,6 @@
 
 variable "digitalocean_token" {}
+variable "host_ssh_key" {}
 variable "host_password" {}
 
 provider "digitalocean" {
@@ -8,4 +9,8 @@ provider "digitalocean" {
 
 data "digitalocean_ssh_key" "snorunt" {
   name = "snorunt"
+}
+
+data "digitalocean_ssh_key" "grizzly" {
+  name = "grizzly"
 }

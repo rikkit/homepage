@@ -2,7 +2,7 @@
 set -e
 
 echo "🐳 Building docker containers..."
-docker-compose build
+(cd .. && docker-compose build --progress --parallel)
 
 docker tag homepage_generator rikkit/homepage_generator:latest
 docker tag homepage_frontend rikkit/homepage_frontend:latest
