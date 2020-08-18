@@ -5,18 +5,18 @@ services:
     image: rikkit/homepage_frontend
     command: yarn start
     volumes:
-      - /root/homepage/data/frontend/build:/usr/src/frontend/.next
+      - ./data/frontend/build:/usr/src/frontend/.next
   backend:
     image: rikkit/homepage_backend
     command: yarn start
     volumes:
-      - /root/homepage/data/backend/data.db:/usr/src/backend/.tmp/data.db
+      - ./data/backend/data.db:/usr/src/backend/.tmp/data.db
     ports:
       - "1337:1337"
   generator:
     image: rikkit/homepage_generator
     volumes:
-      - /root/homepage/data/tiles/:/usr/src/data/
+      - ./data/tiles/:/usr/src/data/
   proxy:
     image: rikkit/homepage_proxy
     volumes:
