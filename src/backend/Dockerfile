@@ -1,7 +1,7 @@
-FROM node:12
+FROM node:12-alpine
 RUN yarn global add package-json-merge
 
-RUN mkdir /usr/src/backend
+RUN mkdir -p /usr/src/backend
 WORKDIR /usr/src/backend
 
 COPY /src/backend/api api

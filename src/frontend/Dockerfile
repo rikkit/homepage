@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-alpine
 RUN yarn global add package-json-merge
 
 ARG API_URL
@@ -8,7 +8,7 @@ ENV STRAPI_PREVIEW_SECRET "$STRAPI_PREVIEW_SECRET"
 ARG WEB_URL
 ENV WEB_URL "$WEB_URL"
 
-RUN mkdir /usr/src/frontend
+RUN mkdir -p /usr/src/frontend
 WORKDIR /usr/src/frontend
 
 COPY src/frontend/components components
