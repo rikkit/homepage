@@ -6,10 +6,9 @@
     "url": "http://rikk.it"
   },
   "version": "0.0.1",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "typescript": "~3.9"
+    "typescript": "~4.2.4"
   },
   "workspaces": [
     "src/*"
