@@ -70,23 +70,3 @@ resource "digitalocean_record" "mail_srv" {
   port     = 5061
   ttl      = 3600
 }
-
-resource "digitalocean_domain" "eastonchilli_com" {
-  name = "eastonchilli.com"
-}
-
-resource "digitalocean_record" "www_eastonchilli_com_ipv4" {
-  domain = digitalocean_domain.eastonchilli_com.name
-  type   = "A"
-  name   = "www"
-  value  = digitalocean_droplet.rikk_it.ipv4_address
-  ttl    = 60
-}
-
-resource "digitalocean_record" "www_eastonchilli_com_ipv6" {
-  domain = digitalocean_domain.eastonchilli_com.name
-  type   = "AAAA"
-  name   = "www"
-  value  = digitalocean_droplet.rikk_it.ipv6_address
-  ttl    = 60
-}
